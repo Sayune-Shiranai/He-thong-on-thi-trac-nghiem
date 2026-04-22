@@ -10,7 +10,7 @@ module.exports = {
         autoIncrement: true 
       },
       content: { 
-        type: Sequelize.TEXT, 
+        type: Sequelize.STRING, 
         allowNull: false 
       },
       option_a: { 

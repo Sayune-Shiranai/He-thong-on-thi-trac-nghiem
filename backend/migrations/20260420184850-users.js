@@ -31,7 +31,6 @@ module.exports = {
           model: 'Roles',
           key: 'id'
         },
-        onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
       img_avatar: { 
@@ -43,7 +42,7 @@ module.exports = {
         allowNull: true
       },
       status: { 
-        type: Sequelize.INTEGER, 
+        type: Sequelize.STRING, 
         allowNull: true,
         references: {
           model: 'Status',
