@@ -15,7 +15,7 @@ module.exports = {
           model: 'Users', 
           key: 'id' 
         },
-        onDelete: 'CASCADE'
+        onUpdate: 'CASCADE'
       },
       exam_id: {
         type: Sequelize.INTEGER,
@@ -23,12 +23,12 @@ module.exports = {
           model: 'Exams', 
           key: 'id' 
         },
-        onDelete: 'CASCADE'
+        onUpdate: 'CASCADE'
       },
 
       score: Sequelize.FLOAT,
 
-      answers: Sequelize.JSON,
+      answers: Sequelize.STRING,
 
       createdAt: { 
         type: Sequelize.DATE, 

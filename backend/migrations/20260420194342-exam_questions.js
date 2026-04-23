@@ -6,24 +6,37 @@ module.exports = {
     await queryInterface.createTable('Exam_Questions', {
       id: { 
         type: Sequelize.INTEGER, 
+        allowNull: false,
         primaryKey: true, 
         autoIncrement: true 
       },
       exam_id: {
         type: Sequelize.INTEGER,
+        allowNull: false,
         references: { 
           model: 'Exams', 
           key: 'id' 
         },
-        onDelete: 'CASCADE'
+        onUpdate: 'CASCADE'
       },
       question_id: {
         type: Sequelize.INTEGER,
+        allowNull: false,
         references: { 
           model: 'Questions', 
           key: 'id' 
         },
-        onDelete: 'CASCADE'
+        onUpdate: 'CASCADE'
+      },
+      createdAt: {
+        type: Sequelize.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.NOW
+      },
+      updatedAt: {
+        type: Sequelize.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.NOW
       }
     });
   },

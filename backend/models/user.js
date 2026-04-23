@@ -5,10 +5,10 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
-      User.belongsTo(models.Roles, { foreignKey: 'role_id' });
+      User.belongsTo(models.Role, { foreignKey: 'role_id' });
       User.belongsTo(models.Status, { foreignKey: 'status_id' });
 
-      User.hasMany(models.Exams, { foreignKey: 'created_by' });
+      User.hasMany(models.Exam, { foreignKey: 'user_id' });
       User.hasMany(models.Results, { foreignKey: 'user_id' });
     }
   }
@@ -39,8 +39,8 @@ module.exports = (sequelize, DataTypes) => {
     img_background: DataTypes.STRING,
 
     status_id: {
-      type: DataTypes.STRING,
-      defaultValue: 'Approved'
+      type: DataTypes.INTEGER,
+      defaultValue: '1'
     },
 
     refreshToken: DataTypes.STRING

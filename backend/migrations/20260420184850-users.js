@@ -13,12 +13,10 @@ module.exports = {
       username: {
         type: Sequelize.STRING,
         allowNull: false,
-        unique: true
       },
       email: {
         type: Sequelize.STRING,
         allowNull: false,
-        unique: true
       },
       password: {
         type: Sequelize.STRING,
@@ -41,11 +39,11 @@ module.exports = {
         type: Sequelize.STRING, 
         allowNull: true
       },
-      status: { 
-        type: Sequelize.STRING, 
+      status_id: { 
+        type: Sequelize.INTEGER, 
         allowNull: true,
         references: {
-          model: 'Status',
+          model: 'Statuses',
           key: 'id'
         },
       },

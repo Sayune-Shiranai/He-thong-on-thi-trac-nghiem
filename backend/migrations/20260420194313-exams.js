@@ -29,7 +29,7 @@ module.exports = {
         },
       onDelete: 'CASCADE'
       },
-      created_by: {
+      user_id: {
         type: Sequelize.INTEGER,
         references: { 
           model: 'Users', 
