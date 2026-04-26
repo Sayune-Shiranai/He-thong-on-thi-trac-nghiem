@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
       User.belongsTo(models.Status, { foreignKey: 'status_id' });
 
       User.hasMany(models.Exam, { foreignKey: 'user_id' });
-      User.hasMany(models.Results, { foreignKey: 'user_id' });
+      User.hasMany(models.Result, { foreignKey: 'user_id' });
     }
   }
   User.init({

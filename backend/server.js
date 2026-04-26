@@ -26,6 +26,17 @@ app.use(
 
 const db = require('./models');
 
+//dashboard routes
+const  UserRoutes = require("./routes/dashboard/UsersRoutes");
+
+//home routes
+
+
+//auth routes
+
+
+app.use("/dashboard/user", UserRoutes) // dashboard/user
+
 app.get('/HelloWorld', (req, res) => {
   res.send('Hello World!')
 })
