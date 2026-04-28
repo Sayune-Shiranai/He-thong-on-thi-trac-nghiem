@@ -10,9 +10,10 @@ const {
     // getUserById
     // UserGetAllForum,
     // UserGetAllBook
-} = require("../../controllers/UsersController.js");
+} = require("../../controllers/UserController.js");
 
 const router = express.Router();
+
 router.get("/", GetPaged); // dashboard/user
 // router.put("/update/:id", updateUser); // dashboard/user/update/:id/
 // router.delete("/delete/:id", deleteUser); // dashboard/user/delete/:id
