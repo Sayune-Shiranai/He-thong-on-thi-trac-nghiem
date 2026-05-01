@@ -50,54 +50,54 @@ const GetPaged = async (req, res) => {
 }
 
 // Update user
-// export async function updateUser(req, res) {
-//   try {
-//     const { id } = req.params;
-//     const { username, email, role_id } = req.body;
+const UpdateUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { username, email, role_id } = req.body;
 
-//     const user = await db.usersModel.findOne({
-//       where: { id }
-//     });
+    const user = await db.User.findOne({
+      where: { id }
+    });
 
-//     if (!user) {
-//       return res.status(404).json({ success: false, message: "Không tìm thấy user!" });
-//     }
+    if (!user) {
+      return res.status(404).json({ success: false, message: "Không tìm thấy user!" });
+    }
 
-//     if (username) user.username = username;
-//     if (email) user.email = email;
-//     if (role_id) user.role_id = role_id;
+    if (username) user.username = username;
+    if (email) user.email = email;
+    if (role_id) user.role_id = role_id;
 
-//     await user.save();
+    await user.save();
 
-//     return res.json({
-//       success: true,
-//       message: "Cập nhật user thành công!",
-//       data: user
-//     });
+    return res.json({
+      success: true,
+      message: "Cập nhật user thành công!",
+      data: user
+    });
 
-//   } catch (err) {
-//     console.error(err);
-//     return res.status(500).json({ success: false, error: err.message });
-//   }
-// }
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ success: false, error: err.message });
+  }
+}
 
+//delete user
+const DeleteUser = async (req, res) => {
+  try {
+    const { id } = req.params;
 
-// export async function deleteUser(req, res) {
-//   try {
-//     const { id } = req.params;
+    const user = await db.User.findOne({
+      where: { id }
+    });
+    if (!user) return res.status(404).json({ success: false, message: 'Không tìm thấy user!' });
 
-//     const user = await db.usersModel.findOne({
-//       where: { id }
-//     });
-//     if (!user) return res.status(404).json({ success: false, message: 'Không tìm thấy user!' });
-
-//     await user.destroy();
-//     res.json({ success: true, message: 'Xóa user thành công!' });
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({ success: false, error: err.message });
-//   }
-// }
+    await user.destroy();
+    res.json({ success: true, message: 'Xóa user thành công!' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, error: err.message });
+  }
+}
 
 
 // export async function approveUser(req, res) {
@@ -169,5 +169,7 @@ const GetPaged = async (req, res) => {
 // }
 
 module.exports = {
-  GetPaged
+  GetPaged,
+  UpdateUser,
+  DeleteUser
 };
