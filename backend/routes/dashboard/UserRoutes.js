@@ -5,9 +5,9 @@ const {
     GetPaged,
     UpdateUser,
     DeleteUser,
-    // approveUser,
-    // rejectUser,
-    // getUserById
+    ApproveUser,
+    RejectUser,
+    GetUserById,
     // UserGetAllForum,
     // UserGetAllBook
 } = require("../../controllers/UserController.js");
@@ -17,8 +17,8 @@ const router = express.Router();
 router.get("/", GetPaged); // dashboard/user
 router.put("/update/:id", UpdateUser); // dashboard/user/update/:id/
 router.delete("/delete/:id", DeleteUser); // dashboard/user/delete/:id
-// router.post("/approve/:id", approveUser); // dashboard/user/approve/:id
-// router.post("/reject/:id", rejectUser); // dashboard/user/reject/:id
-// router.get("/:id", getUserById); // dashboard/user/:id
+router.post("/approve/:id", ApproveUser); // dashboard/user/approve/:id
+router.post("/reject/:id", RejectUser); // dashboard/user/reject/:id
+router.get("/:id", GetUserById); // dashboard/user/:id
 
 module.exports = router;

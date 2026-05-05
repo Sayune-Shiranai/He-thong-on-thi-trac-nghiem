@@ -100,76 +100,103 @@ const DeleteUser = async (req, res) => {
 }
 
 
-// export async function approveUser(req, res) {
-//   try {
-//     const { id } = req.params;
-//     const user = await db.usersModel.findOne({
-//       where: { id }
-//     });
-//     if (!user) return res.status(404).json({ success: false, message: 'Không tìm thấy user!' });
+const ApproveUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await db.User.findOne({
+      where: { id }
+    });
+    if (!user) return res.status(404).json({ success: false, message: 'Không tìm thấy user!' });
 
-//     user.trangthai = 1;
-//     await user.save();
+    const status = await db.Status.findOne({
+      where: { name: "Approved" }
+    });
 
-//     res.json({ success: true, message: 'Đã duyệt', data: user });
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({ success: false, error: err.message });
-//   }
-// }
+    if (!status) {
+      return res.status(404).json({
+        success: false,
+        message: "Không tìm thấy trạng thái!"
+      });
+    }
 
-// export async function rejectUser(req, res) {
-//   try {
-//     const { id } = req.params;
-//     const user = await db.usersModel.findOne({
-//       where: { id }
-//     });
-//     if (!user) return res.status(404).json({ success: false, message: 'Không tìm thấy user!' });
+    user.status_id = status.id;
 
-//     user.trangthai = 2;
-//     await user.save();
+    await user.save();
 
-//     res.json({ success: true, message: 'Hủy duyệt', data: user });
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({ success: false, error: err.message });
-//   }
-// }
+    res.json({ success: true, message: 'Đã duyệt', data: user });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, error: err.message });
+  }
+}
 
-// // Lấy thông tin user theo ID
-// export async function getUserById(req, res) {
-//   try {
-//     const { id } = req.params;
-//     const user = await db.usersModel.findOne({
-//       where: { id },
-//       include: [
-//         {
-//           model: db.roleModel,
-//           as: "User_Role"
-//         }
-//       ]
-//     });
-//     if (!user) return res.status(404).json({ success: false, message: 'Không tìm thấy user!' });
+const RejectUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await db.User.findOne({
+      where: { id }
+    });
+    if (!user) return res.status(404).json({ success: false, message: 'Không tìm thấy user!' });
 
-//     res.json({ success: true, data: user });
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({ success: false, error: err.message });
-//   }
-// }
+    const status = await db.Status.findOne({
+      where: { name: "Rejected" }
+    });
 
-// // Lấy tất cả người dùng
-// export async function getAllUsers(req, res) {
-//   try {
-//     const users = await db.usersModel.findAll();
-//     res.json(users);
-//   } catch (err) {
-//     res.status(500).json({ error: err.message });
-//   }
-// }
+    if (!status) {
+      return res.status(404).json({
+        success: false,
+        message: "Không tìm thấy trạng thái!"
+      });
+    }
+
+    user.status_id = status.id;
+    
+    await user.save();
+
+    res.json({ success: true, message: 'Hủy duyệt', data: user });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, error: err.message });
+  }
+}
+
+// Lấy thông tin user theo ID
+const GetUserById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await db.User.findOne({
+      where: { id },
+      include: [
+        {
+          model: db.Role
+        }
+      ]
+    });
+    if (!user) return res.status(404).json({ success: false, message: 'Không tìm thấy user!' });
+
+    res.json({ success: true, data: user });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, error: err.message });
+  }
+}
+
+// Lấy tất cả người dùng
+const GetAllUsers = async (req, res) => {
+  try {
+    const users = await db.User.findAll();
+    res.json(users);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
 
 module.exports = {
   GetPaged,
   UpdateUser,
-  DeleteUser
+  DeleteUser,
+  ApproveUser,
+  RejectUser,
+  GetUserById,
+  GetAllUsers
 };

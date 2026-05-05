@@ -3,23 +3,23 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    /**
-     * Add seed commands here.
-     *
-     * Example:
-     * await queryInterface.bulkInsert('People', [{
-     *   name: 'John Doe',
-     *   isBetaMember: false
-     * }], {});
-    */
+    await queryInterface.bulkInsert('Statuses', [
+      {
+        name: 'Pending',
+        description: 'Chờ duyệt'
+      },
+      {
+        name: 'Approved',
+        description: 'Đã duyệt'
+      },
+      {
+        name: 'Rejected',
+        description: 'Hủy duyệt'
+      }
+    ], {});
   },
 
   async down (queryInterface, Sequelize) {
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:
-     * await queryInterface.bulkDelete('People', null, {});
-     */
+    await queryInterface.bulkDelete('Statuses', null, {});
   }
 };
