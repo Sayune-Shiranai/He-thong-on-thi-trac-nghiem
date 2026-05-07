@@ -37,9 +37,9 @@ const Register = async (req, res) => {
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  const role = await db.Role.findOne({ where: { role: 'Student' } });
+  const role = await db.Role.findOne({ where: { name: 'Student' } });
 
-  const status = await db.Status.findOne({ where: { name: "Approved" } });
+  const status = await db.Status.findOne({ where: { name: 'Approved' } });
 
   const user = await db.User.create({ 
     username, 
@@ -49,8 +49,14 @@ const Register = async (req, res) => {
     status_id: status.id
   });
     return res.status(201).json({ 
-      message: 'Tạo user thành công!', 
-      user: { id: user.id, username: user.username, email: user.email, role_id: user.role_id, status_id: user.status_id }, 
+      message: 'Tạo tài khoản thành công!', 
+      user: { 
+        id: user.id, 
+        username: user.username, 
+        email: user.email, 
+        role_id: user.role_id, 
+        status_id: user.status_id 
+      }, 
     });
 }
 

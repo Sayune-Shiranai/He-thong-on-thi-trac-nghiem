@@ -6,15 +6,21 @@ module.exports = {
     await queryInterface.bulkInsert('Statuses', [
       {
         name: 'Pending',
-        description: 'Chờ duyệt'
+        description: 'Chờ duyệt',
+        createdAt: new Date(),
+        updatedAt: new Date()
       },
       {
         name: 'Approved',
-        description: 'Đã duyệt'
+        description: 'Đã duyệt',
+        createdAt: new Date(),
+        updatedAt: new Date()
       },
       {
         name: 'Rejected',
-        description: 'Hủy duyệt'
+        description: 'Hủy duyệt',
+        createdAt: new Date(),
+        updatedAt: new Date()
       }
     ], {});
   },

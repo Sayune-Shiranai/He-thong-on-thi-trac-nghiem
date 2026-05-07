@@ -40,7 +40,7 @@ module.exports = (sequelize, DataTypes) => {
 
     status_id: {
       type: DataTypes.INTEGER,
-      defaultValue: '1'
+      allowNull: false
     },
 
     refreshToken: DataTypes.STRING

@@ -34,9 +34,18 @@ const UserRoutes = require("./routes/dashboard/UserRoutes");
 
 
 //auth routes
+const RegisterRoutes = require("./routes/home/RegisterRoutes");
+const LoginRoutes = require("./routes/home/LoginRoutes");
 
-app.use("/dashboard/role", RoleRoutes); // dashboard/role
-app.use("/dashboard/user", UserRoutes) // dashboard/user
+//dashboard 
+app.use("/dashboard/role", RoleRoutes); // /dashboard/role
+app.use("/dashboard/user", UserRoutes) // /dashboard/user
+
+//home
+
+//auth
+app.use("/register", RegisterRoutes); // /register
+app.use("/login", LoginRoutes); // /login
 
 app.get('/HelloWorld', (req, res) => {
   res.send('Hello World!')
