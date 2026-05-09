@@ -29,6 +29,7 @@ const db = require('./models');
 //dashboard routes
 const RoleRoutes = require("./routes/dashboard/RoleRoutes");
 const UserRoutes = require("./routes/dashboard/UserRoutes");
+const GradeRoutes = require("./routes/dashboard/GradeRoutes");
 
 //home routes
 
@@ -41,6 +42,7 @@ const LogoutRoutes = require("./routes/home/LogoutRoutes");
 //dashboard 
 app.use("/dashboard/role", RoleRoutes); // /dashboard/role
 app.use("/dashboard/user", UserRoutes) // /dashboard/user
+app.use("/dashboard/grade", GradeRoutes) // /dashboard/grade
 
 //home
 
