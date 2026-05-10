@@ -1,116 +1,73 @@
-// const db = require("../models");
+const db = require('../models/index.js');
 
-// const CreateExam = async (req, res) => {
+const AddQuestionToExam = async (req, res) => {
 
-//   const transaction = await db.sequelize.transaction();
+  try {
 
-//   try {
+    const {
+      exam_id,
+      question_id,
+      score,
+      sort_order
+    } = req.body;
 
-//     const {
-//       title,
-//       description,
-//       duration,
-//       questions
-//     } = req.body;
+    const examQuestion = await db.ExamQuestion.create({
 
-//     // tạo đề
-//     const exam = await db.Exam.create({
+      exam_id,
+      question_id,
+      score,
+      sort_order
 
-//       title,
-//       description,
-//       duration
+    });
 
-//     }, { transaction });
+    return res.status(201).json({
 
-//     // duyệt từng câu hỏi
-//     for (let i = 0; i < questions.length; i++) {
+      message: "Thêm câu hỏi vào đề thành công",
 
-//       const item = questions[i];
+      data: examQuestion
 
-//       // tạo question
-//       const question = await db.Question.create({
+    });
 
-//         content: item.content,
+  } catch (err) {
 
-//         option_a: item.option_a,
+    return res.status(500).json({
+      error: err.message
+    });
 
-//         option_b: item.option_b,
+  }
 
-//         option_c: item.option_c,
+};
 
-//         option_d: item.option_d,
+module.exports = {
+  AddQuestionToExam
+};
 
-//         correct_answer: item.correct_answer
+// // const GetExamDetail = async (req, res) => {
 
-//       }, { transaction });
+// //   try {
 
-//       // tạo exam_question
-//       await db.ExamQuestion.create({
+// //     const exam = await db.Exam.findByPk(req.params.id, {
 
-//         exam_id: exam.id,
+// //       include: [
+// //         {
+// //           model: db.Question,
 
-//         question_id: question.id,
+// //           through: {
+// //             attributes: ["score", "sort_order"]
+// //           }
+// //         }
+// //       ]
 
-//         score: item.score || 1,
+// //     });
 
-//         sort_order: i + 1
+// //     return res.json(exam);
 
-//       }, { transaction });
+// //   } catch (err) {
 
-//     }
+// //     return res.status(500).json({
+// //       error: err.message
+// //     });
 
-//     await transaction.commit();
+// //   }
 
-//     return res.status(201).json({
-
-//       message: "Tạo đề thành công",
-
-//       exam_id: exam.id
-
-//     });
-
-//   } catch (err) {
-
-//     await transaction.rollback();
-
-//     return res.status(500).json({
-//       error: err.message
-//     });
-
-//   }
-
-// };
-
-// module.exports = {
-//   CreateExam
-// };
-
-// const GetExamDetail = async (req, res) => {
-
-//   try {
-
-//     const exam = await db.Exam.findByPk(req.params.id, {
-
-//       include: [
-//         {
-//           model: db.Question,
-
-//           through: {
-//             attributes: ["score", "sort_order"]
-//           }
-//         }
-//       ]
-
-//     });
-
-//     return res.json(exam);
-
-//   } catch (err) {
-
-//     return res.status(500).json({
-//       error: err.message
-//     });
-
-//   }
-
-// };
+// // };
