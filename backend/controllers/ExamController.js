@@ -19,21 +19,17 @@ const CreateExam = async (req, res) => {
     });
 
     return res.status(201).json({
-
       message: "Tạo đề thành công",
-
       data: exam
 
     });
 
   } catch (err) {
-
     return res.status(500).json({
       error: err.message
     });
 
   }
-
 };
 
 module.exports = {

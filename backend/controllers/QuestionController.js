@@ -3,9 +3,7 @@ const path = require("path");
 const fs = require("fs");
 
 const CreateQuestion = async (req, res) => {
-
   try {
-
     const {
       content,
       option_a,
@@ -28,20 +26,15 @@ const CreateQuestion = async (req, res) => {
       message: "Tạo câu hỏi thành công",
       data: question
     });
-
   } catch (err) {
-
     return res.status(500).json({
       error: err.message
     });
-
   }
-
 };
 
 const UploadQuestionImage = async (req, res) => {
   try {
-
     const {
       option_a,
       option_b,
@@ -68,14 +61,11 @@ const UploadQuestionImage = async (req, res) => {
     }
 
     const question = await db.Question.create({
-
       image: `/uploads/questions/${req.file.filename}`,
-
       option_a,
       option_b,
       option_c,
       option_d,
-
       correct_answer
     });
 
@@ -83,9 +73,7 @@ const UploadQuestionImage = async (req, res) => {
       message: "Upload câu hỏi thành công",
       data: question
     });
-
   } catch (err) {
-
     return res.status(500).json({
       error: err.message
     });
