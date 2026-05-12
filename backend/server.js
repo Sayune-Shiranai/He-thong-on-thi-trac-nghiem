@@ -31,6 +31,10 @@ const RoleRoutes = require("./routes/dashboard/RoleRoutes");
 const UserRoutes = require("./routes/dashboard/UserRoutes");
 const GradeRoutes = require("./routes/dashboard/GradeRoutes");
 const SubjectRoutes = require("./routes/dashboard/SubjectRoutes");
+const ExamRoutes = require("./routes/home/ExamRoutes");
+const QuestionRoutes = require("./routes/home/QuestionRoutes");
+const Exam_QuestionRoutes = require("./routes/home/Exam_QuestionRoutes");
+// const ExamResultRoutes = require("./routes/home/ExamResultRoutes");
 
 //home routes
 
@@ -46,6 +50,9 @@ app.use("/dashboard/role", RoleRoutes); // /dashboard/role
 app.use("/dashboard/user", UserRoutes) // /dashboard/user
 app.use("/dashboard/grade", GradeRoutes) // /dashboard/grade
 app.use("/dashboard/subject", SubjectRoutes) // /dashboard/subject
+app.use("/dashboard/exam", ExamRoutes) // /dashboard/exam
+app.use("/dashboard/question", QuestionRoutes) // /dashboard/question
+app.use("/dashboard/exam_question", Exam_QuestionRoutes) // /dashboard/exam_question
 
 //home
 
