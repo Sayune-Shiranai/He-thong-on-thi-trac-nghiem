@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Question.belongsTo(models.Subject, { foreignKey: 'subject_id' });
       Question.belongsTo(models.Grade, { foreignKey: 'grade_id' });
+      Question.hasMany(models.Resultdetail, { foreignKey: 'question_id' });
 
       Question.belongsToMany(models.Exam, {
         through: models.Exam_Question,
@@ -21,6 +22,7 @@ module.exports = (sequelize, DataTypes) => {
     option_b: DataTypes.STRING,
     option_c: DataTypes.STRING,
     option_d: DataTypes.STRING,
+    answer_count: DataTypes.INTEGER,
     correct_answer: DataTypes.STRING
   }, {
     sequelize,

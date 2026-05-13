@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Grade.init({
-    grade: DataTypes.INTEGER
+    grade: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Grade',

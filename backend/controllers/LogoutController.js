@@ -24,3 +24,7 @@ const Logout = async (req, res) => {
   });
 
 };
+
+module.exports = {
+  Logout
+};

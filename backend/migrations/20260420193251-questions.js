@@ -15,27 +15,31 @@ module.exports = {
       },
       content: { 
         type: Sequelize.STRING, 
-        allowNull: false 
+        allowNull: true 
       },
       option_a: { 
         type: Sequelize.STRING, 
-        allowNull: false 
+        allowNull: true
       },
       option_b: { 
         type: Sequelize.STRING, 
-        allowNull: false 
+        allowNull: true 
       },
       option_c: { 
         type: Sequelize.STRING, 
-        allowNull: false 
+        allowNull: true 
       },
       option_d: { 
         type: Sequelize.STRING, 
-        allowNull: false 
+        allowNull: true 
+      },
+      answer_count: { 
+        type: Sequelize.INTEGER, 
+        allowNull: true,
       },
       correct_answer: { 
         type: Sequelize.STRING, 
-        allowNull: false 
+        allowNull: true 
       },
       grade_id: {
         type: Sequelize.INTEGER,

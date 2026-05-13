@@ -3,51 +3,36 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await queryInterface.createTable('Results', {
+    await queryInterface.createTable('Resultdetails', {
       id: { 
         type: Sequelize.INTEGER, 
         primaryKey: true, 
         autoIncrement: true 
       },
-      user_id: {
+      result_id: {
         type: Sequelize.INTEGER,
         references: { 
-          model: 'Users', 
+          model: 'Results', 
           key: 'id' 
         },
         onUpdate: 'CASCADE'
       },
-      exam_id: {
+      question_id: {
         type: Sequelize.INTEGER,
         references: { 
-          model: 'Exams', 
+          model: 'Questions', 
           key: 'id' 
         },
         onUpdate: 'CASCADE'
       },
 
-      total_score: {
-        type: Sequelize.FLOAT,
-        allowNull: true
-      },
-
-      total_question: {
+      selected_answer: {
         type: Sequelize.STRING,
         allowNull: true
       },
 
-      started_at: {
-        type: Sequelize.DATE,
-        allowNull: true
-      },
-
-      submitted_at: {
-        type: Sequelize.DATE,
-        allowNull: true
-      },
-
-      duration: {
-        type: Sequelize.INTEGER,
+      is_correct: {
+        type: Sequelize.BOOLEAN,
         allowNull: true
       },
 
@@ -55,7 +40,7 @@ module.exports = {
         type: Sequelize.DATE, 
         defaultValue: Sequelize.NOW 
       },
-      
+
       updatedAt: { 
         type: Sequelize.DATE, 
         defaultValue: Sequelize.NOW
@@ -64,7 +49,6 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.dropTable('Results');
+    await queryInterface.dropTable('Resultdetails');
   }
 };
-

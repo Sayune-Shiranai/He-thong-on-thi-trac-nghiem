@@ -10,7 +10,7 @@ module.exports = {
         autoIncrement: true 
       },
       grade: { 
-        type: Sequelize.INTEGER, 
+        type: Sequelize.STRING, 
         unique: true 
       },
       createdAt: { 
@@ -25,6 +25,6 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.dropTable('Subjects');
+    await queryInterface.dropTable('Grades');
   }
 };
