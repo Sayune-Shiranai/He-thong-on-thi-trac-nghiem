@@ -7,7 +7,7 @@ const bcrypt = require('bcrypt');
 
 // Register user
 const Register = async (req, res) => {
-  const { username, email, password, confirmPassword } = req.body;
+  const { username, email, role, password, confirmPassword } = req.body;
 
   if (!username) {
     return res.status(400).json({ 
