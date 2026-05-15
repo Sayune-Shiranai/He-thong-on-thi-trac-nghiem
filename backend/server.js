@@ -50,11 +50,14 @@ app.use("/dashboard/role", RoleRoutes); // /dashboard/role
 app.use("/dashboard/user", UserRoutes) // /dashboard/user
 app.use("/dashboard/grade", GradeRoutes) // /dashboard/grade
 app.use("/dashboard/subject", SubjectRoutes) // /dashboard/subject
-app.use("/dashboard/exam", ExamRoutes) // /dashboard/exam
-app.use("/dashboard/question", QuestionRoutes) // /dashboard/question
-app.use("/dashboard/exam_question", Exam_QuestionRoutes) // /dashboard/exam_question
+// app.use("/dashboard/exam", ExamRoutes) // /dashboard/exam
+// app.use("/dashboard/question", QuestionRoutes) // /dashboard/question
+// app.use("/dashboard/exam_question", Exam_QuestionRoutes) // /dashboard/exam_question
 
 //home
+app.use("/exam", ExamRoutes) // /dashboard/exam
+app.use("/question", QuestionRoutes) // /dashboard/question
+app.use("/exam_question", Exam_QuestionRoutes) // /dashboard/exam_question
 
 //auth
 app.use("/register", RegisterRoutes); // /register

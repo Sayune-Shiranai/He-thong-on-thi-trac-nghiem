@@ -4,6 +4,6 @@ const {
 } = require("../../controllers/ExamController");
 
 const router = express.Router();
-router.post("/", CreateExam);
+router.post("/create", CreateExam);
 
 module.exports = router;
