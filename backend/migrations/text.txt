@@ -1,0 +1,5 @@
+npx sequelize-cli migration:generate --name 
+
+npx sequelize-cli db:migrate --debug
+
+npx sequelize-cli db:migrate:undo:all
