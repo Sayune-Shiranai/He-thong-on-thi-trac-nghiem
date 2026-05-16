@@ -5,6 +5,7 @@ const fs = require("fs");
 const CreateQuestion = async (req, res) => {
   try {
     const {
+      exam_id,
       content,
       option_a,
       option_b,
@@ -13,13 +14,51 @@ const CreateQuestion = async (req, res) => {
       correct_answer
     } = req.body;
 
+    if (!exam_id) {
+      return res.status(400).json({
+        field: "exam_id",
+        message: "Thiếu exam_id"
+      });
+    }
+
+    if (!content) {
+      return res.status(400).json({
+        field: "content",
+        message: "Nội dung câu hỏi không được để trống"
+      });
+    }
+
+    if (!correct_answer) {
+      return res.status(400).json({
+        field: "correct_answer",
+        message: "Vui lòng chọn đáp án đúng"
+      });
+    }
+
+    const exam = await db.Exam.findOne({
+      where: { id: exam_id }
+    });
+
+    if (!exam) {
+      return res.status(404).json({
+        message: "Đề thi không tồn tại"
+      });
+    }
+
     const question = await db.Question.create({
       content,
       option_a,
       option_b,
       option_c,
       option_d,
-      correct_answer
+      correct_answer,
+      grade_id: exam.grade_id,
+      subject_id: exam.subject_id
+    });
+
+    await db.Exam_Question.create({
+      exam_id: exam.id,
+      question_id: question.id
     });
 
     return res.status(201).json({
