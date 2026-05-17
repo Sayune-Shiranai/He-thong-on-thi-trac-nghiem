@@ -10,7 +10,6 @@ const cookieParser = require('cookie-parser');
 dotenv.config();
 
 const app = express();
-const PORT = 3000;
 
 app.use(express.json());
 app.use(cookieParser());
@@ -89,5 +88,5 @@ app.get("/connectDB", async (req, res) => {
 // });
 
 app.listen(PORT, () => {
-  console.log(`Server chạy tại http://localhost:${PORT}`);
+  console.log(`Server chạy tại http://localhost:3000`);
 });
