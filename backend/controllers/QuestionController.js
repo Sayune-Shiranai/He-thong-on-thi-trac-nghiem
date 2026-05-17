@@ -75,7 +75,7 @@ const CreateQuestion = async (req, res) => {
 const UploadQuestionImage = async (req, res) => {
   try {
     const {
-      content_img,
+      exam_id,
       answer_count,
       correct_answers
     } = req.body;
@@ -86,44 +86,67 @@ const UploadQuestionImage = async (req, res) => {
       });
     }
 
-    //dùng nếu gửi form-data ko chuyển sang kiểu int
-    // const totalQuestions = parseInt(answer_count);
-    
-    if (!answer_count || answer_count <= 0) {
+    if (!exam_id) {
+      return res.status(400).json({
+        message: "Thiếu exam_id"
+      });
+    }
+
+    const exam = await db.Exam.findOne({
+      where: { id: exam_id }
+    });
+
+    if (!exam) {
+      return res.status(404).json({
+        message: "Đề thi không tồn tại"
+      });
+    }
+
+    const totalQuestions = parseInt(answer_count);
+
+    if (isNaN(totalQuestions) || totalQuestions <= 0) {
       return res.status(400).json({
         message: "Số lượng câu hỏi không hợp lệ"
       });
     }
 
-    const parsedAnswers = typeof correct_answers === "string"
+    const parsedAnswers =
+      typeof correct_answers === "string"
         ? JSON.parse(correct_answers)
         : correct_answers;
 
-        if (!Array.isArray(parsedAnswers)) {
+    if (!Array.isArray(parsedAnswers)) {
       return res.status(400).json({
         message: "correct_answers phải là mảng"
       });
     }
 
-    if (parsedAnswers.length != answer_count) {
+    if (parsedAnswers.length !== totalQuestions) {
       return res.status(400).json({
-        message: "Số lượng đáp án đúng không khớp"
+        message: "Số lượng đáp án không khớp"
       });
     }
 
     const createdQuestions = [];
 
-    for (let i = 0; i < answer_count; i++) {
+    for (let i = 0; i < totalQuestions; i++) {
       const answer = parsedAnswers[i];
       const question = await db.Question.create({
-        content_img,
-        image: `/uploads/questions/${req.file.filename}`,
+        content_img: `/media/${req.file.filename}`,
         question_number: i + 1,
-        correct_answer: answer
+        answer_count: totalQuestions,
+        correct_answer: answer,
+        grade_id: exam.grade_id,
+        subject_id: exam.subject_id
       });
 
+      await db.Exam_Question.create({
+        exam_id: exam.id,
+        question_id: question.id
+      });
       createdQuestions.push(question);
     }
+
     return res.status(201).json({
       message: "Upload ảnh thành công",
       total_questions: createdQuestions.length,

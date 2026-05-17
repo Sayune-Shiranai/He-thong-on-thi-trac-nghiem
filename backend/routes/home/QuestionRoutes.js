@@ -7,6 +7,6 @@ const {
 
 const router = express.Router();
 router.post("/create", CreateQuestion);
-router.post("/create/upload", upload.single("image"), UploadQuestionImage);
+router.post("/create/upload", upload.single("content_img"), UploadQuestionImage);
 
 module.exports = router;
