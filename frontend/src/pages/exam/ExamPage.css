@@ -1,0 +1,20 @@
+.exam-page{min-height:100vh;background:var(--bg-primary);display:flex;flex-direction:column;}
+.exam-topbar{background:var(--bg-card);border-bottom:1px solid var(--border-light);position:sticky;top:0;z-index:90;box-shadow:var(--shadow-sm);}
+.exam-topbar-inner{max-width:1200px;margin:0 auto;padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between;gap:20px;}
+.exam-topbar-left{display:flex;align-items:center;gap:14px;min-width:0;}
+.exam-logo-mark{width:34px;height:34px;background:var(--accent-primary);color:#fff;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:0.85rem;flex-shrink:0;}
+.exam-name{font-weight:600;font-size:0.95rem;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.exam-meta{font-size:0.76rem;color:var(--text-muted);font-family:var(--font-mono);}
+.exam-body{flex:1;max-width:1200px;margin:0 auto;width:100%;padding:32px 24px 60px;display:grid;grid-template-columns:1fr 280px;gap:24px;align-items:start;}
+.exam-main{display:flex;flex-direction:column;gap:20px;min-width:0;}
+.exam-question-nav{display:flex;align-items:center;justify-content:space-between;}
+.exam-progress-label{font-family:var(--font-mono);font-size:0.82rem;color:var(--text-muted);}
+.exam-sidebar{min-width:0;}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;z-index:200;padding:24px;animation:fadeIn 0.2s ease both;}
+.modal-box{background:var(--bg-card);border:1px solid var(--border-light);border-radius:var(--radius-xl);padding:36px;max-width:440px;width:100%;box-shadow:var(--shadow-xl);animation:fadeInScale 0.25s var(--transition-slow) both;}
+.modal-title{font-family:var(--font-display);font-size:1.5rem;font-weight:400;margin-bottom:12px;}
+.modal-body{font-size:0.95rem;color:var(--text-secondary);line-height:1.6;margin-bottom:28px;}
+.modal-warn{color:var(--accent-warning);font-weight:500;}
+.modal-actions{display:flex;gap:10px;justify-content:flex-end;}
+@media(max-width:900px){.exam-body{grid-template-columns:1fr;}.exam-sidebar{order:-1;}.exam-topbar-inner .btn{display:none;}}
+@media(max-width:600px){.exam-body{padding:16px 14px 40px;}.exam-topbar-inner{padding:0 14px;}.exam-name{display:none;}}

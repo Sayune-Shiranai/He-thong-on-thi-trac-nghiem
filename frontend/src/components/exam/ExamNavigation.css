@@ -1,0 +1,17 @@
+.exam-nav{background:var(--bg-card);border:1px solid var(--border-light);border-radius:var(--radius-xl);padding:24px;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;gap:16px;position:sticky;top:calc(var(--navbar-height) + 16px);}
+.exam-nav-header{display:flex;justify-content:space-between;align-items:center;}
+.exam-nav-title{font-size:0.78rem;font-weight:500;text-transform:uppercase;letter-spacing:0.07em;color:var(--text-muted);font-family:var(--font-mono);}
+.exam-nav-count{font-size:0.78rem;font-family:var(--font-mono);color:var(--accent-primary);}
+.exam-nav-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;}
+.nav-dot{width:100%;aspect-ratio:1;border-radius:var(--radius-sm);border:1.5px solid var(--border-light);background:var(--bg-secondary);color:var(--text-muted);font-size:0.75rem;font-family:var(--font-mono);font-weight:500;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all var(--transition-fast);}
+.nav-dot:hover{border-color:var(--accent-secondary);color:var(--accent-secondary);}
+.nav-dot.answered{background:rgba(46,125,82,0.12);border-color:var(--accent-success);color:var(--accent-success);}
+.nav-dot.current{background:var(--accent-primary);border-color:var(--accent-primary);color:#fff;box-shadow:0 2px 8px rgba(200,80,42,0.35);}
+.exam-nav-legend{display:flex;gap:12px;flex-wrap:wrap;}
+.legend-item{display:flex;align-items:center;gap:5px;font-size:0.74rem;color:var(--text-muted);}
+.legend-dot{width:10px;height:10px;border-radius:2px;border:1.5px solid var(--border-medium);background:var(--bg-secondary);}
+.legend-dot.answered{background:rgba(46,125,82,0.20);border-color:var(--accent-success);}
+.legend-dot.current{background:var(--accent-primary);border-color:var(--accent-primary);}
+.exam-nav-divider{height:1px;background:var(--border-light);}
+.exam-nav-warning{font-size:0.82rem;color:var(--accent-warning);background:rgba(200,125,42,0.08);padding:8px 12px;border-radius:var(--radius-md);text-align:center;}
+.exam-submit-btn{width:100%;justify-content:center;}

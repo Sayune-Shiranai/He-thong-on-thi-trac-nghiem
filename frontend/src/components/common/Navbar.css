@@ -1,0 +1,42 @@
+.navbar{position:sticky;top:0;z-index:100;height:var(--navbar-height);background:var(--bg-overlay);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border-light);transition:background var(--transition-base);}
+.navbar-inner{max-width:1200px;margin:0 auto;padding:0 24px;height:100%;display:flex;align-items:center;gap:32px;}
+.navbar-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0;}
+.logo-mark{width:34px;height:34px;background:var(--accent-primary);color:#fff;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:0.85rem;}
+.logo-text{font-family:var(--font-display);font-size:1.25rem;color:var(--text-primary);letter-spacing:-0.01em;}
+.navbar-links{display:flex;align-items:center;gap:4px;flex:1;}
+.nav-link{padding:6px 14px;border-radius:var(--radius-md);font-size:0.88rem;font-weight:500;color:var(--text-secondary);text-decoration:none;transition:all var(--transition-fast);}
+.nav-link:hover{color:var(--text-primary);background:var(--bg-secondary);}
+.nav-link.active{color:var(--accent-primary);background:rgba(200,80,42,0.08);}
+.navbar-actions{display:flex;align-items:center;gap:8px;margin-left:auto;}
+.icon-btn{width:36px;height:36px;border-radius:var(--radius-md);background:transparent;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-secondary);transition:all var(--transition-fast);}
+.icon-btn:hover{background:var(--bg-secondary);color:var(--text-primary);}
+.user-menu{position:relative;}
+.user-avatar-btn{display:flex;align-items:center;gap:8px;padding:6px 12px 6px 6px;background:transparent;border:1.5px solid var(--border-light);border-radius:var(--radius-full);cursor:pointer;transition:all var(--transition-fast);color:var(--text-secondary);}
+.user-avatar-btn:hover{border-color:var(--border-medium);background:var(--bg-secondary);color:var(--text-primary);}
+.user-avatar{width:28px;height:28px;background:var(--accent-primary);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.78rem;font-weight:600;}
+.user-name{font-size:0.88rem;font-weight:500;}
+.dropdown-menu{position:absolute;top:calc(100% + 8px);right:0;min-width:200px;background:var(--bg-card);border:1px solid var(--border-light);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);padding:6px;animation:fadeInScale 0.18s ease both;}
+.dropdown-header{padding:8px 10px 10px;}
+.dropdown-name{font-size:0.9rem;font-weight:600;color:var(--text-primary);}
+.dropdown-email{font-size:0.8rem;color:var(--text-muted);margin-top:2px;}
+.dropdown-divider{height:1px;background:var(--border-light);margin:4px 0;}
+.dropdown-item{display:block;width:100%;padding:8px 10px;border-radius:var(--radius-sm);font-size:0.88rem;color:var(--text-secondary);text-decoration:none;background:transparent;border:none;cursor:pointer;text-align:left;transition:all var(--transition-fast);}
+.dropdown-item:hover{background:var(--bg-secondary);color:var(--text-primary);}
+.dropdown-item.danger{color:var(--accent-danger);}
+.dropdown-item.danger:hover{background:rgba(200,50,42,0.08);}
+.auth-btns{display:flex;gap:6px;}
+.mobile-menu-btn{display:none;}
+.mobile-nav{display:none;flex-direction:column;padding:8px 16px 16px;border-top:1px solid var(--border-light);background:var(--bg-overlay);backdrop-filter:blur(12px);animation:fadeIn 0.2s ease both;}
+.mobile-nav-link{padding:12px 8px;font-size:0.95rem;color:var(--text-secondary);text-decoration:none;background:transparent;border:none;cursor:pointer;text-align:left;border-bottom:1px solid var(--border-light);transition:color var(--transition-fast);font-family:var(--font-body);}
+.mobile-nav-link:last-child{border-bottom:none;}
+.mobile-nav-link:hover{color:var(--text-primary);}
+.mobile-nav-link.danger{color:var(--accent-danger);}
+@media(max-width:768px){
+  .navbar{height:auto;position:sticky;}
+  .navbar-inner{height:var(--navbar-height);}
+  .navbar-links{display:none;}
+  .user-name{display:none;}
+  .mobile-menu-btn{display:flex;}
+  .mobile-nav{display:flex;}
+  .auth-btns .btn-ghost{display:none;}
+}
