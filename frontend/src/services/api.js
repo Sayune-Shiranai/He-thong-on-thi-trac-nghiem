@@ -1,10 +1,10 @@
 // src/services/api.js
-// Axios instance kết nối với backend Node.js/Express (port 3000)
+// Axios instance kết nối với backend Node.js/Express (port 5000)
 // Backend dùng httpOnly cookie để lưu accessToken + refreshToken
 
 import axios from 'axios';
 
-const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3000';
+const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
 const api = axios.create({
   baseURL: BASE_URL,

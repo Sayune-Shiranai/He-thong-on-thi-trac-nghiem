@@ -77,7 +77,7 @@ export default function AdminOverviewPage() {
       </div>
 
       <div className="alert alert-info" style={{ marginTop: 8 }}>
-        💡 Backend đang chạy tại <strong>http://localhost:3000</strong> — dùng SQL Server (MSSQL) qua Sequelize.
+        💡 Backend đang chạy tại <strong>http://localhost:5000</strong> — dùng SQL Server (MSSQL) qua Sequelize.
       </div>
     </div>
   );
