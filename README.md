@@ -1,5 +1,5 @@
 # Sayune-Novel
-Hệ thống quản lý web truyện online
+Hệ thống ôn thi trắc nghiệm
 
 
 ## Công nghệ sử dụng
