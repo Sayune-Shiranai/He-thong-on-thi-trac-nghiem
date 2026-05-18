@@ -26,18 +26,21 @@ app.use(
 const db = require('./models');
 
 //dashboard routes
-const RoleRoutes = require("./routes/dashboard/RoleRoutes");
-const UserRoutes = require("./routes/dashboard/UserRoutes");
-const GradeRoutes = require("./routes/dashboard/GradeRoutes");
-const SubjectRoutes = require("./routes/dashboard/SubjectRoutes");
+const roleRoutes = require("./routes/dashboard/RoleRoutes");
+const userRoutes = require("./routes/dashboard/UserRoutes");
+const gradeRoutes = require("./routes/dashboard/GradeRoutes");
+const subjectRoutes = require("./routes/dashboard/SubjectRoutes");
+const examRoutes = require("./routes/dashboard/ExamRoutes");
+// const questionRoutes = require("./routes/dashboard/QuestionRoutes");
+// const exam_questionRoutes = require("./routes/dashboard/Exam_QuestionRoutes");
+
+
+
+//home routes
 const ExamRoutes = require("./routes/home/ExamRoutes");
 const QuestionRoutes = require("./routes/home/QuestionRoutes");
 const Exam_QuestionRoutes = require("./routes/home/Exam_QuestionRoutes");
 // const ExamResultRoutes = require("./routes/home/ExamResultRoutes");
-
-//home routes
-
-
 
 //auth routes
 const RegisterRoutes = require("./routes/home/RegisterRoutes");
@@ -45,13 +48,13 @@ const LoginRoutes = require("./routes/home/LoginRoutes");
 const LogoutRoutes = require("./routes/home/LogoutRoutes");
 
 //dashboard 
-app.use("/dashboard/role", RoleRoutes); // /dashboard/role
-app.use("/dashboard/user", UserRoutes) // /dashboard/user
-app.use("/dashboard/grade", GradeRoutes) // /dashboard/grade
-app.use("/dashboard/subject", SubjectRoutes) // /dashboard/subject
-// app.use("/dashboard/exam", ExamRoutes) // /dashboard/exam
-// app.use("/dashboard/question", QuestionRoutes) // /dashboard/question
-// app.use("/dashboard/exam_question", Exam_QuestionRoutes) // /dashboard/exam_question
+app.use("/dashboard/role", roleRoutes); // /dashboard/role
+app.use("/dashboard/user", userRoutes) // /dashboard/user
+app.use("/dashboard/grade", gradeRoutes) // /dashboard/grade
+app.use("/dashboard/subject", subjectRoutes) // /dashboard/subject
+app.use("/dashboard/exam", examRoutes) // /dashboard/exam
+// app.use("/dashboard/question", questionRoutes) // /dashboard/question
+// app.use("/dashboard/exam_question", exam_questionRoutes) // /dashboard/exam_question
 
 //home
 app.use("/exam", ExamRoutes) // /dashboard/exam

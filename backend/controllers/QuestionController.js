@@ -2,6 +2,48 @@ const db = require('../models/index.js');
 const path = require("path");
 const fs = require("fs");
 
+const GetPaged = async (req, res) => {
+    try {
+        let { page = 1, limit = 10, keyword = "" } = req.query;
+        page = parseInt(page);
+        limit = parseInt(limit);
+
+        const offset = (page - 1) * limit;
+
+        let where = {};
+
+        if (keyword) {
+            where = {
+                [Op.or]: [
+                { content: { [Op.like]: `%${keyword}%` } }
+                ]
+            };
+        }
+
+        const totalRecords = await db.Question.count({ where });
+
+        const questions = await db.Question.findAll({
+            where,
+            limit,
+            offset,
+            order: [["id", "DESC"]]
+        });
+
+        const totalPages = Math.ceil(totalRecords / limit);
+
+        return res.json({
+            page,
+            limit,
+            totalPages,
+            totalRecords,
+            data: questions
+        });
+
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+}
+
 const CreateQuestion = async (req, res) => {
   try {
     const {
@@ -160,6 +202,7 @@ const UploadQuestionImage = async (req, res) => {
 };
 
 module.exports = {
+  GetPaged,
   CreateQuestion,
   UploadQuestionImage
 };

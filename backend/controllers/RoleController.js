@@ -1,7 +1,7 @@
 const db = require('../models/index.js');
 const { Op } = require('sequelize');
 
-//xem danh sách có phân trang
+//lấy danh sách role theo phân trang
 const GetPaged = async (req, res) => {
   try {
     let { page = 1, limit = 10, keyword = "" } = req.query;

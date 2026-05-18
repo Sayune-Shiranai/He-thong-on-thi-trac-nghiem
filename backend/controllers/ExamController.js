@@ -1,5 +1,48 @@
 const db = require('../models/index.js');
 
+//lấy danh sách đề thi theo phân trang
+const GetPaged = async (req, res) => {
+    try {
+        let { page = 1, limit = 10, keyword = "" } = req.query;
+        page = parseInt(page);
+        limit = parseInt(limit);
+
+        const offset = (page - 1) * limit;
+
+        let where = {};
+
+        if (keyword) {
+            where = {
+                [Op.or]: [
+                { title: { [Op.like]: `%${keyword}%` } }
+                ]
+            };
+        }
+
+        const totalRecords = await db.Exam.count({ where });
+
+        const exams = await db.Exam.findAll({
+            where,
+            limit,
+            offset,
+            order: [["id", "DESC"]]
+        });
+
+        const totalPages = Math.ceil(totalRecords / limit);
+
+        return res.json({
+            page,
+            limit,
+            totalPages,
+            totalRecords,
+            data: exams
+        });
+
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+}
+
 //tạo đề thi
 const CreateExam = async (req, res) => {
   try {
@@ -108,6 +151,7 @@ const GetExamDetail = async (req, res) => {
 };
 
 module.exports = {
+  GetPaged,
   CreateExam,
   GetExamDetail
 };
