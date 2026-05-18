@@ -88,5 +88,5 @@ app.get("/connectDB", async (req, res) => {
 // });
 
 app.listen(3000, () => {
-  console.log(`Server chạy tại http://localhost:3000`);
+  console.log(`Server chạy tại http://localhost:5000`);
 });
