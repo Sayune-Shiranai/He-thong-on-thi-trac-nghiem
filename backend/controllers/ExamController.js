@@ -1,9 +1,8 @@
 const db = require('../models/index.js');
 
+//tạo đề thi
 const CreateExam = async (req, res) => {
-
   try {
-
     const {
       title,
       grade_id,
@@ -48,22 +47,6 @@ const CreateExam = async (req, res) => {
 
     }
 
-    // if (!user_id) {
-    //   return res.status(400).json({
-    //     field: "user_id",
-    //     message: "Thiếu user tạo đề!"
-    //   });
-    // }
-
-    // const user = await db.User.findOne({ where: { id: user_id } });
-
-    // if (!user) {
-    //   return res.status(404).json({
-    //     message: "User không tồn tại!"
-    //   });
-    // }
-
-    // tạo đề
     const exam = await db.Exam.create({
       title,
       grade_id,
@@ -83,6 +66,48 @@ const CreateExam = async (req, res) => {
   }
 };
 
+const GetExamDetail = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const exam = await db.Exam.findOne({
+      where: { id },
+      include: [
+        {
+          model: db.Question,
+          through: {
+            attributes: []
+          },
+          attributes: [
+            "id",
+            "content",
+            "content_img",
+            "option_a",
+            "option_b",
+            "option_c",
+            "option_d"
+          ]
+        }
+      ]
+    });
+
+    if (!exam) {
+      return res.status(404).json({
+        message: "Đề thi không tồn tại"
+      });
+    }
+
+    return res.status(200).json({
+      message: "Lấy đề thi thành công",
+      data: exam
+    });
+  } catch (err) {
+    return res.status(500).json({
+      error: err.message
+    });
+  }
+};
+
 module.exports = {
-  CreateExam
+  CreateExam,
+  GetExamDetail
 };

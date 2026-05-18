@@ -1,0 +1,3 @@
+.admin-layout{display:flex;min-height:calc(100vh - var(--navbar-height));}
+.admin-content{flex:1;min-width:0;padding:36px 32px 60px;overflow-x:hidden;}
+@media(max-width:768px){.admin-content{padding:24px 16px;}}

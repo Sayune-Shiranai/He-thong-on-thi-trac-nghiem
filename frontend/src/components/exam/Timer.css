@@ -1,0 +1,10 @@
+.timer{display:flex;flex-direction:column;align-items:center;gap:4px;--timer-color:var(--accent-secondary);}
+.timer.warning{--timer-color:var(--accent-warning);}
+.timer.danger{--timer-color:var(--accent-danger);}
+.timer-ring{position:relative;width:64px;height:64px;}
+.timer-svg{width:100%;height:100%;transform:rotate(-90deg);}
+.timer-track{fill:none;stroke:var(--border-light);stroke-width:3;}
+.timer-fill{fill:none;stroke:var(--timer-color);stroke-width:3;stroke-linecap:round;transition:stroke-dashoffset 0.9s linear,stroke var(--transition-base);}
+.timer-label{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:0.88rem;font-weight:500;color:var(--timer-color);transition:color var(--transition-base);}
+.timer-hint{font-size:0.7rem;font-weight:500;color:var(--timer-color);letter-spacing:0.04em;text-transform:uppercase;}
+.blink{animation:pulse 0.8s ease-in-out infinite;}

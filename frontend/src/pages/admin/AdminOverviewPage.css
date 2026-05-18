@@ -1,0 +1,22 @@
+.admin-overview{max-width:960px;}
+.admin-page-header{margin-bottom:28px;}
+.admin-page-title{font-family:var(--font-display);font-size:2rem;font-weight:400;margin-bottom:4px;}
+.admin-page-sub{font-size:0.9rem;color:var(--text-secondary);}
+.admin-stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:40px;}
+.admin-stat-card{background:var(--bg-card);border:1px solid var(--border-light);border-radius:var(--radius-lg);padding:22px;display:flex;align-items:center;gap:16px;box-shadow:var(--shadow-sm);border-left-width:3px;}
+.admin-stat-card.blue{border-left-color:var(--accent-secondary);}
+.admin-stat-card.green{border-left-color:var(--accent-success);}
+.admin-stat-card.orange{border-left-color:var(--accent-warning);}
+.admin-stat-card.red{border-left-color:var(--accent-primary);}
+.admin-stat-icon{font-size:1.6rem;line-height:1;}
+.admin-stat-body{display:flex;flex-direction:column;gap:2px;}
+.admin-stat-value{font-family:var(--font-display);font-size:1.8rem;line-height:1;color:var(--text-primary);}
+.admin-stat-label{font-size:0.76rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);font-weight:500;}
+.admin-stat-delta{font-size:0.74rem;font-family:var(--font-mono);}
+.admin-stat-delta.up{color:var(--accent-success);}.admin-stat-delta.down{color:var(--accent-danger);}
+.admin-quick-links{margin-bottom:40px;}
+.section-heading{font-family:var(--font-display);font-size:1.2rem;font-weight:400;margin-bottom:16px;color:var(--text-primary);}
+.quick-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;}
+.quick-card{display:flex;align-items:center;gap:10px;padding:16px 20px;background:var(--bg-card);border:1.5px solid var(--border-light);border-radius:var(--radius-lg);text-decoration:none;color:var(--text-primary);font-size:0.9rem;font-weight:500;transition:all var(--transition-fast);}
+.quick-card:hover{border-color:var(--accent-primary);color:var(--accent-primary);background:rgba(200,80,42,0.04);transform:translateY(-1px);}
+.quick-icon{font-size:1rem;font-weight:700;opacity:0.6;}

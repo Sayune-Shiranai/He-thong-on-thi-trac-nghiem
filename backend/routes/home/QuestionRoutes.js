@@ -6,7 +6,7 @@ const {
 } = require("../../controllers/QuestionController");
 
 const router = express.Router();
-router.post("/", CreateQuestion);
-router.post("/upload", upload.single("image"), UploadQuestionImage);
+router.post("/create", CreateQuestion);
+router.post("/create/upload", upload.single("content_img"), UploadQuestionImage);
 
 module.exports = router;

@@ -1,0 +1,33 @@
+.result-summary{background:var(--bg-card);border:1px solid var(--border-light);border-radius:var(--radius-xl);padding:40px;box-shadow:var(--shadow-md);}
+.result-hero{display:flex;align-items:center;gap:40px;margin-bottom:36px;flex-wrap:wrap;}
+.score-ring{position:relative;width:140px;height:140px;flex-shrink:0;--ring-color:var(--accent-secondary);}
+.score-ring.success{--ring-color:var(--accent-success);}.score-ring.warning{--ring-color:var(--accent-warning);}.score-ring.danger{--ring-color:var(--accent-danger);}
+.score-svg{width:100%;height:100%;transform:rotate(-90deg);}
+.score-track{fill:none;stroke:var(--border-light);stroke-width:6;}
+.score-fill{fill:none;stroke:var(--ring-color);stroke-width:6;stroke-linecap:round;transition:stroke-dashoffset 1.2s cubic-bezier(0.16,1,0.3,1),stroke 0.4s ease;}
+.score-inner{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;}
+.score-pct{font-family:var(--font-display);font-size:1.9rem;color:var(--text-primary);line-height:1;}
+.score-grade{font-family:var(--font-mono);font-size:0.85rem;color:var(--ring-color);font-weight:500;}
+.result-verdict{display:flex;flex-direction:column;gap:10px;}
+.verdict-badge{display:inline-flex;align-items:center;padding:4px 14px;border-radius:var(--radius-full);font-family:var(--font-mono);font-size:0.75rem;font-weight:500;letter-spacing:0.07em;width:fit-content;}
+.verdict-badge.passed{background:rgba(46,125,82,0.12);color:var(--accent-success);}
+.verdict-badge.failed{background:rgba(200,50,42,0.12);color:var(--accent-danger);}
+.verdict-title{font-family:var(--font-display);font-size:2rem;font-weight:400;color:var(--text-primary);line-height:1.1;}
+.verdict-sub{font-size:0.95rem;color:var(--text-secondary);}
+.result-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:12px;margin-bottom:28px;}
+.stat-card{padding:18px 16px;border-radius:var(--radius-lg);border:1.5px solid var(--border-light);display:flex;flex-direction:column;align-items:center;gap:4px;background:var(--bg-secondary);}
+.stat-card.correct{border-color:rgba(46,125,82,0.3);background:rgba(46,125,82,0.06);}
+.stat-card.incorrect{border-color:rgba(200,50,42,0.3);background:rgba(200,50,42,0.06);}
+.stat-card.skipped{border-color:rgba(200,125,42,0.3);background:rgba(200,125,42,0.06);}
+.stat-value{font-family:var(--font-display);font-size:2rem;line-height:1;color:var(--text-primary);}
+.stat-label{font-size:0.75rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;font-weight:500;}
+.accuracy-header{display:flex;justify-content:space-between;margin-bottom:8px;}
+.accuracy-label{font-size:0.82rem;font-weight:500;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;}
+.accuracy-pct{font-family:var(--font-mono);font-size:0.85rem;color:var(--accent-primary);}
+.accuracy-bar{display:flex;height:10px;border-radius:var(--radius-full);overflow:hidden;background:var(--border-light);}
+.accuracy-fill{height:100%;transition:width 1s var(--transition-slow);}
+.correct-fill{background:var(--accent-success);}.incorrect-fill{background:var(--accent-danger);}
+.accuracy-legend{display:flex;gap:16px;margin-top:10px;font-size:0.8rem;color:var(--text-muted);flex-wrap:wrap;}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px;vertical-align:middle;}
+.correct-dot{background:var(--accent-success);}.incorrect-dot{background:var(--accent-danger);}.skipped-dot{background:var(--border-medium);}
+@media(max-width:600px){.result-summary{padding:24px 20px;}.result-hero{flex-direction:column;gap:24px;text-align:center;}.verdict-badge{margin:0 auto;}.verdict-title{font-size:1.6rem;}}

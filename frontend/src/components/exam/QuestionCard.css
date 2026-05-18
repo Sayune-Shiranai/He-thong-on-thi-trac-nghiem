@@ -1,0 +1,21 @@
+.question-card{background:var(--bg-card);border:1px solid var(--border-light);border-radius:var(--radius-xl);padding:32px 36px;box-shadow:var(--shadow-md);}
+.qcard-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.qcard-progress{font-size:0.82rem;color:var(--text-muted);font-family:var(--font-mono);letter-spacing:0.02em;}
+.qcard-progress strong{color:var(--accent-primary);}
+.qcard-text{font-size:1.12rem;font-weight:400;line-height:1.65;color:var(--text-primary);margin-bottom:28px;}
+.qcard-options{display:flex;flex-direction:column;gap:10px;}
+.option-btn{display:flex;align-items:center;gap:14px;padding:14px 18px;border:1.5px solid var(--border-light);border-radius:var(--radius-lg);background:var(--bg-primary);cursor:pointer;text-align:left;transition:all var(--transition-fast);width:100%;color:var(--text-primary);}
+.option-btn:hover:not(:disabled):not(.selected):not(.correct):not(.incorrect){border-color:var(--accent-secondary);background:rgba(42,95,200,0.04);transform:translateX(3px);}
+.option-label{width:30px;height:30px;border-radius:50%;border:1.5px solid var(--border-medium);display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-size:0.78rem;font-weight:500;flex-shrink:0;transition:all var(--transition-fast);color:var(--text-muted);}
+.option-text{flex:1;font-size:0.95rem;line-height:1.4;}
+.option-btn.selected{border-color:var(--accent-secondary);background:rgba(42,95,200,0.07);}
+.option-btn.selected .option-label{background:var(--accent-secondary);border-color:var(--accent-secondary);color:#fff;}
+.option-btn.correct{border-color:var(--accent-success);background:rgba(46,125,82,0.07);cursor:default;}
+.option-btn.correct .option-label{background:var(--accent-success);border-color:var(--accent-success);color:#fff;}
+.option-btn.incorrect{border-color:var(--accent-danger);background:rgba(200,50,42,0.07);cursor:default;}
+.option-btn.incorrect .option-label{background:var(--accent-danger);border-color:var(--accent-danger);color:#fff;}
+.option-check{color:var(--accent-success);font-weight:700;margin-left:auto;}
+.option-cross{color:var(--accent-danger);font-weight:700;margin-left:auto;}
+.qcard-explanation{margin-top:24px;padding:16px 20px;background:var(--bg-secondary);border-radius:var(--radius-md);border-left:3px solid var(--accent-secondary);font-size:0.9rem;color:var(--text-secondary);line-height:1.55;}
+.explanation-label{display:block;font-size:0.75rem;font-weight:500;text-transform:uppercase;letter-spacing:0.06em;color:var(--accent-secondary);margin-bottom:6px;}
+@media(max-width:600px){.question-card{padding:22px 18px;}.qcard-text{font-size:1rem;}.option-btn{padding:12px 14px;}}

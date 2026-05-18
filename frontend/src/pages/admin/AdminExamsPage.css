@@ -1,0 +1,9 @@
+/* src/pages/admin/AdminExamsPage.css */
+/* Shared admin page styles — referenced by multiple admin pages */
+
+.admin-exams { max-width: 960px; }
+
+/* Modal body scrollable for long forms */
+.modal-box {
+  overflow-y: auto;
+}
