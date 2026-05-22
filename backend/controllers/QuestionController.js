@@ -24,6 +24,20 @@ const GetPaged = async (req, res) => {
 
         const questions = await db.Question.findAll({
             where,
+              include: [
+                {
+                    model: db.Grade,
+                    attributes: ["id", "grade"]
+                },
+                {
+                    model: db.Subject,
+                    attributes: ["id", "name"]
+                },
+                {
+                    model: db.Exam,
+                    attributes: ["id", "title"]
+                }
+            ],
             limit,
             offset,
             order: [["id", "DESC"]]

@@ -43,6 +43,7 @@ const GetPaged = async (req, res) => {
     }
 }
 
+// Tạo lớp mới
 const CreateGrade = async (req, res) => {
     try {
         const { grade } = req.body;
@@ -57,6 +58,7 @@ const CreateGrade = async (req, res) => {
     }
 }
 
+// Cập nhật lớp
 const UpdateGrade = async (req, res) => {
     try {
         const { id } = req.params;
@@ -80,6 +82,7 @@ const UpdateGrade = async (req, res) => {
     }
 }
 
+// Xóa lớp
 const DeleteGrade = async (req, res) => {
     try {
         const { id } = req.params;
@@ -96,9 +99,39 @@ const DeleteGrade = async (req, res) => {
     }
 }
 
+// Lấy tất cả lớp
+const GetAllGrades = async (req, res) => {
+    try {
+        const grades = await db.Grade.findAll({
+            order: [["id", "DESC"]]
+        });
+        return res.json(grades);
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+}
+
+// Lấy tất cả đề thi theo lớp
+const GetAllExamsByGrade = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const exams = await db.Exam.findAll({
+            where: { 
+                grade_id: id 
+            },
+            order: [["id", "DESC"]]
+        });
+        return res.json(exams);
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+}
+
 module.exports = {
     GetPaged,
     CreateGrade,
     UpdateGrade,
-    DeleteGrade
+    DeleteGrade,
+    GetAllGrades,
+    GetAllExamsByGrade
 }

@@ -1,4 +1,5 @@
 const db = require('../models/index.js');
+const { Op } = require("sequelize");
 
 //lấy danh sách đề thi theo phân trang
 const GetPaged = async (req, res) => {
@@ -23,6 +24,33 @@ const GetPaged = async (req, res) => {
 
         const exams = await db.Exam.findAll({
             where,
+            include: [
+                {
+                    model: db.Grade,
+                    attributes: ["id", "grade"]
+                },
+                {
+                    model: db.Subject,
+                    attributes: ["id", "name"]
+                },
+                {
+                    model: db.User,
+                    attributes: ["id", "username"]
+                },
+                {
+                    model: db.Question,
+                    attributes: [
+                        "id",
+                        "content",
+                        "content_img",
+                        "option_a",
+                        "option_b",
+                        "option_c",
+                        "option_d",
+                        "correct_answer"
+                    ]
+                }
+            ],
             limit,
             offset,
             order: [["id", "DESC"]]
@@ -109,6 +137,42 @@ const CreateExam = async (req, res) => {
   }
 };
 
+//lấy danh sách tất cả đề thi
+const GetAllExams = async (req, res) => {
+    try {
+        const exams = await db.Exam.findAll({
+            include: [
+                {
+                    model: db.Grade,
+                    attributes: ["id", "grade"]
+                },
+                {
+                    model: db.Subject,
+                    attributes: ["id", "name"]
+                },
+                {
+                    model: db.Question,
+                    attributes: [
+                        "id",
+                        "content",
+                        "content_img",
+                        "option_a",
+                        "option_b",
+                        "option_c",
+                        "option_d",
+                        "correct_answer"
+                    ]
+                }
+            ],
+            order: [["id", "DESC"]]
+        });
+        return res.json(exams);
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+}
+
+//lấy chi tiết đề thi theo id
 const GetExamDetail = async (req, res) => {
   try {
     const { id } = req.params;
@@ -127,7 +191,8 @@ const GetExamDetail = async (req, res) => {
             "option_a",
             "option_b",
             "option_c",
-            "option_d"
+            "option_d",
+            "correct_answer"
           ]
         }
       ]
@@ -150,8 +215,50 @@ const GetExamDetail = async (req, res) => {
   }
 };
 
+//lấy danh sách đề thi theo lớp
+// const GetAllExamByGrade = async (req, res) => {
+//   try {
+//     const { grade_id } = req.params;
+//     const exams = await db.Exam.findAll({
+//       where: { grade_id },
+//       include: [
+//         {
+//           model: db.Grade,
+//           attributes: ["id", "grade"]
+//         },
+//         {
+//           model: db.Subject,
+//           attributes: ["id", "name"]
+//         },
+//         {
+//           model: db.User,
+//           attributes: ["id", "username"]
+//         },
+//         {
+//           model: db.Question,
+//           attributes: [
+//             "id",
+//             "content",
+//             "content_img",
+//             "correct_answer"
+//           ]
+//         }
+//       ],
+//       order: [["id", "DESC"]]
+//     });
+//     return res.json(exams);
+//   } catch (err) {
+//     return res.status(500).json({
+//       error: err.message
+//     });
+//   }
+// };
+    
+
 module.exports = {
   GetPaged,
   CreateExam,
-  GetExamDetail
+  GetAllExams,
+  GetExamDetail,
+  // GetAllExamByGrade
 };

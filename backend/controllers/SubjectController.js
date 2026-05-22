@@ -43,6 +43,7 @@ const GetPaged = async (req, res) => {
     }
 }
 
+//tạo mới môn học
 const CreateSubject = async (req, res) => {
     try {
         const { name } = req.body;
@@ -57,6 +58,7 @@ const CreateSubject = async (req, res) => {
     }
 }
 
+//cập nhật môn học
 const UpdateSubject = async (req, res) => {
     try {
         const { id } = req.params;
@@ -80,6 +82,7 @@ const UpdateSubject = async (req, res) => {
     }
 }
 
+//xóa môn học
 const DeleteSubject = async (req, res) => {
     try {
         const { id } = req.params;
@@ -96,9 +99,39 @@ const DeleteSubject = async (req, res) => {
     }
 }
 
+//lấy danh sách tất cả môn học
+const GetAllSubjects = async (req, res) => {
+    try {
+        const subjects = await db.Subject.findAll({
+            order: [["id", "DESC"]]
+        });
+        return res.json(subjects);
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+}
+
+//lấy danh sách đề thi theo môn học
+const GetAllExamsBySubject = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const exams = await db.Exam.findAll({
+            where: { 
+                subjectId: id 
+            },
+            order: [["id", "DESC"]]
+        });
+        return res.json(exams);
+    } catch (err) {
+        res.status(500).send(err.message);
+    }
+}
+
 module.exports = {
     GetPaged,
     CreateSubject,
     UpdateSubject,
-    DeleteSubject
+    DeleteSubject,
+    GetAllSubjects,
+    GetAllExamsBySubject
 }
