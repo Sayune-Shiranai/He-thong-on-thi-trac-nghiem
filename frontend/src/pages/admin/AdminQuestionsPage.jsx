@@ -120,7 +120,7 @@ export default function AdminQuestionsPage() {
               </div>
 
               {q.image && (
-                <img src={`http://localhost:5000${q.image}`} alt="câu hỏi" style={{ maxWidth: 300, borderRadius: 8, marginBottom: 10 }} />
+                <img src={`http://localhost:3000${q.image}`} alt="câu hỏi" style={{ maxWidth: 300, borderRadius: 8, marginBottom: 10 }} />
               )}
               {q.content && <p style={{ fontSize: '0.98rem', lineHeight: 1.6, marginBottom: 12 }}>{q.content}</p>}
 

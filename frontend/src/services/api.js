@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-// baseURL để trống → Vite proxy tự chuyển sang http://localhost:5000
+// baseURL để trống → Vite proxy tự chuyển sang http://localhost:3000
 const api = axios.create({
   baseURL: '',
   timeout: 15000,

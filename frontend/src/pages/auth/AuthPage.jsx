@@ -137,7 +137,7 @@ export default function AuthPage({ defaultTab = 'login' }) {
             </button>
 
             <p className="auth-demo-hint">
-              Backend chạy tại <code>http://localhost:5000</code>
+              Backend chạy tại <code>http://localhost:3000</code>
             </p>
           </form>
         )}
