@@ -7,7 +7,7 @@ const bcrypt = require('bcrypt');
 
 // Register user
 const Register = async (req, res) => {
-  const { username, email, role, password, confirmPassword } = req.body;
+  const { username, email, password, confirmPassword } = req.body;
 
   if (!username) {
     return res.status(400).json({ 
@@ -69,30 +69,11 @@ const Register = async (req, res) => {
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  if (!role) {
-    return res.status(400).json({
-      field: "role",
-      message: "Vui lòng chọn vai trò!"
-    });
-  }
-
-  if (!["Student", "Teacher"].includes(role)) {
-    return res.status(400).json({
-      field: "role",
-      message: "Vai trò không hợp lệ!"
-    });
-  }
-
   const roleData = await db.Role.findOne({
-    where: { name: role }
+    where: {
+      name: "Student"
+    }
   });
-
-  if (!roleData) {
-    return res.status(400).json({
-      field: "role",
-      message: "Role không tồn tại!"
-    });
-  }
 
   const status = await db.Status.findOne({ where: { name: 'Approved' } });
 
