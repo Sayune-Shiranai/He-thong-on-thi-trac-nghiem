@@ -14,7 +14,6 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
       // Các route không có prefix /api
-      '/dashboard': { target: 'http://localhost:3000', changeOrigin: true },
       '/exam':      { target: 'http://localhost:3000', changeOrigin: true },
       '/question':  { target: 'http://localhost:3000', changeOrigin: true },
       '/media':     { target: 'http://localhost:3000', changeOrigin: true },

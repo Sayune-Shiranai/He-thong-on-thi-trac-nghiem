@@ -8,19 +8,19 @@ import Navbar         from './components/common/Navbar';
 import ProtectedRoute from './components/common/ProtectedRoute';
 
 import AuthPage           from './pages/auth/AuthPage';
-import DashboardPage      from './pages/dashboard/DashboardPage';
+import HomePage      from './pages/home/HomePage';
 import ExamDetailPage     from './pages/exam/ExamDetailPage';
 import ExamPage           from './pages/exam/ExamPage';
 import ResultPage         from './pages/exam/ResultPage';
 import ResultDetailPage   from './pages/exam/ResultDetailPage';
 import HistoryPage        from './pages/exam/HistoryPage';
-import AdminLayout        from './pages/admin/AdminLayout';
-import AdminOverviewPage  from './pages/admin/AdminOverviewPage';
-import AdminExamsPage     from './pages/admin/AdminExamsPage';
-import AdminQuestionsPage from './pages/admin/AdminQuestionsPage';
-import AdminUsersPage     from './pages/admin/AdminUsersPage';
-import AdminResultsPage   from './pages/admin/AdminResultsPage';
-import AdminSubjectsPage  from './pages/admin/AdminSubjectsPage';
+import AdminLayout        from './pages/dashboard/AdminLayout';
+import AdminOverviewPage  from './pages/dashboard/AdminOverviewPage';
+import AdminExamsPage     from './pages/dashboard/AdminExamsPage';
+import AdminQuestionsPage from './pages/dashboard/AdminQuestionsPage';
+import AdminUsersPage     from './pages/dashboard/AdminUsersPage';
+import AdminResultsPage   from './pages/dashboard/AdminResultsPage';
+import AdminSubjectsPage  from './pages/dashboard/AdminSubjectsPage';
 import NotFoundPage       from './pages/NotFoundPage';
 
 import './styles/globals.css';
@@ -37,8 +37,8 @@ export default function App() {
             <Route path="/register" element={<AuthPage key="register" defaultTab="register" />} />
 
             {/* Trang chủ = danh sách đề thi */}
-            <Route path="/"          element={<DashboardPage />} />
-            <Route path="/dashboard" element={<DashboardPage />} />
+            <Route path="/"          element={<HomePage />} />
+            {/* <Route path="/dashboard" element={<DashboardPage />} /> */}
 
             {/* Xem chi tiết đề — công khai, chỉ bấm "Bắt đầu" mới cần đăng nhập */}
             <Route path="/detail/:examId" element={<ExamDetailPage />} />
@@ -49,7 +49,7 @@ export default function App() {
             <Route path="/history"           element={<ProtectedRoute><HistoryPage /></ProtectedRoute>} />
 
             {/* ── Admin ── */}
-            <Route path="/admin" element={<ProtectedRoute adminOnly><AdminLayout /></ProtectedRoute>}>
+            <Route path="/dashboard" element={<ProtectedRoute adminOnly><AdminLayout /></ProtectedRoute>}>
               <Route index            element={<AdminOverviewPage />} />
               <Route path="exams"     element={<AdminExamsPage />} />
               <Route path="questions" element={<AdminQuestionsPage />} />

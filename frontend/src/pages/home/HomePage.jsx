@@ -3,7 +3,7 @@ import {Link,useNavigate} from 'react-router-dom';
 import {useAuth} from '../../context/AuthContext';
 import {examService} from '../../services/examService';
 import {formatDuration} from '../../utils/helpers';
-import './DashboardPage.css';
+import './HomePage.css';
 
 const MOCK_EXAMS=[
   {id:'1',title:'Lập trình JavaScript Cơ bản',description:'Kiểm tra kiến thức JS: closures, promises, event loop và nhiều hơn nữa.',duration:30,questionCount:20,difficulty:'medium',category:'Lập trình',passingScore:70},
@@ -39,7 +39,7 @@ function ExamCard({exam,onView}){
   );
 }
 
-export default function DashboardPage(){
+export default function HomePage(){
   const {user}=useAuth();
   const navigate=useNavigate();
   const [exams,setExams]=useState([]);
