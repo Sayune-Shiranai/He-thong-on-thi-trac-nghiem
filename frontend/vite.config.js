@@ -7,13 +7,18 @@ export default defineConfig({
     port: 5173,
     open: true,
     proxy: {
-      '/login':     { target: 'http://localhost:3000', changeOrigin: true },
-      '/register':  { target: 'http://localhost:3000', changeOrigin: true },
-      '/logout':    { target: 'http://localhost:3000', changeOrigin: true },
+      // Tất cả API call dùng prefix /api → forward sang backend
+      '/api': {
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ''),
+      },
+      // Các route không có prefix /api
       '/dashboard': { target: 'http://localhost:3000', changeOrigin: true },
       '/exam':      { target: 'http://localhost:3000', changeOrigin: true },
       '/question':  { target: 'http://localhost:3000', changeOrigin: true },
       '/media':     { target: 'http://localhost:3000', changeOrigin: true },
+      '/logout':    { target: 'http://localhost:3000', changeOrigin: true },
     }
   }
 })
