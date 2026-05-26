@@ -42,10 +42,10 @@ export default function AdminOverviewPage() {
 
       <div className="admin-stats-grid stagger">
         {[
-          { label: 'Người dùng',    value: stats.totalUsers,     color: 'blue',   icon: '👥', to: '/admin/users' },
-          { label: 'Đề thi',        value: stats.totalExams,     color: 'green',  icon: '📋', to: '/admin/exams' },
-          { label: 'Câu hỏi',       value: stats.totalQuestions, color: 'orange', icon: '❓', to: '/admin/questions' },
-          { label: 'Môn học',        value: stats.totalSubjects,  color: 'red',    icon: '📚', to: '/admin/subjects' },
+          { label: 'Người dùng',    value: stats.totalUsers,     color: 'blue',   icon: '👥', to: '/dashboard/users' },
+          { label: 'Đề thi',        value: stats.totalExams,     color: 'green',  icon: '📋', to: '/dashboard/exams' },
+          { label: 'Câu hỏi',       value: stats.totalQuestions, color: 'orange', icon: '❓', to: '/dashboard/questions' },
+          { label: 'Môn học',        value: stats.totalSubjects,  color: 'red',    icon: '📚', to: '/dashboard/subjects' },
         ].map(s => (
           <Link to={s.to} key={s.label} style={{ textDecoration: 'none' }}>
             <div className={`admin-stat-card animate-fadeIn ${s.color}`}>
@@ -63,10 +63,10 @@ export default function AdminOverviewPage() {
         <h2 className="section-heading">Thao tác nhanh</h2>
         <div className="quick-grid">
           {[
-            { to: '/admin/exams',     icon: '+', label: 'Tạo đề thi mới' },
-            { to: '/admin/questions', icon: '+', label: 'Thêm câu hỏi' },
-            { to: '/admin/subjects',  icon: '→', label: 'Quản lý môn học' },
-            { to: '/admin/users',     icon: '→', label: 'Quản lý người dùng' },
+            { to: '/dashboard/exams',     icon: '+', label: 'Tạo đề thi mới' },
+            { to: '/dashboard/questions', icon: '+', label: 'Thêm câu hỏi' },
+            { to: '/dashboard/subjects',  icon: '→', label: 'Quản lý môn học' },
+            { to: '/dashboard/users',     icon: '→', label: 'Quản lý người dùng' },
           ].map(a => (
             <Link key={a.to} to={a.to} className="quick-card">
               <span className="quick-icon">{a.icon}</span>
