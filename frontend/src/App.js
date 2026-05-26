@@ -9,6 +9,7 @@ import ProtectedRoute from './components/common/ProtectedRoute';
 
 import AuthPage           from './pages/auth/AuthPage';
 import DashboardPage      from './pages/dashboard/DashboardPage';
+import ExamDetailPage     from './pages/exam/ExamDetailPage';
 import ExamPage           from './pages/exam/ExamPage';
 import ResultPage         from './pages/exam/ResultPage';
 import HistoryPage        from './pages/exam/HistoryPage';
@@ -30,18 +31,14 @@ export default function App(){
         <BrowserRouter>
           <Navbar/>
           <Routes>
-            {/* Công khai */}
-            <Route path="/login"    element={<AuthPage defaultTab="login"/>}/>
-            <Route path="/register" element={<AuthPage defaultTab="register"/>}/>
-            <Route path="/"         element={<Navigate to="/dashboard" replace/>}/>
-
-            {/* Học viên (đã đăng nhập) */}
-            <Route path="/dashboard"         element={<ProtectedRoute><DashboardPage/></ProtectedRoute>}/>
+            <Route path="/login"    element={<AuthPage key="login"    defaultTab="login"/>}/>
+            <Route path="/register" element={<AuthPage key="register" defaultTab="register"/>}/>
+            <Route path="/"          element={<DashboardPage/>}/>
+            <Route path="/dashboard" element={<DashboardPage/>}/>
+            <Route path="/detail/:examId" element={<ExamDetailPage/>}/>
             <Route path="/exam/:examId"      element={<ProtectedRoute><ExamPage/></ProtectedRoute>}/>
             <Route path="/result/:attemptId" element={<ProtectedRoute><ResultPage/></ProtectedRoute>}/>
             <Route path="/history"           element={<ProtectedRoute><HistoryPage/></ProtectedRoute>}/>
-
-            {/* Quản trị (adminOnly) */}
             <Route path="/admin" element={<ProtectedRoute adminOnly><AdminLayout/></ProtectedRoute>}>
               <Route index              element={<AdminOverviewPage/>}/>
               <Route path="exams"       element={<AdminExamsPage/>}/>
@@ -50,8 +47,6 @@ export default function App(){
               <Route path="users"       element={<AdminUsersPage/>}/>
               <Route path="results"     element={<AdminResultsPage/>}/>
             </Route>
-
-            {/* 404 */}
             <Route path="*" element={<NotFoundPage/>}/>
           </Routes>
         </BrowserRouter>
