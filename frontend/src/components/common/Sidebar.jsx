@@ -3,12 +3,12 @@ import {NavLink} from 'react-router-dom';
 import './Sidebar.css';
 
 const items=[
-  {label:'Tổng quan',         path:'/admin',           end:true,  icon:'⊞'},
-  {label:'Đề thi',            path:'/admin/exams',     end:false, icon:'📋'},
-  {label:'Câu hỏi',           path:'/admin/questions', end:false, icon:'❓'},
-  {label:'Môn học & Khối',    path:'/admin/subjects',  end:false, icon:'📚'},
-  {label:'Người dùng',        path:'/admin/users',     end:false, icon:'👥'},
-  {label:'Kết quả',           path:'/admin/results',   end:false, icon:'📊'},
+  {label:'Tổng quan',         path:'/dashboard',           end:true,  icon:'⊞'},
+  {label:'Đề thi',            path:'/dashboard/exams',     end:false, icon:'📋'},
+  {label:'Câu hỏi',           path:'/dashboard/questions', end:false, icon:'❓'},
+  {label:'Môn học & Khối',    path:'/dashboard/subjects',  end:false, icon:'📚'},
+  {label:'Người dùng',        path:'/dashboard/users',     end:false, icon:'👥'},
+  {label:'Kết quả',           path:'/dashboard/results',   end:false, icon:'📊'},
 ];
 
 export default function Sidebar(){

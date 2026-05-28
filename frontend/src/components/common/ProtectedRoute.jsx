@@ -6,6 +6,6 @@ export default function ProtectedRoute({children,adminOnly=false}){
   const location=useLocation();
   if(loading)return <div className="loading-screen" style={{minHeight:'100vh'}}><div className="spinner"/></div>;
   if(!user)return <Navigate to="/login" state={{from:location}} replace/>;
-  if(adminOnly&&user.role!=='admin')return <Navigate to="/dashboard" replace/>;
+  if(adminOnly&&user.role_name!=='Admin')return <Navigate to="/" replace/>;
   return children;
 }

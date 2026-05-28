@@ -61,7 +61,7 @@ app.use("/dashboard/question", questionRoutes) // /dashboard/question
 app.use("/exam", ExamRoutes) // /dashboard/exam
 app.use("/question", QuestionRoutes) // /dashboard/question
 app.use("/exam_question", Exam_QuestionRoutes) // /dashboard/exam_question
-app.use("/profile", ProfileRoutes) // /dashboard/profile
+// app.use("/profile", ProfileRoutes) // /dashboard/profile
 
 //auth
 app.use("/register", RegisterRoutes); // /register

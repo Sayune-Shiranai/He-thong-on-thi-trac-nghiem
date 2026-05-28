@@ -2,8 +2,9 @@ import api from './api';
 
 // ── Đề thi ──
 export const examService = {
-  create:  (data) => api.post('/dashboard/exam', data),
-  getById: (id)   => api.get(`/dashboard/exam/${id}`),
+  create:  (data)   => api.post('/dashboard/exam', data),
+  getAll:  (params) => api.get('/exam', { params }),        // public endpoint
+  getById: (id)     => api.get(`/dashboard/exam/${id}`),
 };
 
 // ── Câu hỏi ──

@@ -3,7 +3,7 @@ import {Link,useNavigate} from 'react-router-dom';
 import {useAuth} from '../../context/AuthContext';
 import {examService} from '../../services/examService';
 import {formatDuration} from '../../utils/helpers';
-import './DashboardPage.css';
+import './HomePage.css';
 
 const MOCK_EXAMS=[
   {id:'1',title:'Lập trình JavaScript Cơ bản',description:'Kiểm tra kiến thức JS: closures, promises, event loop và nhiều hơn nữa.',duration:30,questionCount:20,difficulty:'medium',category:'Lập trình',passingScore:70},
@@ -16,7 +16,7 @@ const MOCK_EXAMS=[
 
 const DIFF_LABEL={easy:'Dễ',medium:'Trung bình',hard:'Khó'};
 
-function ExamCard({exam,onStart}){
+function ExamCard({exam,onView}){
   const diffBadge={easy:'badge-success',medium:'badge-warning',hard:'badge-danger'}[exam.difficulty]||'badge-neutral';
   return(
     <div className="exam-card card animate-fadeIn">
@@ -33,13 +33,13 @@ function ExamCard({exam,onStart}){
       </div>
       <div className="exam-card-footer">
         {exam.dueDate&&<span className="exam-due">Sắp hết hạn</span>}
-        <button className="btn btn-primary btn-sm" onClick={()=>onStart(exam.id)}>Vào thi →</button>
+        <button className="btn btn-primary btn-sm" onClick={()=>onView(exam.id)}>Xem đề →</button>
       </div>
     </div>
   );
 }
 
-export default function DashboardPage(){
+export default function HomePage(){
   const {user}=useAuth();
   const navigate=useNavigate();
   const [exams,setExams]=useState([]);
@@ -61,17 +61,21 @@ export default function DashboardPage(){
   });
 
   const categories=[...new Set(exams.map(e=>e.category).filter(Boolean))];
-
   const filterLabels={all:'Tất cả',easy:'Dễ',medium:'Trung bình',hard:'Khó'};
 
   return(
     <div className="dashboard-page">
       <div className="dashboard-header">
         <div>
-          <h1 className="dashboard-title">Xin chào, {user?.name?.split(' ').pop()} 👋</h1>
+          {user
+            ? <h1 className="dashboard-title">Xin chào, {user?.name?.split(' ').pop()} 👋</h1>
+            : <h1 className="dashboard-title">Chào mừng đến ExamFlow 👋</h1>
+          }
           <p className="dashboard-subtitle">{exams.length} đề thi đang có — chọn một để bắt đầu</p>
         </div>
-        <Link to="/history" className="btn btn-secondary btn-sm">Xem kết quả của tôi</Link>
+        {user&&(
+          <Link to="/history" className="btn btn-secondary btn-sm">Xem kết quả của tôi</Link>
+        )}
       </div>
 
       <div className="dashboard-filters">
@@ -89,7 +93,7 @@ export default function DashboardPage(){
         ?<div className="loading-screen"><div className="spinner"/><span>Đang tải đề thi…</span></div>
         :filtered.length===0
           ?<div className="empty-state"><div className="empty-icon">📋</div><h3>Không tìm thấy đề thi</h3><p>{search?'Thử từ khoá khác.':'Hiện chưa có đề thi nào.'}</p></div>
-          :<div className="exam-grid stagger">{filtered.map(e=><ExamCard key={e.id} exam={e} onStart={id=>navigate(`/exam/${id}`)}/>)}</div>
+          :<div className="exam-grid stagger">{filtered.map(e=><ExamCard key={e.id} exam={e} onView={id=>navigate(`/detail/${id}`)}/>)}</div>
       }
     </div>
   );
