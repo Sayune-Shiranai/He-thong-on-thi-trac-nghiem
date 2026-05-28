@@ -1,9 +1,7 @@
 const db = require('../models/index.js');
 const { Op } = require('sequelize');
 
-// =========================
 // xem danh sách kết quả có phân trang
-// =========================
 const GetPaged = async (req, res) => {
   try {
     let { page = 1, limit = 10, keyword = "" } = req.query;
@@ -75,9 +73,7 @@ const GetPaged = async (req, res) => {
   }
 };
 
-// =========================
 // nộp bài thi
-// =========================
 const SubmitExam = async (req, res) => {
   try {
     const {
@@ -190,9 +186,7 @@ const SubmitExam = async (req, res) => {
   }
 };
 
-// =========================
 // xem chi tiết kết quả
-// =========================
 const GetDetail = async (req, res) => {
   try {
     const { id } = req.params;
@@ -229,9 +223,7 @@ const GetDetail = async (req, res) => {
   }
 };
 
-// =========================
 // xem lịch sử làm bài
-// =========================
 const GetMyResults = async (req, res) => {
   try {
     const { user_id } = req.params;
@@ -254,9 +246,7 @@ const GetMyResults = async (req, res) => {
   }
 };
 
-// =========================
 // xóa kết quả
-// =========================
 const DeleteResult = async (req, res) => {
   try {
     const { id } = req.params;
