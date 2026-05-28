@@ -1,0 +1,18 @@
+.page-footer {
+    bottom: 0;
+    right: 0;
+    left: 0;
+    position: relative;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    color: black;
+    border-top: 1px solid #ddd;
+    text-align: center;
+    margin-left: 265px;
+}
+
+.page-footer p {
+    margin: 0;
+    font-size: 14px;
+}

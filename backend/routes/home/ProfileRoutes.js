@@ -1,29 +1,31 @@
-const express = require('express');
-const router = express.Router();
+//fix lại
 
-const {
-  GetProfile,
-  UpdateProfile,
-  ChangePassword,
-  UploadAvatar
-} = require('../controllers/ProfileController');
+// const express = require('express');
+// const router = express.Router();
 
-const upload = require('../middlewares/upload');
+// const {
+//   GetProfile,
+//   UpdateProfile,
+//   ChangePassword,
+//   UploadAvatar
+// } = require('../controllers/ProfileController');
 
-// lấy profile
-router.get('/:id', GetProfile);
+// const upload = require('../middlewares/upload');
 
-// cập nhật profile
-router.put('/update/:id', UpdateProfile);
+// // lấy profile
+// router.get('/:id', GetProfile);
 
-// đổi mật khẩu
-router.put('/change-password/:id', ChangePassword);
+// // cập nhật profile
+// router.put('/update/:id', UpdateProfile);
 
-// upload avatar
-router.post(
-  '/upload-avatar/:id',
-  upload.single('avatar'),
-  UploadAvatar
-);
+// // đổi mật khẩu
+// router.put('/change-password/:id', ChangePassword);
 
-module.exports = router;
+// // upload avatar
+// router.post(
+//   '/upload-avatar/:id',
+//   upload.single('avatar'),
+//   UploadAvatar
+// );
+
+// module.exports = router;

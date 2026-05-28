@@ -13,6 +13,7 @@ export default function Navbar() {
   const [dropOpen, setDropOpen]   = useState(false);
   const [search,   setSearch]     = useState('');
 
+  if (location.pathname.startsWith('/dashboard')) return null;
   if (location.pathname.startsWith('/exam/')) return null;
   if (location.pathname === '/login' || location.pathname === '/register') return null;
 
@@ -23,36 +24,36 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="navbar">
-      <div className="navbar-inner">
+    <nav className="main-navbar">
+      <div className="main-navbar-inner">
         {/* Logo */}
         <Link to="/" className="navbar-logo">
           <span className="logo-mark">EF</span>
         </Link>
 
         {/* Menu chính */}
-        <div className="navbar-links">
-          <Link to="/"      className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}>TRANG CHỦ</Link>
-          <Link to="/grade" className={`nav-link ${location.pathname === '/grade' ? 'active' : ''}`}>LỚP</Link>
-          <Link to="/subject" className={`nav-link ${location.pathname === '/subject' ? 'active' : ''}`}>MÔN HỌC</Link>
-          <Link to="/exams"   className={`nav-link ${location.pathname === '/exams' ? 'active' : ''}`}>TÌM KIẾM NÂNG CAO</Link>
+        <div className="main-navbar-links">
+          <Link to="/"      className={`main-nav-link ${location.pathname === '/' ? 'active' : ''}`}>TRANG CHỦ</Link>
+          <Link to="/grade" className={`main-nav-link ${location.pathname === '/grade' ? 'active' : ''}`}>LỚP</Link>
+          <Link to="/subject" className={`main-nav-link ${location.pathname === '/subject' ? 'active' : ''}`}>MÔN HỌC</Link>
+          <Link to="/exams"   className={`main-nav-link ${location.pathname === '/exams' ? 'active' : ''}`}>TÌM KIẾM NÂNG CAO</Link>
           {/* Chỉ hiện TẠO ĐỀ nếu là Teacher, Admin, Moderator */}
           {user && (isTeacher || canAccessAdmin) && (
-            <Link to="/create-exam" className={`nav-link ${location.pathname === '/create-exam' ? 'active' : ''}`}>TẠO ĐỀ</Link>
+            <Link to="/create-exam" className={`main-nav-link ${location.pathname === '/create-exam' ? 'active' : ''}`}>TẠO ĐỀ</Link>
           )}
-          <Link to="/guide" className={`nav-link ${location.pathname === '/guide' ? 'active' : ''}`}>HƯỚNG DẪN</Link>
+          <Link to="/guide" className={`main-nav-link ${location.pathname === '/guide' ? 'active' : ''}`}>HƯỚNG DẪN</Link>
         </div>
 
         {/* Phải: search + auth */}
-        <div className="navbar-actions">
+        <div className="main-navbar-actions">
           {/* Search */}
-          <form onSubmit={handleSearch} className="navbar-search">
+          <form onSubmit={handleSearch} className="main-navbar-search">
             <input
               type="search"
               placeholder="Search"
               value={search}
               onChange={e => setSearch(e.target.value)}
-              className="navbar-search-input"
+              className="main-navbar-search-input"
             />
           </form>
 
@@ -72,7 +73,7 @@ export default function Navbar() {
                 <span className="user-name">{user.name}</span>
               </button>
               {dropOpen && (
-                <div className="dropdown-menu" onMouseLeave={() => setDropOpen(false)}>
+                <div className="main-dropdown-menu" onMouseLeave={() => setDropOpen(false)}>
                   <div className="dropdown-header">
                     <p className="dropdown-name">{user.name}</p>
                     <p className="dropdown-role">
