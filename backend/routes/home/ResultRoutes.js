@@ -15,7 +15,7 @@ router.post('/submit', SubmitExam);
 
 router.get('/detail/:id', GetDetail);
 
-router.get('/my-results/:user_id', GetMyResults);
+router.get('/my-results',Authentication, GetMyResults);
 
 router.delete('/delete/:id', DeleteResult);
 

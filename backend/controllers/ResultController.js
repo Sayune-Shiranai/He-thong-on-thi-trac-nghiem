@@ -77,11 +77,11 @@ const GetPaged = async (req, res) => {
 const SubmitExam = async (req, res) => {
   try {
     const {
-      user_id,
       exam_id,
       answers,
       started_at
     } = req.body;
+const user_id = req.user.id;
 
     if (!user_id) {
       return res.status(400).json({
@@ -226,7 +226,7 @@ const GetDetail = async (req, res) => {
 // xem lịch sử làm bài
 const GetMyResults = async (req, res) => {
   try {
-    const { user_id } = req.params;
+    const user_id = req.user.id;
 
     const results = await db.Result.findAll({
       where: {
