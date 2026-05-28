@@ -1,87 +1,318 @@
-// const jwt = require("jsonwebtoken");
+const db = require('../models/index.js');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const { Op } = require('sequelize');
 
-// const {
-//   generateAccessToken,
-//   generateRefreshToken
-// } = require("../utils/jwt");
+// đăng ký
+const Register = async (req, res) => {
+  try {
+    const {
+      fullname,
+      username,
+      email,
+      password
+    } = req.body;
 
-// const RefreshToken = async (req, res) => {
+    if (!fullname) {
+      return res.status(400).json({
+        error: 'Vui lòng nhập fullname!'
+      });
+    }
 
-//   try {
+    if (!username) {
+      return res.status(400).json({
+        error: 'Vui lòng nhập username!'
+      });
+    }
 
-//     const refreshToken = req.cookies.refreshToken;
+    if (!email) {
+      return res.status(400).json({
+        error: 'Vui lòng nhập email!'
+      });
+    }
 
-//     if (!refreshToken) {
-//       return res.status(401).json({
-//         message: "Không có refresh token"
-//       });
-//     }
+    if (!password) {
+      return res.status(400).json({
+        error: 'Vui lòng nhập password!'
+      });
+    }
 
-//     // verify token
+    const checkUser = await db.User.findOne({
+      where: {
+        [Op.or]: [
+          { email },
+          { username }
+        ]
+      }
+    });
 
-//     const decoded = jwt.verify(
-//       refreshToken,
-//       process.env.JWT_REFRESH_SECRET
-//     );
+    if (checkUser) {
+      return res.status(400).json({
+        error: 'Email hoặc username đã tồn tại!'
+      });
+    }
 
-//     // tìm user
+    const salt = await bcrypt.genSalt(10);
 
-//     const user = await db.User.findByPk(decoded.id);
+    const hashPassword = await bcrypt.hash(
+      password,
+      salt
+    );
 
-//     if (!user) {
-//       return res.status(404).json({
-//         message: "User không tồn tại"
-//       });
-//     }
+    const newUser = await db.User.create({
+      fullname,
+      username,
+      email,
+      password: hashPassword,
+      role_id: 2
+    });
 
-//     // check token trong DB
+    return res.status(201).json({
+      message: 'Đăng ký thành công!',
+      data: newUser
+    });
+  } catch (err) {
+    return res.status(500).json({
+      error: err.message
+    });
+  }
+};
 
-//     if (user.refreshToken !== refreshToken) {
-//       return res.status(403).json({
-//         message: "Refresh token không hợp lệ"
-//       });
-//     }
+// đăng nhập
+const Login = async (req, res) => {
+  try {
+    const {
+      username,
+      password
+    } = req.body;
 
-//     // tạo token mới
+    if (!username) {
+      return res.status(400).json({
+        error: 'Vui lòng nhập username!'
+      });
+    }
 
-//     const newAccessToken = generateAccessToken(user);
+    if (!password) {
+      return res.status(400).json({
+        error: 'Vui lòng nhập password!'
+      });
+    }
 
-//     const newRefreshToken = generateRefreshToken(user);
+    const user = await db.User.findOne({
+      where: {
+        [Op.or]: [
+          { username },
+          { email: username }
+        ]
+      },
+      include: [
+        {
+          model: db.Role
+        }
+      ]
+    });
 
-//     // rotation
-//     user.refreshToken = newRefreshToken;
+    if (!user) {
+      return res.status(404).json({
+        error: 'Tài khoản không tồn tại!'
+      });
+    }
 
-//     await user.save();
+    const checkPassword = await bcrypt.compare(
+      password,
+      user.password
+    );
 
-//     // set cookie mới
+    if (!checkPassword) {
+      return res.status(400).json({
+        error: 'Sai mật khẩu!'
+      });
+    }
 
-//     res.cookie("accessToken", newAccessToken, {
-//       httpOnly: true,
-//       secure: false,
-//       sameSite: "lax"
-//     });
+    const token = jwt.sign(
+      {
+        id: user.id,
+        username: user.username,
+        email: user.email,
+        role_id: user.role_id
+      },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: '7d'
+      }
+    );
 
-//     res.cookie("refreshToken", newRefreshToken, {
-//       httpOnly: true,
-//       secure: false,
-//       sameSite: "lax"
-//     });
+    return res.json({
+      message: 'Đăng nhập thành công!',
+      token,
+      user
+    });
+  } catch (err) {
+    return res.status(500).json({
+      error: err.message
+    });
+  }
+};
 
-//     return res.json({
-//       accessToken: newAccessToken,
-//       refreshToken: newRefreshToken
-//     });
+// lấy thông tin user hiện tại
+const Me = async (req, res) => {
+  try {
+    const { id } = req.user;
 
-//   } catch (err) {
+    const user = await db.User.findOne({
+      where: { id },
+      include: [
+        {
+          model: db.Role
+        }
+      ],
+      attributes: {
+        exclude: ['password']
+      }
+    });
 
-//     return res.status(403).json({
-//       message: "Refresh token hết hạn hoặc sai"
-//     });
+    if (!user) {
+      return res.status(404).json({
+        error: 'Không tìm thấy user!'
+      });
+    }
 
-//   }
+    return res.json(user);
+  } catch (err) {
+    return res.status(500).json({
+      error: err.message
+    });
+  }
+};
 
-// };
+// đổi mật khẩu
+const ChangePassword = async (req, res) => {
+  try {
+    const { id } = req.user;
 
-// module.exports = {
-//   RefreshToken
-// };
+    const {
+      old_password,
+      new_password
+    } = req.body;
+
+    if (!old_password) {
+      return res.status(400).json({
+        error: 'Vui lòng nhập mật khẩu cũ!'
+      });
+    }
+
+    if (!new_password) {
+      return res.status(400).json({
+        error: 'Vui lòng nhập mật khẩu mới!'
+      });
+    }
+
+    const user = await db.User.findOne({
+      where: { id }
+    });
+
+    if (!user) {
+      return res.status(404).json({
+        error: 'Không tìm thấy user!'
+      });
+    }
+
+    const checkPassword = await bcrypt.compare(
+      old_password,
+      user.password
+    );
+
+    if (!checkPassword) {
+      return res.status(400).json({
+        error: 'Mật khẩu cũ không đúng!'
+      });
+    }
+
+    const salt = await bcrypt.genSalt(10);
+
+    const hashPassword = await bcrypt.hash(
+      new_password,
+      salt
+    );
+
+    await user.update({
+      password: hashPassword
+    });
+
+    return res.json({
+      message: 'Đổi mật khẩu thành công!'
+    });
+  } catch (err) {
+    return res.status(500).json({
+      error: err.message
+    });
+  }
+};
+
+// refresh token
+const RefreshToken = async (req, res) => {
+  try {
+    const { token } = req.body;
+
+    if (!token) {
+      return res.status(400).json({
+        error: 'Token không hợp lệ!'
+      });
+    }
+
+    jwt.verify(
+      token,
+      process.env.JWT_SECRET,
+      async (err, decoded) => {
+        if (err) {
+          return res.status(401).json({
+            error: 'Token hết hạn!'
+          });
+        }
+
+        const newToken = jwt.sign(
+          {
+            id: decoded.id,
+            username: decoded.username,
+            email: decoded.email,
+            role_id: decoded.role_id
+          },
+          process.env.JWT_SECRET,
+          {
+            expiresIn: '7d'
+          }
+        );
+
+        return res.json({
+          token: newToken
+        });
+      }
+    );
+  } catch (err) {
+    return res.status(500).json({
+      error: err.message
+    });
+  }
+};
+
+// logout
+const Logout = async (req, res) => {
+  try {
+    return res.json({
+      message: 'Đăng xuất thành công!'
+    });
+  } catch (err) {
+    return res.status(500).json({
+      error: err.message
+    });
+  }
+};
+
+module.exports = {
+  Register,
+  Login,
+  Me,
+  ChangePassword,
+  RefreshToken,
+  Logout
+};
