@@ -38,17 +38,17 @@ input,select,textarea{font-family:var(--font-body);font-size:0.95rem;}
 .card{background:var(--bg-card);border:1px solid var(--border-light);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);padding:28px;transition:box-shadow var(--transition-base),transform var(--transition-base);}
 .card:hover{box-shadow:var(--shadow-md);}
 
-.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border-radius:var(--radius-md);font-size:0.9rem;font-weight:500;letter-spacing:0.01em;transition:all var(--transition-fast);white-space:nowrap;}
-.btn-primary{background:var(--accent-primary);color:#fff;}
-.btn-primary:hover{background:#b04420;transform:translateY(-1px);box-shadow:0 4px 12px rgba(200,80,42,0.35);}
-.btn-primary:active{transform:translateY(0);}
-.btn-secondary{background:transparent;color:var(--text-primary);border:1.5px solid var(--border-medium);}
-.btn-secondary:hover{border-color:var(--accent-primary);color:var(--accent-primary);background:rgba(200,80,42,0.05);}
+.main-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border-radius:var(--radius-md);font-size:0.9rem;font-weight:500;letter-spacing:0.01em;transition:all var(--transition-fast);white-space:nowrap;}
+.main-btn-primary{background:var(--accent-primary);color:#fff;}
+.main-btn-primary:hover{background:#b04420;transform:translateY(-1px);box-shadow:0 4px 12px rgba(200,80,42,0.35);}
+.main-btn-primary:active{transform:translateY(0);}
+.main-btn-secondary{background:transparent;color:var(--text-primary);border:1.5px solid var(--border-medium);}
+.main-btn-secondary:hover{border-color:var(--accent-primary);color:var(--accent-primary);background:rgba(200,80,42,0.05);}
 .btn-ghost{background:transparent;color:var(--text-secondary);padding:8px 14px;}
 .btn-ghost:hover{background:var(--bg-secondary);color:var(--text-primary);}
 .btn-danger{background:var(--accent-danger);color:#fff;}
 .btn-danger:hover{background:#a82820;transform:translateY(-1px);}
-.btn-sm{padding:6px 14px;font-size:0.82rem;}
+.main-btn-sm{padding:6px 14px;font-size:0.82rem;}
 .btn-lg{padding:14px 32px;font-size:1rem;}
 .btn:disabled{opacity:0.45;cursor:not-allowed;transform:none !important;}
 

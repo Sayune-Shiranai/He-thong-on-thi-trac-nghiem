@@ -8,10 +8,10 @@ const Authorization = (...roles) => {
 
     const allowedRoles = Array.isArray(roles) ? roles : [roles];
 
-    console.log("req.user.role_id =", req.user.role_id);
+    console.log("req.user.ROLE =", req.user.role);
     console.log("allowedRoles =", allowedRoles);
 
-    if (!allowedRoles.includes(req.user.role_id)) {
+    if (!allowedRoles.includes(req.user.role)) {
       return res.status(403).json({
         message: `Tài khoản ${req.user.username} không đủ quyền truy cập`
       });

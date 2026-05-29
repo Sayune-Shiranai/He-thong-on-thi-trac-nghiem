@@ -46,8 +46,8 @@ const Login = async (req, res) => {
 
             await user.save();
 
-            res.cookie("accessToken", accessToken, { httpOnly: true, sameSite: "lax" });
-            res.cookie("refreshToken", refreshToken, { httpOnly: true, sameSite: "lax" });
+            res.cookie("accessToken", accessToken, { httpOnly: true, sameSite: "lax", path: "/" });
+            res.cookie("refreshToken", refreshToken, { httpOnly: true, sameSite: "lax", path: "/" });
 
             return res.status(200).json({ 
                 message: "Đăng nhập thành công!", 

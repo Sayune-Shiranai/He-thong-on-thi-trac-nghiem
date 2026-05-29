@@ -97,8 +97,8 @@ export default function Navbar() {
           ) : (
             /* Chưa đăng nhập → Đăng nhập + Đăng ký */
             <div className="auth-btns">
-              <Link to="/register" className="btn btn-secondary btn-sm">Đăng ký</Link>
-              <Link to="/login"    className="btn btn-primary btn-sm">Đăng nhập</Link>
+              <Link to="/register" className="main-btn main-btn-secondary main-btn-sm">Đăng ký</Link>
+              <Link to="/login"    className="main-btn main-btn-primary main-btn-sm">Đăng nhập</Link>
             </div>
           )}
 

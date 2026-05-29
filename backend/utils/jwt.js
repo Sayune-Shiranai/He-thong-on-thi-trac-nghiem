@@ -8,7 +8,8 @@ const generateAccessToken = (user) => {
             id: user.id,
             username: user.username,
             email: user.email,
-            role_id: user.role_id
+            role_id: user.role_id,
+            role: user.Role.name
         },
         JWT_SECRET,
         { expiresIn: "2m"}
@@ -18,7 +19,11 @@ const generateAccessToken = (user) => {
 const generateRefreshToken = (user) => {
     return jwt.sign(
         {
-            id: user.id
+            id: user.id,
+            username: user.username,
+            email: user.email,
+            role_id: user.role_id,
+            role: user.Role.name
         },
         JWT_SECRET,
         { expiresIn: "5m" }

@@ -52,7 +52,9 @@ const Authentication = async (req, res, next) => {
               return {
                 id: User.id,
                 username: User.username,
-                role_id: User.role_id
+                email: User.email,
+                role_id: User.role_id,
+                role: User.Role.name
               };
             }
             
@@ -67,7 +69,9 @@ const Authentication = async (req, res, next) => {
                 { 
                   id: User.id, 
                   username: User.username, 
-                  role_id: User.role_id 
+                  email: User.email,
+                  role_id: User.role_id,
+                  role: User.Role.name
                 },
                 JWT_SECRET,
                 { expiresIn: "15m" }
@@ -76,6 +80,10 @@ const Authentication = async (req, res, next) => {
               const newRefreshToken = jwt.sign(
                 { 
                   id: User.id, 
+                  username: User.username,
+                  email: User.email,
+                  role_id: User.role_id,
+                  role: User.Role.name
                 },
                 JWT_SECRET,
                 { expiresIn: "7d" }
@@ -105,7 +113,9 @@ const Authentication = async (req, res, next) => {
               return {
                 id: User.id,
                 username: User.username,
+                email: User.email,
                 role_id: User.role_id,
+                role: User.Role.name
               };
               
             }

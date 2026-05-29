@@ -27,6 +27,9 @@ const GetPaged = async (req, res) => {
       include: [
         {
           model: db.Role,
+        },
+        {
+          model: db.Status,
         }
       ],
       limit,

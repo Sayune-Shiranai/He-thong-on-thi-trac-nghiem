@@ -22,9 +22,11 @@ export default function UserPage() {
         keyword,
       });
 
+      console.log("API Response:", res);
+
       if (!ignore) {
-        setUsers(res.data.data || []);
-        setTotalPages(res.data.totalPages);
+        setUsers(res.data || []);
+        setTotalPages(res.totalPages);
       }
     };
 
@@ -49,22 +51,22 @@ export default function UserPage() {
       keyword,
     });
 
-    setUsers(res.data.data || []);
-    setTotalPages(res.data.totalPages);
+    setUsers(res.data || []);
+    setTotalPages(res.totalPages);
   };
 
   const handleApprove = async (id) => { 
     await userService.approveUser(id); 
     const res = await userService.getPagedUsers({ page, limit, keyword });
-    setUsers(res.data.data || []);
-    setTotalPages(res.data.totalPages);
+    setUsers(res.data || []);
+    setTotalPages(res.totalPages);
   }; 
 
   const handleReject = async (id) => { 
     await userService.rejectUser(id); 
     const res = await userService.getPagedUsers({ page, limit, keyword });
-    setUsers(res.data.data || []);
-    setTotalPages(res.data.totalPages);
+    setUsers(res.data || []);
+    setTotalPages(res.totalPages);
  }; 
 
   return (
@@ -139,22 +141,22 @@ export default function UserPage() {
                         <td>{u.email}</td>
                         <td>
                           <span className="badge bg-info">
-                            {u.User_Role?.role}
+                            {u.Role?.name}
                           </span>
                         </td>
                         <td>
-                          {u.trangthai === 0 && (
+                          {u.Status?.name === "Pending" && (
                             <span className="badge bg-warning text-dark">Chờ duyệt</span>
                           )}
-                          {u.trangthai === 1 && (
+                          {u.Status?.name === "Approved" && (
                             <span className="badge bg-success">Đã duyệt</span>
                           )}
-                          {u.trangthai === 2 && (
+                          {u.Status?.name === "Rejected" && (
                             <span className="badge bg-danger">Từ chối</span>
                           )}
                         </td>
                         <td className="text-center">
-                          {u.trangthai === 0 && (
+                          {u.Status?.name === "Pending" && (
                             <>
                               <button
                                 className="btn btn-sm btn-success me-2"
@@ -171,7 +173,7 @@ export default function UserPage() {
                             </>
                           )}
 
-                          {u.trangthai === 2 && (
+                          {u.Status?.name === "Rejected" && (
                           <>
                             <button
                               className="btn btn-sm btn-success me-2"
@@ -197,7 +199,7 @@ export default function UserPage() {
                           </>
                           )}
 
-                          {u.trangthai === 1 && (
+                          {u.Status?.name === "Approved" && (
                             <button
                               className="btn btn-sm btn-warning text-dark"
                               onClick={() => handleReject(u.id)}

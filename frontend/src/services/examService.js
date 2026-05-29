@@ -41,23 +41,19 @@ export const userService = {
   getPagedUsers:  (params)   => api.get(
     '/dashboard/user', 
     { 
-      params,
-      withCredentials: true 
+      params    
     }
   ),
   getUserById: (id)       => api.get(
-    `/dashboard/user/${id}`,
-    { withCredentials: true }
+    `/dashboard/user/${id}`
   ),
   updateUser:  (id, data) => api.put(`/dashboard/user/update/${id}`, data),
   deleteUser:  (id)       => api.delete(`/dashboard/user/delete/${id}`),
   approveUser: (id)       => api.post(
     `/dashboard/user/approve/${id}`, {}, 
-    { withCredentials: true }
   ),
   rejectUser:  (id)       => api.post(
     `/dashboard/user/reject/${id}`, {}, 
-    { withCredentials: true }
   ),
 };
 
