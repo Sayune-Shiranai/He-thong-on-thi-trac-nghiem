@@ -38,12 +38,27 @@ export const gradeService = {
 
 // ── Người dùng (admin) ──
 export const userService = {
-  getAll:  (params)   => api.get('/dashboard/user', { params }),
-  getById: (id)       => api.get(`/dashboard/user/${id}`),
-  update:  (id, data) => api.put(`/dashboard/user/update/${id}`, data),
-  delete:  (id)       => api.delete(`/dashboard/user/delete/${id}`),
-  approve: (id)       => api.post(`/dashboard/user/approve/${id}`),
-  reject:  (id)       => api.post(`/dashboard/user/reject/${id}`),
+  getPagedUsers:  (params)   => api.get(
+    '/dashboard/user', 
+    { 
+      params,
+      withCredentials: true 
+    }
+  ),
+  getUserById: (id)       => api.get(
+    `/dashboard/user/${id}`,
+    { withCredentials: true }
+  ),
+  updateUser:  (id, data) => api.put(`/dashboard/user/update/${id}`, data),
+  deleteUser:  (id)       => api.delete(`/dashboard/user/delete/${id}`),
+  approveUser: (id)       => api.post(
+    `/dashboard/user/approve/${id}`, {}, 
+    { withCredentials: true }
+  ),
+  rejectUser:  (id)       => api.post(
+    `/dashboard/user/reject/${id}`, {}, 
+    { withCredentials: true }
+  ),
 };
 
 // ── Lần thi / Kết quả ──

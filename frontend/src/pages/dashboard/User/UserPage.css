@@ -1,0 +1,27 @@
+.main-page {
+    
+}
+
+.main-page .page-header-box {
+    
+}
+
+.main-page .page-header-box .page-title {
+    
+}
+
+.main-page .page-body-box {
+    
+}
+
+.main-page .page-body-box .header-page-body-box {
+    background-color: inherit;
+}
+
+.header-page-body-box .search-box {
+    height: 40px;
+}
+
+.header-page-body-box .search-box button{
+    width: 134px;
+}

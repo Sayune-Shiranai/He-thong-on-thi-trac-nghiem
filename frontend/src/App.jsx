@@ -18,7 +18,7 @@ import AdminLayout        from './pages/dashboard/AdminLayout';
 import AdminOverviewPage  from './pages/dashboard/AdminOverviewPage';
 import AdminExamsPage     from './pages/dashboard/AdminExamsPage';
 import AdminQuestionsPage from './pages/dashboard/AdminQuestionsPage';
-import AdminUsersPage     from './pages/dashboard/AdminUsersPage';
+import UsersPage     from './pages/dashboard/User/UserPage';
 import AdminResultsPage   from './pages/dashboard/AdminResultsPage';
 import AdminSubjectsPage  from './pages/dashboard/AdminSubjectsPage';
 import NotFoundPage       from './pages/NotFoundPage';
@@ -54,7 +54,7 @@ export default function App() {
               <Route path="exams"     element={<AdminExamsPage />} />
               <Route path="questions" element={<AdminQuestionsPage />} />
               <Route path="subjects"  element={<AdminSubjectsPage />} />
-              <Route path="users"     element={<AdminUsersPage />} />
+              <Route path="user"     element={<UsersPage />} />
               <Route path="results"   element={<AdminResultsPage />} />
             </Route>
 

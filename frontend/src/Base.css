@@ -1,0 +1,113 @@
+:root {
+    --theme-deafult: #006666;
+    --theme-secondary: #FE6A49;
+    --light-background: rgba(242, 243, 247, 0.7);
+    --body-font-color: #86909C;
+    --chart-border: #E6E9EB;
+    --recent-chart-bg: #FCFCFD;
+    --light-bg: #EEF1F6;
+    --white: #fff;
+    --light2: #F5F6F9;
+    --sidebar-border: rgba(0, 0, 0, 0.1);
+    --chart-text-color: rgba(82, 82, 108, 0.8);
+    --bs-topbar-height: 80px;
+    --bs-logo-lg-height: 40px;
+    --bs-logo-sm-height: 24px;
+    --bs-sidebar-width: 250px;
+    --bs-sidebar-width-sm: 70px;
+    --text-color-hover: #039be5;
+    --box-hover: #eef5ff;
+
+}
+
+    :root .customLook {
+        --tag-bg: var(--theme-deafult);
+        --tag-hover: var(--theme-secondary);
+        --tag-text-color: var(--white);
+        --tags-border-color: silver;
+        --tag-border-radius: 25px;
+        --tag-text-color--edit: #111;
+        --tag-remove-bg: var(--tag-hover);
+        --tag-pad: .6em 1em;
+        --tag-inset-shadow-size: 1.35em;
+        --tag-remove-btn-bg--hover: #000;
+        --tagify-dd-color-primary: var(var(--theme-deafult));
+        --tagify-dd-bg-color: var(--course-light-btn);
+    }
+
+.table {
+    --bs-body-bg: auto;
+}
+
+body[class=dark-only] {
+    --light-background: #1A1C23;
+    --recent-chart-bg: #262932;
+    --light-bg: #1d1e26;
+    --chart-text-color: #86909C;
+    --white: #262932;
+    --sidebar-border: rgba(255, 255, 255, 0.1);
+    --light2: #1d1e26;
+    --chart-border: #1A1C23;
+    --recent-box-bg: #1d1e26;
+    --recent-border: #374558;
+    --body-font-color: rgba(255, 255, 255);
+    --course-light-btn: var(--light-bg);
+    --view-grid-bg: var(--light-bg);
+    --view-border-marker: #2c2c45d4;
+    --light-slate: #1c1d26;
+    --text-gray: rgba(153, 153, 169, 0.8);
+    --product-shadow: 0px 1px 0px rgb(55 70 87);
+    --bs-heading-color: rgb(255, 255, 255);
+    --bs-card-color: rgba(255, 255, 255, 0.7);
+}
+
+body[class="rtl dark-only"] {
+    --light-background: #1A1C23;
+    --recent-chart-bg: #262932;
+    --light-bg: #1d1e26;
+    --chart-text-color: #86909C;
+    --white: #262932;
+    --sidebar-border: rgba(255, 255, 255, 0.1);
+    --light2: #1d1e26;
+    --chart-border: #1A1C23;
+    --recent-box-bg: #1d1e26;
+    --recent-border: #374558;
+    --body-font-color: rgba(255, 255, 255);
+    --course-light-btn: var(--light-bg);
+    --view-grid-bg: var(--light-bg);
+    --view-border-marker: #2c2c45d4;
+    --light-slate: #1c1d26;
+    --text-gray: rgba(153, 153, 169, 0.8);
+    --product-shadow: 0px 1px 0px rgb(55 70 87);
+    --bs-heading-color: rgb(255, 255, 255);
+    --bs-card-color: rgba(255, 255, 255, 0.7);
+}
+
+body[class="dark-only modal-open"] {
+    --light-shade-primary: rgba(48, 126, 243, 0.2);
+    --light-slate: #1c1d26;
+}
+
+body[class="rtl dark-only modal-open"] {
+    --light-shade-primary: rgba(48, 126, 243, 0.2);
+    --light-slate: #1c1d26;
+}
+
+body.dark-only.box-layout {
+    --light-background: #1A1C23;
+    --recent-chart-bg: #262932;
+    --light-bg: #1d1e26;
+    --white: #262932;
+    --chart-text-color: #86909C;
+    --sidebar-border: rgba(255, 255, 255, 0.1);
+    --light2: #1d1e26;
+    --chart-border: #1A1C23;
+    --recent-box-bg: #1d1e26;
+    --recent-border: #374558;
+    --body-font-color: rgba(255, 255, 255);
+    --course-light-btn: var(--light-bg);
+    --view-grid-bg: var(--light-bg);
+    --view-border-marker: #2c2c45d4;
+    --bs-heading-color: rgb(255, 255, 255);
+    --bs-card-color: rgba(255, 255, 255, 0.7);
+}

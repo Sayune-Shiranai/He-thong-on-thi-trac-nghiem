@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from '../../../context/AuthContext';
 import "./Header.css";
-// import avt from '../../../../../media/avt/jindou-hikari.jpg'
+import avt from '../../../../../media/avt/jindou-hikari.jpg';
 
 const Header = ({ collapsed }) => {
   const navigate = useNavigate();
@@ -54,7 +54,7 @@ const Header = ({ collapsed }) => {
             <li className="profile-nav">
               <div className="profile-media">
 
-                {/* <img src={avt} alt="Avatar" /> */}
+                <img src={avt} alt="Avatar" />
 
                 <div className="header-profile-info d-none d-md-block">
                   <span>{user?.name}</span>
