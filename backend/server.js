@@ -48,7 +48,12 @@ const RegisterRoutes = require("./routes/home/RegisterRoutes");
 const LoginRoutes = require("./routes/home/LoginRoutes");
 const LogoutRoutes = require("./routes/home/LogoutRoutes");
 
+const Authentication = require("./middlewares/Authentication");
+const Authorization = require("./middlewares/Authorization");
+
 //dashboard 
+app.use("/dashboard", Authentication, Authorization("Admin", "Mod"));
+
 app.use("/dashboard/role", roleRoutes); // /dashboard/role
 app.use("/dashboard/user", userRoutes) // /dashboard/user
 app.use("/dashboard/grade", gradeRoutes) // /dashboard/grade

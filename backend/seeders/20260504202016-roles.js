@@ -10,7 +10,7 @@ module.exports = {
         updatedAt: new Date()
       },
       {
-        name: 'Moderator',
+        name: 'Mod',
         createdAt: new Date(),
         updatedAt: new Date()
       },

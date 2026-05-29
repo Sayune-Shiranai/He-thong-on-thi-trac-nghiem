@@ -11,7 +11,7 @@ const generateAccessToken = (user) => {
             role_id: user.role_id
         },
         JWT_SECRET,
-        { expiresIn: "15m"}
+        { expiresIn: "2m"}
     );
 };
 
@@ -21,7 +21,7 @@ const generateRefreshToken = (user) => {
             id: user.id
         },
         JWT_SECRET,
-        { expiresIn: "7d" }
+        { expiresIn: "5m" }
     );
 };
 

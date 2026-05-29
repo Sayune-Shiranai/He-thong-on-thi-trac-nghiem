@@ -1,16 +1,24 @@
-// const Authorization = (...roles) => {
+const Authorization = (...roles) => {
+  return (req, res, next) => {
+    if (!req.user) {
+      return res.status(401).json({
+        message: "Chưa đăng nhập"
+      });
+    }
 
-//   return (req, res, next) => {
+    const allowedRoles = Array.isArray(roles) ? roles : [roles];
 
-//     if (!roles.includes(req.user.role_id)) {
+    console.log("req.user.role_id =", req.user.role_id);
+    console.log("allowedRoles =", allowedRoles);
 
-//       return res.status(403).json({
-//         message: "Không có quyền truy cập"
-//       });
-//     }
+    if (!allowedRoles.includes(req.user.role_id)) {
+      return res.status(403).json({
+        message: `Tài khoản ${req.user.username} không đủ quyền truy cập`
+      });
+    }
 
-//     next();
-//   };
-// };
+    next();
+  };
+};
 
-// module.exports = Authorization;
+module.exports = Authorization;
