@@ -71,7 +71,7 @@ const GetPaged = async (req, res) => {
     }
 }
 
-//tạo đề thi
+//create exam
 const CreateExam = async (req, res) => {
   try {
     const {
@@ -130,6 +130,156 @@ const CreateExam = async (req, res) => {
       data: exam
     });
 
+  } catch (err) {
+    return res.status(500).json({
+      error: err.message
+    });
+  }
+};
+
+
+//update exam
+const UpdateExam = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const {
+      title,
+      grade_id,
+      subject_id,
+    } = req.body;
+
+    const exam = await db.Exam.findOne({ where: { id } });
+
+    if (!exam) {
+      return res.status(404).json({
+        message: "Đề thi không tồn tại!"
+      });
+    }
+
+    if (title) {
+      exam.title = title;
+    }
+
+    if (grade_id) {
+      const grade = await db.Grade.findOne({ where: { id: grade_id } });
+
+      if (!grade) {
+        return res.status(404).json({
+          message: "Lớp không tồn tại!"
+        });
+      }
+      exam.grade_id = grade_id;
+    }
+
+    if (subject_id) {
+      const subject = await db.Subject.findOne({ where: { id: subject_id } });
+
+      if (!subject) {
+        return res.status(404).json({
+          message: "Môn học không tồn tại!"
+        });
+      }
+      exam.subject_id = subject_id;
+    }
+
+    await exam.save();
+
+    return res.status(200).json({
+      message: "Cập nhật đề thi thành công",
+      data: exam
+    });
+  } catch (err) {
+    return res.status(500).json({
+      error: err.message
+    });
+  }
+};
+
+//delete exam
+const DeleteExam = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const exam = await db.Exam.findOne({ where: { id } });
+
+    if (!exam) {
+      return res.status(404).json({
+        message: "Đề thi không tồn tại!"
+      });
+    }
+
+    await exam.destroy();
+
+    return res.status(200).json({
+      message: "Xóa đề thi thành công"
+    });
+  } catch (err) {
+    return res.status(500).json({
+      error: err.message
+    });
+  }
+};
+
+//duyệt đề thi
+const ApproveExam = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const exam = await db.Exam.findOne({ where: { id } });
+
+    if (!exam) {
+      return res.status(404).json({
+        message: "Đề thi không tồn tại!"
+      });
+    }
+    const status = await db.Status.findOne({
+      where: { name: "Approved" }
+    });
+
+    if (!status) {
+      return res.status(404).json({
+        message: "Không tìm thấy trạng thái!"
+      });
+    }
+    exam.status_id = status.id;
+
+    await exam.save();
+    return res.status(200).json({
+      message: "Đã duyệt đề thi",
+      data: exam
+    });
+  } catch (err) {
+    return res.status(500).json({
+      error: err.message
+    });
+  }
+};
+
+//hủy duyệt đề thi
+const RejectExam = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const exam = await db.Exam.findOne({ where: { id } });
+
+    if (!exam) {
+      return res.status(404).json({
+        message: "Đề thi không tồn tại!"
+      });
+    }
+    const status = await db.Status.findOne({
+      where: { name: "Rejected" }
+    });
+
+    if (!status) {
+      return res.status(404).json({
+        message: "Không tìm thấy trạng thái!"
+      });
+    }
+    exam.status_id = status.id;
+
+    await exam.save(); 
+    return res.status(200).json({
+      message: "Đã từ chối đề thi",
+      data: exam
+    });
   } catch (err) {
     return res.status(500).json({
       error: err.message
@@ -214,51 +364,16 @@ const GetExamDetail = async (req, res) => {
     });
   }
 };
-
-//lấy danh sách đề thi theo lớp
-// const GetAllExamByGrade = async (req, res) => {
-//   try {
-//     const { grade_id } = req.params;
-//     const exams = await db.Exam.findAll({
-//       where: { grade_id },
-//       include: [
-//         {
-//           model: db.Grade,
-//           attributes: ["id", "grade"]
-//         },
-//         {
-//           model: db.Subject,
-//           attributes: ["id", "name"]
-//         },
-//         {
-//           model: db.User,
-//           attributes: ["id", "username"]
-//         },
-//         {
-//           model: db.Question,
-//           attributes: [
-//             "id",
-//             "content",
-//             "content_img",
-//             "correct_answer"
-//           ]
-//         }
-//       ],
-//       order: [["id", "DESC"]]
-//     });
-//     return res.json(exams);
-//   } catch (err) {
-//     return res.status(500).json({
-//       error: err.message
-//     });
-//   }
-// };
     
 
 module.exports = {
   GetPaged,
   CreateExam,
+  UpdateExam,
+  DeleteExam,
+  ApproveExam,
+  RejectExam,
   GetAllExams,
   GetExamDetail,
-  // GetAllExamByGrade
+  GetExamDetail,
 };
