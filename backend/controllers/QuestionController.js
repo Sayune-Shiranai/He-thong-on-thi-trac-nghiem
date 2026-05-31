@@ -215,8 +215,62 @@ const UploadQuestionImage = async (req, res) => {
   }
 };
 
+const ApproveQuestion = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const question = await db.Question.findOne({
+      where: { id }
+    });
+
+    if (!question) {
+      return res.status(404).json({
+        message: "Câu hỏi không tồn tại"
+      });
+    }
+
+    question.status = "approved";
+    await question.save();
+    return res.json({
+      message: "Duyệt câu hỏi thành công",
+      data: question
+    });
+  } catch (err) {
+    return res.status(500).json({
+      error: err.message
+    });
+  }
+};
+
+const RejectQuestion = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const question = await db.Question.findOne({
+      where: { id }
+    });
+
+    if (!question) {
+      return res.status(404).json({
+        message: "Câu hỏi không tồn tại"
+      });
+    }
+
+    question.status = "rejected";
+    await question.save();
+    return res.json({
+      message: "Từ chối câu hỏi thành công",
+      data: question
+    });
+  } catch (err) {
+    return res.status(500).json({
+      error: err.message
+    });
+  }
+};
+
 module.exports = {
   GetPaged,
   CreateQuestion,
-  UploadQuestionImage
+  UploadQuestionImage,
+  ApproveQuestion,
+  RejectQuestion
 };
