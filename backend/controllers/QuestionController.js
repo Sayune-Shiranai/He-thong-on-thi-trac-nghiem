@@ -58,6 +58,7 @@ const GetPaged = async (req, res) => {
     }
 }
 
+// create question
 const CreateQuestion = async (req, res) => {
   try {
     const {
@@ -128,6 +129,7 @@ const CreateQuestion = async (req, res) => {
   }
 };
 
+// create question by upload image
 const UploadQuestionImage = async (req, res) => {
   try {
     const {
@@ -215,6 +217,7 @@ const UploadQuestionImage = async (req, res) => {
   }
 };
 
+// duyệt câu hỏi
 const ApproveQuestion = async (req, res) => {
   try {
     const { id } = req.params;
@@ -228,7 +231,7 @@ const ApproveQuestion = async (req, res) => {
       });
     }
 
-    question.status = "approved";
+    question.status = "Approved";
     await question.save();
     return res.json({
       message: "Duyệt câu hỏi thành công",
@@ -241,6 +244,40 @@ const ApproveQuestion = async (req, res) => {
   }
 };
 
+//delete question
+const DeleteQuestion = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const question = await db.Question.findOne({
+      where: { id }
+    });
+
+    if (!question) {
+      return res.status(404).json({
+        message: "Câu hỏi không tồn tại"
+      });
+    }
+
+    // if (question.content_img) {
+    //   const imagePath = path.join(__dirname, "..", "public", question.content_img);
+    //   if (fs.existsSync(imagePath)) {
+    //     fs.unlinkSync(imagePath);
+    //   }
+    // }
+
+    await question.destroy();
+    return res.json({
+      message: "Xóa câu hỏi thành công"
+    });
+  }
+  catch (err) {
+    return res.status(500).json({
+      error: err.message
+    });
+  }
+}
+
+// hủy duyệt câu hỏi
 const RejectQuestion = async (req, res) => {
   try {
     const { id } = req.params;
@@ -254,10 +291,10 @@ const RejectQuestion = async (req, res) => {
       });
     }
 
-    question.status = "rejected";
+    question.status = "Rejected";
     await question.save();
     return res.json({
-      message: "Từ chối câu hỏi thành công",
+      message: "Hủy duyệt câu hỏi thành công",
       data: question
     });
   } catch (err) {
