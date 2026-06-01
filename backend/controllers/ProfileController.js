@@ -1,72 +1,30 @@
 const db = require('../models/index.js');
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcrypt');
 
 // lấy thông tin profile
 const GetProfile = async (req, res) => {
   try {
-    const { id } = req.params;
+    if (!req.user?.id) {
+      return res.status(401).json({
+        message: "Chưa đăng nhập!"
+      });
+    }
 
     const user = await db.User.findOne({
-      where: { id },
-      include: [
-        {
-          model: db.Role
-        }
-      ],
-      attributes: {
-        exclude: ['password']
+      where: { id: req.user.id },
+      attributes: { 
+        exclude: ["password", "refreshToken"]
       }
     });
 
     if (!user) {
-      return res.status(404).json({
-        error: 'Không tìm thấy người dùng!'
+      return res.status(404).json({ 
+        message: "Không tìm thấy người dùng!" 
       });
     }
-
-    return res.json(user);
-  } catch (err) {
-    return res.status(500).json({
-      error: err.message
-    });
-  }
-};
-
-// cập nhật profile
-const UpdateProfile = async (req, res) => {
-  try {
-    const { id } = req.params;
-
-    const {
-      fullname,
-      username,
-      email,
-      phone,
-      address,
-      avatar
-    } = req.body;
-
-    const user = await db.User.findOne({
-      where: { id }
-    });
-
-    if (!user) {
-      return res.status(404).json({
-        error: 'Không tìm thấy người dùng!'
-      });
-    }
-
-    await user.update({
-      fullname,
-      username,
-      email,
-      phone,
-      address,
-      avatar
-    });
 
     return res.json({
-      message: 'Cập nhật profile thành công!',
+      message: "Lấy thông tin người dùng thành công!",
       data: user
     });
   } catch (err) {
@@ -74,92 +32,116 @@ const UpdateProfile = async (req, res) => {
       error: err.message
     });
   }
+
 };
 
+// cập nhật profile (tạm thời bỏ)
+// const UpdateProfile = async (req, res) => {
+//   try {
+//     const {
+//       fullname,
+//       username,
+//       email,
+//       phone,
+//       address,
+//       avatar
+//     } = req.body;
+
+//     const user = await db.User.findOne({
+//       where: { id }
+//     });
+
+//     if (!user) {
+//       return res.status(404).json({
+//         message: "Không tìm thấy người dùng!"
+//       });
+//     }
+
+//     await user.update({
+//       fullname,
+//       username,
+//       email,
+//       phone,
+//       address,
+//       avatar
+//     });
+
+//     return res.json({
+//       message: 'Cập nhật profile thành công!',
+//       data: user
+//     });
+//   } catch (err) {
+//     return res.status(500).json({
+//       error: err.message
+//     });
+//   }
+// };
+
 // đổi mật khẩu
+const bcrypt = require("bcrypt");
+
 const ChangePassword = async (req, res) => {
   try {
-    const { id } = req.params;
-
-    const {
-      old_password,
-      new_password
-    } = req.body;
-
-    const user = await db.User.findOne({
-      where: { id }
-    });
-
-    if (!user) {
-      return res.status(404).json({
-        error: 'Không tìm thấy người dùng!'
+    if (!req.user?.id) {
+      return res.status(401).json({
+        message: "Chưa đăng nhập!"
       });
     }
 
-    const checkPassword = await bcrypt.compare(
+    const { old_password, new_password } = req.body;
+
+    if (!old_password || !new_password) {
+      return res.status(400).json({
+        message: "Vui lòng nhập đầy đủ thông tin!"
+      });
+    }
+
+    const user = await db.User.findByPk(req.user.id);
+
+    if (!user) {
+      return res.status(404).json({
+        message: "Không tìm thấy người dùng!"
+      });
+    }
+
+    const isOldPasswordValid = await bcrypt.compare(
       old_password,
       user.password
     );
 
-    if (!checkPassword) {
+    if (!isOldPasswordValid) {
       return res.status(400).json({
-        error: 'Mật khẩu cũ không đúng!'
+        message: "Mật khẩu cũ không đúng!"
       });
     }
 
-    const salt = await bcrypt.genSalt(10);
-
-    const hashPassword = await bcrypt.hash(
+    const isSamePassword = await bcrypt.compare(
       new_password,
-      salt
+      user.password
     );
 
-    await user.update({
-      password: hashPassword
-    });
-
-    return res.json({
-      message: 'Đổi mật khẩu thành công!'
-    });
-  } catch (err) {
-    return res.status(500).json({
-      error: err.message
-    });
-  }
-};
-
-// upload avatar
-const UploadAvatar = async (req, res) => {
-  try {
-    const { id } = req.params;
-
-    const user = await db.User.findOne({
-      where: { id }
-    });
-
-    if (!user) {
-      return res.status(404).json({
-        error: 'Không tìm thấy người dùng!'
-      });
-    }
-
-    if (!req.file) {
+    if (isSamePassword) {
       return res.status(400).json({
-        error: 'Vui lòng chọn ảnh!'
+        message: "Mật khẩu mới phải khác mật khẩu cũ!"
       });
     }
 
-    const avatar = `/uploads/avatar/${req.file.filename}`;
+    const hashPassword = await bcrypt.hash(new_password,10);
 
     await user.update({
-      avatar
+      password: hashPassword,
+      refreshToken: null
     });
 
-    return res.json({
-      message: 'Upload avatar thành công!',
-      avatar
+    res.clearCookie("accessToken");
+    res.clearCookie("refreshToken");
+
+    return res.status(200).json({
+      message: "Đổi mật khẩu thành công. Vui lòng đăng nhập lại!"
     });
+
   } catch (err) {
+    console.error("ChangePassword Error:", err);
     return res.status(500).json({
       error: err.message
     });
@@ -168,7 +150,5 @@ const UploadAvatar = async (req, res) => {
 
 module.exports = {
   GetProfile,
-  UpdateProfile,
   ChangePassword,
-  UploadAvatar
 };

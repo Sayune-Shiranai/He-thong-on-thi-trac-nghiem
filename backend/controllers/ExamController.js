@@ -290,33 +290,42 @@ const RejectExam = async (req, res) => {
 //lấy danh sách tất cả đề thi
 const GetAllExams = async (req, res) => {
     try {
-        const exams = await db.Exam.findAll({
-            include: [
-                {
-                    model: db.Grade,
-                    attributes: ["id", "grade"]
-                },
-                {
-                    model: db.Subject,
-                    attributes: ["id", "name"]
-                },
-                {
-                    model: db.Question,
-                    attributes: [
-                        "id",
-                        "content",
-                        "content_img",
-                        "option_a",
-                        "option_b",
-                        "option_c",
-                        "option_d",
-                        "correct_answer"
-                    ]
-                }
-            ],
-            order: [["id", "DESC"]]
-        });
-        return res.json(exams);
+      const rejectStatus = await db.Status.findOne({
+        where: { name: "Rejected" }
+      });
+
+      const exams = await db.Exam.findAll({
+        where: {
+          status_id: {
+            [Op.ne]: rejectStatus.id
+          }
+        },
+        include: [
+            {
+                model: db.Grade,
+                attributes: ["id", "grade"]
+            },
+            {
+                model: db.Subject,
+                attributes: ["id", "name"]
+            },
+            {
+                model: db.Question,
+                attributes: [
+                    "id",
+                    "content",
+                    "content_img",
+                    "option_a",
+                    "option_b",
+                    "option_c",
+                    "option_d",
+                    "correct_answer"
+                ]
+            }
+        ],
+        order: [["id", "DESC"]]
+      });
+      return res.json(exams);
     } catch (err) {
         res.status(500).send(err.message);
     }
@@ -331,9 +340,6 @@ const GetExamDetail = async (req, res) => {
       include: [
         {
           model: db.Question,
-          through: {
-            attributes: []
-          },
           attributes: [
             "id",
             "content",
