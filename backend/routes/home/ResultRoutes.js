@@ -20,7 +20,6 @@ router.post('/submit', SubmitExam);
 router.get('/detail/:id', GetById);
 
 // GET /api/results/my-results?user_id=1 - Lịch sử thi của user
-// 👉 Lưu ý: Cần truyền user_id qua query hoặc từ auth
 router.get('/my-results', GetByUser);
 
 // GET /api/results/exam/:exam_id - Kết quả theo đề thi
