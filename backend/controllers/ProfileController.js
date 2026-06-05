@@ -1,6 +1,5 @@
 const db = require('../models/index.js');
-const bcrypt = require('bcrypt');
-
+const bcrypt = require("bcrypt");
 // lấy thông tin profile
 const GetProfile = async (req, res) => {
   try {
@@ -78,8 +77,6 @@ const GetProfile = async (req, res) => {
 // };
 
 // đổi mật khẩu
-const bcrypt = require("bcrypt");
-
 const ChangePassword = async (req, res) => {
   try {
     if (!req.user?.id) {

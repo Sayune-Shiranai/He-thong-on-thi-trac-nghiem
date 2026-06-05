@@ -66,7 +66,7 @@ app.use("/dashboard/question", questionRoutes) // /dashboard/question
 app.use("/exam", ExamRoutes) // /dashboard/exam
 app.use("/question", QuestionRoutes) // /dashboard/question
 app.use("/exam_question", Exam_QuestionRoutes) // /dashboard/exam_question
-// app.use("/profile", ProfileRoutes) // /dashboard/profile
+app.use("/profile", ProfileRoutes) // /dashboard/profile
 
 //auth
 app.use("/register", RegisterRoutes); // /register
@@ -86,16 +86,6 @@ app.get("/connectDB", async (req, res) => {
     res.status(500).json({ success: false, message: "Kết nối thất bại", error: err.message });
   }
 });
-
-// app.get("/syncDB", async (req, res) => {
-//   try {
-//     await db.sequelize.sync({ alter: true });
-//     res.json({ success: true, message: "Đồng bộ database thành công!" });
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({ success: false, message: "Đồng bộ database thất bại", error: err.message });
-//   }
-// });
 
 app.listen(3000, () => {
   console.log(`Server chạy tại http://localhost:3000`);
