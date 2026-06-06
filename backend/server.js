@@ -41,6 +41,7 @@ const ExamRoutes = require("./routes/home/ExamRoutes");
 const QuestionRoutes = require("./routes/home/QuestionRoutes");
 const Exam_QuestionRoutes = require("./routes/home/Exam_QuestionRoutes");
 const ProfileRoutes = require("./routes/home/ProfileRoutes");
+const ResultRoutes = require("./routes/home/ResultRoutes");
 // const ExamResultRoutes = require("./routes/home/ExamResultRoutes");
 
 //auth routes
@@ -67,6 +68,7 @@ app.use("/exam", ExamRoutes) // /dashboard/exam
 app.use("/question", QuestionRoutes) // /dashboard/question
 app.use("/exam_question", Exam_QuestionRoutes) // /dashboard/exam_question
 app.use("/profile", ProfileRoutes) // /dashboard/profile
+app.use("/result", ResultRoutes);
 
 //auth
 app.use("/register", RegisterRoutes); // /register
