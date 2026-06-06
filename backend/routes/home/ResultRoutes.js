@@ -8,7 +8,7 @@ const {
   GetByUser,
   GetByExam,
   DeleteResult
-} = require('../controllers/ResultController');
+} = require('../../controllers/ResultController');
 
 // GET /api/results - Danh sách kết quả (phân trang)
 router.get('/', GetPaged);
