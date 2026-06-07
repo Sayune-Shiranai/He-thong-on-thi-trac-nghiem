@@ -44,7 +44,7 @@ module.exports = {
           model: 'Statuses',
           key: 'id'
         },
-        onDelete: 'CASCADE'
+        onUpdate: 'CASCADE'
       },
       createdAt: { 
         type: Sequelize.DATE, 
