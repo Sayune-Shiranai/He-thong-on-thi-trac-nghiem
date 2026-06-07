@@ -33,7 +33,7 @@ npx sequelize-cli db:migrate
 
 ### Tạo tất cả seeders ( Tạo tất cả dữ liệu mẫu nếu cần )
 ```bash
-
+npx sequelize-cli db:seed:all
 ```
 
 ### 4.Chạy server
