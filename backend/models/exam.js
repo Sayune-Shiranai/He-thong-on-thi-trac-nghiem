@@ -19,7 +19,11 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Exam.init({
-    title: DataTypes.STRING
+    title: DataTypes.STRING,
+    status_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
   }, {
     sequelize,
     modelName: 'Exam',

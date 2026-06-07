@@ -24,7 +24,11 @@ module.exports = (sequelize, DataTypes) => {
     option_c: DataTypes.STRING,
     option_d: DataTypes.STRING,
     answer_count: DataTypes.INTEGER,
-    correct_answer: DataTypes.STRING
+    correct_answer: DataTypes.STRING,
+    status_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
   }, {
     sequelize,
     modelName: 'Question',
