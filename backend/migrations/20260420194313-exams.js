@@ -37,6 +37,15 @@ module.exports = {
         },
         onDelete: 'CASCADE'
       },
+      status_id: { 
+        type: Sequelize.INTEGER, 
+        allowNull: false,
+        references: {
+          model: 'Statuses',
+          key: 'id'
+        },
+        onDelete: 'CASCADE'
+      },
       createdAt: { 
         type: Sequelize.DATE, 
         defaultValue: Sequelize.NOW 
