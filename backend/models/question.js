@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
       Question.belongsTo(models.Subject, { foreignKey: 'subject_id' });
       Question.belongsTo(models.Grade, { foreignKey: 'grade_id' });
       Question.hasMany(models.Resultdetail, { foreignKey: 'question_id' });
+      Question.belongsTo(models.Status, { foreignKey: 'status_id' });
 
       Question.belongsToMany(models.Exam, {
         through: models.Exam_Question,
