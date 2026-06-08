@@ -1,1 +1,1 @@
-npx sequelize-cli model:generate --name 
+npx sequelize-cli model:generate --name [tên file] --attributes name:string

@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Grade.hasMany(models.Question, { foreignKey: 'grade_id' });
       Grade.hasMany(models.Exam, { foreignKey: 'grade_id' });
+      Grade.hasMany(models.Teacher_Assignment, { foreignKey: 'grade_id' });
     }
   }
   Grade.init({

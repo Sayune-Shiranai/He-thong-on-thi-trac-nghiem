@@ -1,4 +1,4 @@
-npx sequelize-cli migration:generate --name 
+npx sequelize-cli migration:generate --name [tên file] name:string
 
 npx sequelize-cli db:migrate --debug
 

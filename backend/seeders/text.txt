@@ -1,6 +1,6 @@
 npx sequelize-cli seed:generate --name 
 
-npx sequelize-cli db:seed:all
+npx sequelize-cli db:seed:all --debug
 
 npx sequelize-cli db:seed:undo:all
 

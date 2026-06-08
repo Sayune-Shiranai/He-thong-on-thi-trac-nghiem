@@ -3,13 +3,11 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await queryInterface.bulkInsert('Exams', [
+    await queryInterface.bulkInsert('Teacher_Assignments', [
       {
-        title: 'Đề thi 1',
+        user_id: 3,
         grade_id: 1,
         subject_id: 1,
-        user_id: 1,
-        status_id: 2,
         createdAt: new Date(),
         updatedAt: new Date()
       }
@@ -17,6 +15,6 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('Exams', null, {});
+    await queryInterface.bulkDelete('Teacher_Assignments', null, {});
   }
 };
