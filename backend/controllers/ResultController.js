@@ -113,32 +113,10 @@ const SubmitExam = async (req, res) => {
   }
 };
 
-// 2. GET PAGED - Danh sách kết quả (phân trang)
+// 2. GET ALL - Lấy tất cả kết quả (không phân trang)
 const GetPaged = async (req, res) => {
   try {
-    let { page = 1, limit = 10, user_id, exam_id } = req.query;
-    page = parseInt(page);
-    limit = parseInt(limit);
-    const offset = (page - 1) * limit;
-
-    let where = {};
-    
-    // Lọc theo user
-    if (user_id) {
-      where.user_id = user_id;
-    }
-    
-    // Lọc theo exam
-    if (exam_id) {
-      where.exam_id = exam_id;
-    }
-
-    // Đếm tổng records
-    const totalRecords = await db.Result.count({ where });
-
-    // Lấy danh sách kết quả
     const results = await db.Result.findAll({
-      where,
       include: [
         {
           model: db.User,
@@ -149,18 +127,10 @@ const GetPaged = async (req, res) => {
           attributes: ['id', 'title']
         }
       ],
-      limit,
-      offset,
       order: [['submitted_at', 'DESC']]
     });
 
-    const totalPages = Math.ceil(totalRecords / limit);
-
     return res.json({
-      page,
-      limit,
-      totalPages,
-      totalRecords,
       data: results
     });
 
