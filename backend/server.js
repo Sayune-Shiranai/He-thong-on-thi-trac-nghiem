@@ -32,6 +32,7 @@ const gradeRoutes = require("./routes/dashboard/GradeRoutes");
 const subjectRoutes = require("./routes/dashboard/SubjectRoutes");
 const examRoutes = require("./routes/dashboard/ExamRoutes");
 const questionRoutes = require("./routes/dashboard/QuestionRoutes");
+const teacher_assignmentRoutes = require("./routes/dashboard/Teacher_AssignmentRoutes");
 // const exam_questionRoutes = require("./routes/dashboard/Exam_QuestionRoutes");
 
 
@@ -61,6 +62,7 @@ app.use("/dashboard/grade", gradeRoutes) // /dashboard/grade
 app.use("/dashboard/subject", subjectRoutes) // /dashboard/subject
 app.use("/dashboard/exam", examRoutes) // /dashboard/exam
 app.use("/dashboard/question", questionRoutes) // /dashboard/question
+app.use("/dashboard/teacher", teacher_assignmentRoutes) // /dashboard/teacher
 // app.use("/dashboard/exam_question", exam_questionRoutes) // /dashboard/exam_question
 
 //home

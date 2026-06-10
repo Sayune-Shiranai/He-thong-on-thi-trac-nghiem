@@ -3,11 +3,12 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
+    const passwordHash = await bcrypt.hash('123456', 10);
     await queryInterface.bulkInsert('Users', [
       {
         username: 'admin',
         email: 'admin@example.com',
-        password: 'admin',
+        password: passwordHash,
         role_id: 1,
         img_avatar: null,
         img_background: null,
@@ -19,7 +20,7 @@ module.exports = {
       {
         username: 'mod',
         email: 'mod@example.com',
-        password: 'mod',
+        password: passwordHash,
         role_id: 2,
         img_avatar: null,
         img_background: null,
@@ -31,7 +32,7 @@ module.exports = {
       {
         username: 'teacher',
         email: 'teacher@example.com',
-        password: 'teacher',
+        password: passwordHash,
         role_id: 3,
         img_avatar: null,
         img_background: null,
@@ -43,7 +44,7 @@ module.exports = {
       {
         username: 'student',
         email: 'student@example.com',
-        password: 'student',
+        password: passwordHash,
         role_id: 4,
         img_avatar: null,
         img_background: null,
