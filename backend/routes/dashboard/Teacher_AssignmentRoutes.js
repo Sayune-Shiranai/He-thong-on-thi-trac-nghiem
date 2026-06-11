@@ -3,6 +3,7 @@ const express = require("express");
 
 const {
     GetPaged,
+    CreateTeacherAssignment,
     UpdateTeacherAssignment,
     DeleteTeacherAssignment,
     // UserGetAllForum,
@@ -12,6 +13,7 @@ const {
 const router = express.Router();
 
 router.get("/", GetPaged); // dashboard/teacher-assignment
+router.post("/create", CreateTeacherAssignment); // dashboard/teacher-assignment/create
 router.put("/update/:id", UpdateTeacherAssignment); // dashboard/teacher-assignment/update/:id
 router.delete("/delete/:id", DeleteTeacherAssignment); // dashboard/teacher-assignment/delete/:id
 

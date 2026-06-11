@@ -59,30 +59,94 @@ const GetPaged = async (req, res) => {
   }
 }
 
-//update teacher_assignment
+//create teacher_assignment
+const CreateTeacherAssignment = async (req, res) => {
+  try {
+    const { user_id, grade_ids, subject_ids } = req.body;
+
+    const teacher = await db.User.findOne({
+      where: { id: user_id },
+      include: [
+        {
+          model: db.Role
+        }
+      ]
+    });
+
+    if (!teacher) {
+      return res.status(404).json({ message: "Không tìm thấy giáo viên!" });
+    }
+
+    if (teacher.Role?.name !== "Teacher") {
+      return res.status(400).json({ message: "Người dùng không phải là giáo viên" });
+    }
+
+    const teacher_assignments = [];
+
+    for (const grade_id of grade_ids) {
+      for (const subject_id of subject_ids) {
+        teacher_assignments.push({
+          user_id,
+          grade_id,
+          subject_id
+        });
+      }
+    }
+
+    await db.Teacher_Assignment.bulkCreate(teacher_assignments);
+    
+    return res.json({ message: "Giáo viên đã được tạo thành công", data: teacher_assignments });
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+}
+
+//update teacher_assignment (chưa hoàn thiện)
 const UpdateTeacherAssignment = async (req, res) => {
   try {
     const { id } = req.params;
-    const { grade_id, subject_id } = req.body;
+    const { grade_ids, subject_ids } = req.body;
 
     const teacher_assignment = await db.Teacher_Assignment.findOne({
       where: { id }
     });
 
     if (!teacher_assignment) {
-      return res.status(404).json({ message: "Giáo viên không tồn tại" });
+      return res.status(404).json({
+        message: "Không tìm thấy giáo viên!"
+      });
     }
 
-    await teacher_assignment.update({
-      grade_id,
-      subject_id
+    const user_id = teacher_assignment.user_id;
+
+    await db.Teacher_Assignment.destroy({
+      where: { user_id }
     });
 
-    return res.json({ message: "Giáo viên đã được cập nhật thành công" });
+    const teacher_assignments = [];
+
+    for (const grade_id of grade_ids) {
+      for (const subject_id of subject_ids) {
+        teacher_assignments.push({
+          user_id,
+          grade_id,
+          subject_id
+        });
+      }
+    }
+
+    await db.Teacher_Assignment.bulkCreate(teacher_assignments);
+
+    return res.json({
+      message: "Cập nhật phân công thành công!"
+    });
+
   } catch (err) {
-    res.status(500).send(err.message);
+    res.status(500).json({
+      message: err.message
+    });
   }
-}
+};
 
 //delete teacher_assignment
 const DeleteTeacherAssignment = async (req, res) => {
@@ -107,6 +171,7 @@ const DeleteTeacherAssignment = async (req, res) => {
 
 module.exports = {
   GetPaged,
+  CreateTeacherAssignment,
   UpdateTeacherAssignment,
   DeleteTeacherAssignment
 }
