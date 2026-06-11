@@ -66,11 +66,11 @@ app.use("/dashboard/teacher", teacher_assignmentRoutes) // /dashboard/teacher
 // app.use("/dashboard/exam_question", exam_questionRoutes) // /dashboard/exam_question
 
 //home
-app.use("/exam", ExamRoutes) // /dashboard/exam
-app.use("/question", QuestionRoutes) // /dashboard/question
-app.use("/exam_question", Exam_QuestionRoutes) // /dashboard/exam_question
-app.use("/profile", ProfileRoutes) // /dashboard/profile
-app.use("/result", ResultRoutes);
+app.use("/exam", ExamRoutes) // /exam
+app.use("/question", QuestionRoutes) // /question
+app.use("/exam_question", Exam_QuestionRoutes) // /exam_question
+app.use("/profile", ProfileRoutes) // /profile
+app.use("/result", ResultRoutes); // /result
 
 //auth
 app.use("/register", RegisterRoutes); // /register
