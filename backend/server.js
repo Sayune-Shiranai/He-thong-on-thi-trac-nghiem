@@ -40,7 +40,7 @@ const teacher_assignmentRoutes = require("./routes/dashboard/Teacher_AssignmentR
 //home routes
 const ExamRoutes = require("./routes/home/ExamRoutes");
 const QuestionRoutes = require("./routes/home/QuestionRoutes");
-const Exam_QuestionRoutes = require("./routes/home/Exam_QuestionRoutes");
+// const Exam_QuestionRoutes = require("./routes/home/Exam_QuestionRoutes");
 const ProfileRoutes = require("./routes/home/ProfileRoutes");
 const ResultRoutes = require("./routes/home/ResultRoutes");
 // const ExamResultRoutes = require("./routes/home/ExamResultRoutes");
@@ -68,7 +68,7 @@ app.use("/dashboard/teacher", teacher_assignmentRoutes) // /dashboard/teacher
 //home
 app.use("/exam", ExamRoutes) // /exam
 app.use("/question", QuestionRoutes) // /question
-app.use("/exam_question", Exam_QuestionRoutes) // /exam_question
+// app.use("/exam_question", Exam_QuestionRoutes) // /exam_question
 app.use("/profile", ProfileRoutes) // /profile
 app.use("/result", ResultRoutes); // /result
 
