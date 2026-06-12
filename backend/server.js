@@ -38,6 +38,8 @@ const teacher_assignmentRoutes = require("./routes/dashboard/Teacher_AssignmentR
 
 
 //home routes
+const SubjectRoutes = require("./routes/home/SubjectRoutes");
+const GradeRoutes = require("./routes/home/GradeRoutes");
 const ExamRoutes = require("./routes/home/ExamRoutes");
 const QuestionRoutes = require("./routes/home/QuestionRoutes");
 // const Exam_QuestionRoutes = require("./routes/home/Exam_QuestionRoutes");
@@ -54,7 +56,7 @@ const Authentication = require("./middlewares/Authentication");
 const Authorization = require("./middlewares/Authorization");
 
 //dashboard 
-// app.use("/dashboard", Authentication, Authorization("Admin", "Mod"));
+app.use("/dashboard", Authentication, Authorization("Admin", "Mod"));
 
 app.use("/dashboard/role", roleRoutes); // /dashboard/role
 app.use("/dashboard/user", userRoutes) // /dashboard/user
@@ -66,6 +68,8 @@ app.use("/dashboard/teacher", teacher_assignmentRoutes) // /dashboard/teacher
 // app.use("/dashboard/exam_question", exam_questionRoutes) // /dashboard/exam_question
 
 //home
+app.use("/subject", SubjectRoutes) // /subject
+app.use("/grade", GradeRoutes) // /grade
 app.use("/exam", ExamRoutes) // /exam
 app.use("/question", QuestionRoutes) // /question
 // app.use("/exam_question", Exam_QuestionRoutes) // /exam_question

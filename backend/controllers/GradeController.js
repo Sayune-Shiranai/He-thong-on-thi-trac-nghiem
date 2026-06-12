@@ -127,11 +127,52 @@ const GetAllExamsByGrade = async (req, res) => {
     }
 }
 
+const GetGradesByTeacherAssignment = async (req, res) => {
+  try {
+    if (!req.user?.id) {
+      return res.status(401).json({
+        message: "Chưa đăng nhập!"
+      });
+    }
+
+    const teacherAssignments = await db.Teacher_Assignment.findAll({
+      where: {
+        user_id: req.user.id
+      },
+      include: [
+        {
+          model: db.Grade,
+          attributes: ["id", "grade"]
+        }
+      ]
+    });
+
+    const grades = [
+      ...new Map(
+        teacherAssignments.map(item => [
+          item.Grade.id,
+          item.Grade
+        ])
+      ).values()
+    ];
+
+    return res.json({
+      data: grades
+    });
+
+  } catch (err) {
+    return res.status(500).json({
+      message: err.message
+    });
+  }
+};
+
 module.exports = {
     GetPaged,
     CreateGrade,
     UpdateGrade,
     DeleteGrade,
     GetAllGrades,
-    GetAllExamsByGrade
+    GetAllExamsByGrade,
+    GetGradesByTeacherAssignment
 }

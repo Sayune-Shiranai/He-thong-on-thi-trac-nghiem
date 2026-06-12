@@ -127,11 +127,52 @@ const GetAllExamsBySubject = async (req, res) => {
     }
 }
 
+const GetSubjectsByTeacherAssignment = async (req, res) => {
+  try {
+    if (!req.user?.id) {
+      return res.status(401).json({
+        message: "Chưa đăng nhập!"
+      });
+    }
+
+    const teacherAssignments = await db.Teacher_Assignment.findAll({
+      where: {
+        user_id: req.user.id
+      },
+      include: [
+        {
+          model: db.Subject,
+          attributes: ["id", "name"]
+        }
+      ]
+    });
+
+    const subjects = [
+      ...new Map(
+        teacherAssignments.map(item => [
+          item.Subject.id,
+          item.Subject
+        ])
+      ).values()
+    ];
+
+    return res.json({
+      data: subjects
+    });
+
+  } catch (err) {
+    return res.status(500).json({
+      message: err.message
+    });
+  }
+};
+
 module.exports = {
     GetPaged,
     CreateSubject,
     UpdateSubject,
     DeleteSubject,
     GetAllSubjects,
-    GetAllExamsBySubject
+    GetAllExamsBySubject,
+    GetSubjectsByTeacherAssignment
 }
