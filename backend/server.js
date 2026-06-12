@@ -54,7 +54,7 @@ const Authentication = require("./middlewares/Authentication");
 const Authorization = require("./middlewares/Authorization");
 
 //dashboard 
-app.use("/dashboard", Authentication, Authorization("Admin", "Mod"));
+// app.use("/dashboard", Authentication, Authorization("Admin", "Mod"));
 
 app.use("/dashboard/role", roleRoutes); // /dashboard/role
 app.use("/dashboard/user", userRoutes) // /dashboard/user

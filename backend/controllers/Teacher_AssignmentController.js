@@ -62,7 +62,7 @@ const GetPaged = async (req, res) => {
 //create teacher_assignment
 const CreateTeacherAssignment = async (req, res) => {
   try {
-    const { user_id, grade_ids, subject_ids } = req.body;
+    let { user_id, grade_ids, subject_ids } = req.body;
 
     const teacher = await db.User.findOne({
       where: { id: user_id },
@@ -80,6 +80,9 @@ const CreateTeacherAssignment = async (req, res) => {
     if (teacher.Role?.name !== "Teacher") {
       return res.status(400).json({ message: "Người dùng không phải là giáo viên" });
     }
+
+    grade_ids = JSON.parse(grade_ids);
+    subject_ids = JSON.parse(subject_ids);
 
     const teacher_assignments = [];
 
