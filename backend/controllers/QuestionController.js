@@ -71,13 +71,6 @@ const CreateQuestion = async (req, res) => {
       correct_answer
     } = req.body;
 
-    if (!exam_id) {
-      return res.status(400).json({
-        field: "exam_id",
-        message: "Thiếu exam_id"
-      });
-    }
-
     if (!content) {
       return res.status(400).json({
         field: "content",
@@ -96,11 +89,11 @@ const CreateQuestion = async (req, res) => {
       where: { id: exam_id }
     });
 
-    if (!exam) {
-      return res.status(404).json({
-        message: "Đề thi không tồn tại"
-      });
-    }
+    // if (!exam) {
+    //   return res.status(404).json({
+    //     message: "Đề thi không tồn tại"
+    //   });
+    // }
 
     const question = await db.Question.create({
       content,
@@ -129,6 +122,39 @@ const CreateQuestion = async (req, res) => {
   }
 };
 
+// sử dụng ngân hàng câu hỏi
+const UseQuestionBank = async (req, res) => {
+  try {
+    const { exam_id, question_ids } = req.body;
+
+    const exam = await db.Exam.findOne({
+      where: { id: exam_id }
+    });
+
+    if (!exam) {
+      return res.status(404).json({
+        message: "Không tìm thấy đề thi"
+      });
+    }
+
+    const data = question_ids.map(question_id => ({
+      exam_id,
+      question_id
+    }));
+
+    await db.Exam_Question.bulkCreate(data);
+
+    return res.json({
+      message: "Thêm câu hỏi thành công"
+    });
+
+  } catch (err) {
+    return res.status(500).json({
+      message: err.message
+    });
+  }
+};
+
 // create question by upload image
 const UploadQuestionImage = async (req, res) => {
   try {
@@ -144,21 +170,15 @@ const UploadQuestionImage = async (req, res) => {
       });
     }
 
-    if (!exam_id) {
-      return res.status(400).json({
-        message: "Thiếu exam_id"
-      });
-    }
-
     const exam = await db.Exam.findOne({
       where: { id: exam_id }
     });
 
-    if (!exam) {
-      return res.status(404).json({
-        message: "Đề thi không tồn tại"
-      });
-    }
+    // if (!exam) {
+    //   return res.status(404).json({
+    //     message: "Đề thi không tồn tại"
+    //   });
+    // }
 
     const totalQuestions = parseInt(answer_count);
 
