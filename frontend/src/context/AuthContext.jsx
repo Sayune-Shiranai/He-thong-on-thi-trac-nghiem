@@ -36,8 +36,6 @@ export const AuthProvider = ({ children }) => {
     try {
       const response = await authService.profile();
 
-      console.log("PROFILE DATA:", response);
-
       const userData = {
         id: response.data.id,
         name: response.data.username,
