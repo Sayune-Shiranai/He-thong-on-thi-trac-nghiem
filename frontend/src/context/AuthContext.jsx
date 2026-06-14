@@ -69,12 +69,17 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   // role_name === 'Admin' hoặc role_id === 1 → là admin
-  const isAdmin = user?.role_name === 'Admin' || user?.role_id === 1;
-  const isTeacher = user?.role_name === 'Teacher' || user?.role_id === 2;
+  const isAdmin     = user?.role_name === 'Admin'     || user?.role_id === 1;
+  const isModerator = user?.role_name === 'Moderator' || user?.role_id === 4;
+  const isTeacher   = user?.role_name === 'Teacher'   || user?.role_id === 2;
+
+  // Admin và Moderator đều được vào trang quản trị (/dashboard)
+  const canAccessAdmin = isAdmin || isModerator;
 
   return (
     <AuthContext.Provider value={{
-      user, loading, login, register, logout, isAdmin, isTeacher
+      user, loading, login, register, logout,
+      isAdmin, isModerator, isTeacher, canAccessAdmin,
     }}>
       {children}
     </AuthContext.Provider>
