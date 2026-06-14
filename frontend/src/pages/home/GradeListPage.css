@@ -1,0 +1,52 @@
+.grade-list-page { max-width: 900px; margin: 0 auto; padding: 40px 24px 80px; }
+.grade-list-title { font-family: var(--font-display); font-size: 2rem; font-weight: 400; margin-bottom: 6px; color: var(--text-primary); }
+.grade-list-sub   { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 28px; }
+
+.grade-list { display: flex; flex-direction: column; gap: 14px; }
+
+.grade-item {
+  display: flex; align-items: center; gap: 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 18px 22px;
+  cursor: pointer; text-align: left;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-fast);
+  font-family: var(--font-body);
+  width: 100%;
+}
+.grade-item:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+  border-color: var(--accent-secondary);
+}
+.grade-item.empty { border-color: var(--accent-danger); }
+
+.grade-item-label { flex: 1; font-size: 1.05rem; font-weight: 600; color: var(--text-primary); }
+
+.grade-item-badge {
+  padding: 8px 22px; border-radius: var(--radius-full);
+  background: rgba(200,80,42,0.65); color: #fff;
+  font-size: 0.9rem; font-weight: 600; white-space: nowrap;
+}
+.grade-item-badge.badge-low { background: var(--accent-danger); }
+
+/* Breadcrumb trang chi tiết */
+.grade-detail-back { margin-bottom: 16px; }
+.grade-detail-header {
+  margin-bottom: 20px; padding-bottom: 10px;
+  border-bottom: 3px solid var(--accent-danger);
+}
+.grade-detail-title {
+  font-family: var(--font-display); font-size: 1.3rem;
+  font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em;
+  color: var(--text-primary);
+}
+
+@media (max-width: 600px) {
+  .grade-list-page { padding: 24px 16px; }
+  .grade-item { padding: 14px 16px; gap: 12px; }
+  .grade-item-label { font-size: 0.95rem; }
+  .grade-item-badge { padding: 6px 14px; font-size: 0.8rem; }
+}
