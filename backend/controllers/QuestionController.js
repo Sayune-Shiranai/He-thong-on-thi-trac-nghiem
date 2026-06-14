@@ -374,6 +374,8 @@ const RejectQuestion = async (req, res) => {
 module.exports = {
   GetPaged,
   CreateQuestion,
+  UseQuestionBank,
+  RandomQuestion,
   UploadQuestionImage,
   ApproveQuestion,
   RejectQuestion
