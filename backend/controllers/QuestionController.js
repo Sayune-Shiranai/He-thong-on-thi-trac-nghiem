@@ -155,6 +155,53 @@ const UseQuestionBank = async (req, res) => {
   }
 };
 
+//random câu hỏi
+const RandomQuestion = async (req, res) => {
+  try {
+    const { exam_id, count } = req.body;
+    const exam = await db.Exam.findOne({
+      where: { id: exam_id }
+    });
+
+    if (!exam) {
+      return res.status(404).json({
+        message: "Không tìm thấy đề thi"
+      });
+    }
+
+    if(isNaN(count) || count <= 0) {
+      return res.status(400).json({
+        message: "Vui lòng nhập số lượng câu hỏi hợp lệ!"
+      });
+    }
+
+    const questions = await db.Question.findAll({
+      where: {
+        grade_id: exam.grade_id,
+        subject_id: exam.subject_id
+      },
+      order: db.sequelize.random(),
+      limit: count
+    });
+
+    const data = questions.map(question => ({
+      exam_id,
+      question_id: question.id
+    }));
+
+    await db.Exam_Question.bulkCreate(data);
+
+    return res.json({
+      message: "Thêm câu hỏi thành công",
+      data: questions
+    });
+  } catch (err) {
+    return res.status(500).json({
+      message: err.message
+    });
+  }
+};
+
 // create question by upload image
 const UploadQuestionImage = async (req, res) => {
   try {
