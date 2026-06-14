@@ -9,24 +9,57 @@ const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
   // Khôi phục user từ localStorage khi F5 trang
-  const [user, setUser] = useState(() => {
-    try {
-      const saved = localStorage.getItem('examflow_user');
-      return saved ? JSON.parse(saved) : null;
-    } catch {
-      return null;
-    }
-  });
-  const [loading, setLoading] = useState(false);
+  // const [user, setUser] = useState(() => {
+  //   try {
+  //     const saved = localStorage.getItem('examflow_user');
+  //     return saved ? JSON.parse(saved) : null;
+  //   } catch {
+  //     return null;
+  //   }
+  // });
+  const [user, setUser] = useState(null);
+
+  const [loading, setLoading] = useState(true);
 
   // Lưu user vào localStorage mỗi khi thay đổi
-  useEffect(() => {
-    if (user) {
-      localStorage.setItem('examflow_user', JSON.stringify(user));
-    } else {
-      localStorage.removeItem('examflow_user');
+  // useEffect(() => {
+  //   if (user) {
+  //     localStorage.setItem('examflow_user', JSON.stringify(user));
+  //   } else {
+  //     localStorage.removeItem('examflow_user');
+  //   }
+  // }, [user]);
+
+  const profile = useCallback(async () => {
+    setLoading(true);
+
+    try {
+      const response = await authService.profile();
+
+      console.log("PROFILE DATA:", response);
+
+      const userData = {
+        id: response.data.id,
+        name: response.data.username,
+        email: response.data.email,
+        role_id: response.data.role_id,
+        role_name: response.data.Role.name,
+      };
+
+      setUser(userData);
+
+      return userData;
+    } catch (err) {
+      console.error(err);
+      setUser(null);
+    } finally {
+      setLoading(false);
     }
-  }, [user]);
+  }, []);
+
+  useEffect(() => {
+    profile();
+  }, [profile]);
 
   // Đăng nhập — POST /login
   // Backend trả về: { message, user: { id, username, email, role_id, role_name }, accessToken }
@@ -78,7 +111,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider value={{
-      user, loading, login, register, logout,
+      user, loading, profile, login, register, logout,
       isAdmin, isModerator, isTeacher, canAccessAdmin,
     }}>
       {children}

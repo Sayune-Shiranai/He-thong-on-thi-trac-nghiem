@@ -13,7 +13,11 @@ const GetProfile = async (req, res) => {
       where: { id: req.user.id },
       attributes: { 
         exclude: ["password", "refreshToken"]
-      }
+      },
+      include: [{
+        model: db.Role,
+        attributes: ["name"]
+      }]
     });
 
     if (!user) {
