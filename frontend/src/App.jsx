@@ -9,6 +9,12 @@ import ProtectedRoute from './components/common/ProtectedRoute';
 
 import AuthPage           from './pages/auth/AuthPage';
 import HomePage      from './pages/home/HomePage';
+import GradePage          from './pages/home/GradePage';
+import GradeDetailPage    from './pages/home/GradeDetailPage';
+import SubjectPage        from './pages/home/SubjectPage';
+import SubjectDetailPage  from './pages/home/SubjectDetailPage';
+import ExamsPage          from './pages/home/ExamsPage';
+import GuidePage          from './pages/home/GuidePage';
 import ExamDetailPage     from './pages/exam/ExamDetailPage';
 import ExamPage           from './pages/exam/ExamPage';
 import ResultPage         from './pages/exam/ResultPage';
@@ -42,6 +48,14 @@ export default function App() {
 
             {/* Xem chi tiết đề — công khai, chỉ bấm "Bắt đầu" mới cần đăng nhập */}
             <Route path="/detail/:examId" element={<ExamDetailPage />} />
+
+            {/* ── LỚP / MÔN HỌC / TÌM KIẾM NÂNG CAO / HƯỚNG DẪN — công khai ── */}
+            <Route path="/grade"                element={<GradePage />} />
+            <Route path="/grade/:gradeKey"      element={<GradeDetailPage />} />
+            <Route path="/subject"              element={<SubjectPage />} />
+            <Route path="/subject/:subjectName" element={<SubjectDetailPage />} />
+            <Route path="/exams"                element={<ExamsPage />} />
+            <Route path="/guide"                element={<GuidePage />} />
 
             {/* ── Cần đăng nhập ── */}
             <Route path="/exam/:examId"      element={<ProtectedRoute><ExamPage /></ProtectedRoute>} />
