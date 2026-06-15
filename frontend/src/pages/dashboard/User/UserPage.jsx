@@ -101,7 +101,7 @@ export default function UserPage() {
                     setPage(1);
                   }}
                 />
-                <button className="btn btn-primary">
+                <button className="btn btn-primary text-nowrap">
                   <i className="fa-solid fa-magnifying-glass me-2"></i>
                   Tìm kiếm
                 </button>
@@ -155,7 +155,7 @@ export default function UserPage() {
                             <span className="badge bg-danger">Từ chối</span>
                           )}
                         </td>
-                        <td className="text-center">
+                        <td className="text-center text-nowrap">
                           {u.Status?.name === "Pending" && (
                             <>
                               <button

@@ -96,6 +96,22 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
                   <li><Link to="/dashboard/role/create">Thêm vai trò</Link></li>
                 </ul>
               </li>
+
+              <li className={`sidebar-list ${openMenu === "teachers" ? "open" : ""}`}>
+                <div
+                  className="sidebar-link sidebar-title"
+                  onClick={() => toggleMenu("teachers")}
+                >
+                  <i className="fa fa-user"></i>
+                  <span className="ms-2">Giáo viên</span>
+                  <i className="fa fa-angle-down ms-auto sidebar-icon"></i>
+                </div>
+
+                <ul className="sidebar-submenu">
+                  <li><Link to="/dashboard/teacher">Danh sách giáo viên</Link></li>
+                  <li><Link to="/dashboard/teacher/create">Thêm phân công giáo viên</Link></li>
+                </ul>
+              </li>
             </>
           )}
 
