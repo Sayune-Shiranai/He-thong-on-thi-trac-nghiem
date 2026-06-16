@@ -57,6 +57,13 @@ export const userService = {
   ),
 };
 
+export const roleService = {
+  GetPagedRoles: (params) => api.get('/dashboard/role', { params }),
+  CreateRole: (data) => api.post('/dashboard/role/create', data),
+  DeleteRole: (id) => api.delete(`/dashboard/role/delete/${id}`),
+  GetAllRoles: (params) => api.get('/dashboard/role/all', { params }),
+};
+
 // ── Lần thi / Kết quả ──
 // Backend chưa có API riêng cho attempts → dùng mock data
 export const attemptService = {

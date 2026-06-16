@@ -5,12 +5,14 @@ const {
     GetPaged,
     CreateRole,
     UpdateRole,
-    DeleteRole
+    DeleteRole,
+    GetAllRoles
 } = require("../../controllers/RoleController.js");
 
 const router = express.Router();
 
 router.get("/", GetPaged);
+router.get("/all", GetAllRoles);
 router.post("/create", CreateRole);
 router.post("/update/:id", UpdateRole);
 router.delete("/delete/:id", DeleteRole);

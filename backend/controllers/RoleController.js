@@ -135,10 +135,20 @@ const DeleteRole = async (req, res) => {
   }
 }
 
+const GetAllRoles = async (req, res) => {
+  try {
+    const roles = await db.Role.findAll();
+    return res.json(roles);
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+}
+
 module.exports = {
   GetPaged,
   CreateRole,
   UpdateRole,
-  DeleteRole
+  DeleteRole,
+  GetAllRoles
 };
 

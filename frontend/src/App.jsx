@@ -25,6 +25,9 @@ import AdminOverviewPage  from './pages/dashboard/AdminOverviewPage';
 import AdminExamsPage     from './pages/dashboard/AdminExamsPage';
 import AdminQuestionsPage from './pages/dashboard/AdminQuestionsPage';
 import UsersPage     from './pages/dashboard/User/UserPage';
+import UpdateUserPage from './pages/dashboard/User/UpdateUser/UpdateUserPage';
+import RolePage      from './pages/dashboard/Role/RolePage';
+import CreateRolePage from './pages/dashboard/Role/CreateRole/CreateRolePage';
 import AdminResultsPage   from './pages/dashboard/AdminResultsPage';
 import AdminSubjectsPage  from './pages/dashboard/AdminSubjectsPage';
 import NotFoundPage       from './pages/NotFoundPage';
@@ -69,6 +72,9 @@ export default function App() {
               <Route path="questions" element={<AdminQuestionsPage />} />
               <Route path="subjects"  element={<AdminSubjectsPage />} />
               <Route path="user"     element={<UsersPage />} />
+              <Route path="role"     element={<RolePage />} />
+              <Route path="role/create" element={<CreateRolePage />} />
+              <Route path="user/update/:id" element={<UpdateUserPage />} />
               <Route path="results"   element={<AdminResultsPage />} />
             </Route>
 
