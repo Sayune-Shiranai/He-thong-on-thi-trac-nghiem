@@ -8,7 +8,6 @@ module.exports = {
         user_id: 3,
         grade_id: 1,
         subject_id: 1,
-        status_id: 1,
         createdAt: new Date(),
         updatedAt: new Date()
       }

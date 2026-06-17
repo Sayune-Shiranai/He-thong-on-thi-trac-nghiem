@@ -13,32 +13,38 @@ const GetPaged = async (req, res) => {
       where: { name: "Teacher" }
     });
 
-    const where = {
+    const whereUser = {
       role_id: TeacherRole.id
     };
 
     if (keyword) {
-      where.username = {
+      whereUser.username = {
         [Op.like]: `%${keyword}%`
       };
     }
 
-    const totalRecords = await db.User.count({ where });
-
-    const teacher_assignments = await db.User.findAll({
-      where,
+    const totalRecords = await db.Teacher_Assignment.count({
       include: [
         {
-          model: db.Teacher_Assignment,
-          include: [
-            {
-              model: db.Subject
-            },
-            {
-              model: db.Grade
-            }
-          ]
+          model: db.User,
+          where: whereUser
+        }
+      ]
+    });
+
+    const teacher_assignments = await db.Teacher_Assignment.findAll({
+      include: [
+        {
+          model: db.User,
+          where: whereUser,
+          attributes: ["id", "username", "email"]
         },
+        {
+          model: db.Subject
+        },
+        {
+          model: db.Grade
+        }
       ],
       limit,
       offset,
@@ -156,17 +162,19 @@ const DeleteTeacherAssignment = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const teacher_assignment = await db.Teacher_Assignment.findOne({
+    const teacher_assignment = await db.Teacher_Assignment.findAll({
         where: { id }
     });
 
-    if (!teacher_assignment) {
-        return res.status(404).json({ message: "Giáo viên không tồn tại" });
+    if (!teacher_assignment || teacher_assignment.length === 0) {
+        return res.status(404).json({ message: "Phân công giáo viên không tồn tại" });
     }
 
-    await teacher_assignment.destroy();
+    await db.Teacher_Assignment.destroy({
+        where: { id }
+    });
 
-    return res.json({ message: "Giáo viên đã được xóa thành công" });
+    return res.json({ message: "Phân công giáo viên đã được xóa thành công" });
   } catch (err) {
     res.status(500).send(err.message);
   }

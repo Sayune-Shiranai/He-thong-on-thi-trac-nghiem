@@ -64,8 +64,6 @@ export const teacherService = {
   GetTeacherById: (id) => api.get(`/dashboard/teacher/${id}`),
   UpdateTeacher: (id, data) => api.put(`/dashboard/teacher/update/${id}`, data),
   DeleteTeacher: (id) => api.delete(`/dashboard/teacher/delete/${id}`),
-  ApproveTeacher: (id) => api.post(`/dashboard/teacher/approve/${id}`, {}),
-  RejectTeacher: (id) => api.post(`/dashboard/teacher/reject/${id}`, {}),
 };
 
 // ── Lần thi / Kết quả ──

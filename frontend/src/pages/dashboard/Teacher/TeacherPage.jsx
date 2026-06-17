@@ -45,7 +45,7 @@ export default function TeacherPage() {
 
 
   const handleDelete = async (id) => { 
-    if (!window.confirm("Xóa giáo viên này?")) return; 
+    if (!window.confirm("Xóa phân quyền giáo viên này?")) return; 
     await teacherService.DeleteTeacher(id); 
     const res = await teacherService.GetPagedTeachers({
       page: 1,
@@ -139,16 +139,12 @@ export default function TeacherPage() {
                     teachers.map((t, i) => (
                       <tr key={t.id}>
                         <td className="text-center">{(page - 1) * limit + i + 1}</td>
-                        <td>{t.username}</td>
+                        <td>{t.User?.username}</td>
                         <td>
-                          {t.Teacher_Assignments?.map(a => a.Grade?.grade)
-                            .filter(Boolean)
-                            .join(", ")}
+                          {t.Grade?.grade}
                         </td>
                         <td>
-                          {t.Teacher_Assignments?.map(a => a.Subject?.name)
-                            .filter(Boolean)
-                            .join(", ")}
+                          {t.Subject?.name}
                         </td>
                         {/* <td>
                           {t.Teacher_Assignments?.[0]?.Status?.name === "Pending" && (
