@@ -117,7 +117,7 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
 
           {/* QUẢN LÝ TRUYỆN */}
           <li className="sidebar-main-title">
-            <h6>Quản lý truyện</h6>
+            <h6>Quản lý đề thi</h6>
           </li>
 
           <li className={`sidebar-list ${openMenu === "exam" ? "open" : ""}`}>

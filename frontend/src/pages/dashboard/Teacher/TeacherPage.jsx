@@ -21,8 +21,8 @@ export default function TeacherPage() {
         limit,
         keyword,
       });
-
-      console.log("API Response:", res);
+      
+      console.table(res.data);
 
       if (!ignore) {
         setTeachers(res.data || []);
@@ -31,6 +31,8 @@ export default function TeacherPage() {
     };
 
     loadUsers();
+
+    
 
     return () => {
       ignore = true;
@@ -122,7 +124,7 @@ export default function TeacherPage() {
                     <th>Tên giáo viên</th>
                     <th>Lớp</th>
                     <th>Môn</th>
-                    <th>Trạng thái kiểm duyệt</th>
+                    {/* <th>Trạng thái kiểm duyệt</th> */}
                     <th width="120">Chức năng</th>
                   </tr>
                 </thead>
@@ -138,50 +140,29 @@ export default function TeacherPage() {
                       <tr key={t.id}>
                         <td className="text-center">{(page - 1) * limit + i + 1}</td>
                         <td>{t.username}</td>
-                        <td>{t.Grade?.grade}</td>
                         <td>
-                          <span className="badge bg-info">
-                            {t.name}
-                          </span>
+                          {t.Teacher_Assignments?.map(a => a.Grade?.grade)
+                            .filter(Boolean)
+                            .join(", ")}
                         </td>
                         <td>
-                          {t.Status?.name === "Pending" && (
+                          {t.Teacher_Assignments?.map(a => a.Subject?.name)
+                            .filter(Boolean)
+                            .join(", ")}
+                        </td>
+                        {/* <td>
+                          {t.Teacher_Assignments?.[0]?.Status?.name === "Pending" && (
                             <span className="badge bg-warning text-dark">Chờ duyệt</span>
                           )}
-                          {t.Status?.name === "Approved" && (
+                          {t.Teacher_Assignments?.[0]?.Status?.name === "Approved" && (
                             <span className="badge bg-success">Đã duyệt</span>
                           )}
-                          {t.Status?.name === "Rejected" && (
+                          {t.Teacher_Assignments?.[0]?.Status?.name === "Rejected" && (
                             <span className="badge bg-danger">Từ chối</span>
                           )}
-                        </td>
+                        </td> */}
                         <td className="text-center text-nowrap">
-                          {t.Status?.name === "Pending" && (
-                            <>
-                              <button
-                                className="btn btn-sm btn-success me-2"
-                                onClick={() => handleApprove(t.id)}
-                              >
-                                ✓
-                              </button>
-                              <button
-                                className="btn btn-sm btn-warning text-dark"
-                                onClick={() => handleReject(t.id)}
-                              >
-                                ✕
-                              </button>
-                            </>
-                          )}
-
-                          {t.Status?.name === "Rejected" && (
                           <>
-                            <button
-                              className="btn btn-sm btn-success me-2"
-                              onClick={() => handleApprove(t.id)}
-                              title="Duyệt"
-                            >
-                              ✓
-                            </button>
                             <button
                               className="btn btn-sm btn-primary me-2"
                               onClick={() => handleUpdate(t.id)}
@@ -197,16 +178,6 @@ export default function TeacherPage() {
                               <FaTrash />
                             </button>
                           </>
-                          )}
-
-                          {t.Status?.name === "Approved" && (
-                            <button
-                              className="btn btn-sm btn-warning text-dark"
-                              onClick={() => handleReject(t.id)}
-                            >
-                              ✕
-                            </button>
-                          )}
                         </td>
                       </tr>
                     ))

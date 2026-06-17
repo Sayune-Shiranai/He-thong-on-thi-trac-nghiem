@@ -22,8 +22,6 @@ export default function UserPage() {
         keyword,
       });
 
-      console.log("API Response:", res);
-
       if (!ignore) {
         setUsers(res.data || []);
         setTotalPages(res.totalPages);
