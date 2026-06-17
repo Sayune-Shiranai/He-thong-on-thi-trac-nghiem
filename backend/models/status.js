@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
       Status.hasMany(models.User, { foreignKey: 'status_id' });
       Status.hasMany(models.Exam, { foreignKey: 'status_id' });
       Status.hasMany(models.Question, { foreignKey: 'status_id' });
+      Status.hasMany(models.Teacher_Assignment, { foreignKey: 'status_id' });
     }
   }
   Status.init({

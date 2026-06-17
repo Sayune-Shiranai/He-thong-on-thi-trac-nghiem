@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
         Teacher_Assignment.belongsTo(models.User, { foreignKey: 'user_id' });
         Teacher_Assignment.belongsTo(models.Grade, { foreignKey: 'grade_id' });
         Teacher_Assignment.belongsTo(models.Subject, { foreignKey: 'subject_id' });
+        Teacher_Assignment.belongsTo(models.Status, { foreignKey: 'status_id' });
     }
   }
   Teacher_Assignment.init({
@@ -21,6 +22,10 @@ module.exports = (sequelize, DataTypes) => {
 
     subject_id: {
       type: DataTypes.INTEGER,
+    },
+    status_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false
     }
   }, {
     sequelize,

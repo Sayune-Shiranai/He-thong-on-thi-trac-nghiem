@@ -33,6 +33,15 @@ module.exports = {
         },
         onDelete: 'CASCADE'
       },
+      status_id: { 
+        type: Sequelize.INTEGER, 
+        allowNull: false,
+        references: {
+          model: 'Statuses',
+          key: 'id'
+        },
+        onDelete: 'CASCADE'
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

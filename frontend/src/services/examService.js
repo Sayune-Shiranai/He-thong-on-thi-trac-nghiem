@@ -38,12 +38,7 @@ export const gradeService = {
 
 // ── Người dùng (admin) ──
 export const userService = {
-  getPagedUsers:  (params)   => api.get(
-    '/dashboard/user', 
-    { 
-      params    
-    }
-  ),
+  getPagedUsers:  (params)   => api.get('/dashboard/user', { params }),
   getUserById: (id)       => api.get(
     `/dashboard/user/${id}`
   ),
@@ -62,6 +57,15 @@ export const roleService = {
   CreateRole: (data) => api.post('/dashboard/role/create', data),
   DeleteRole: (id) => api.delete(`/dashboard/role/delete/${id}`),
   GetAllRoles: (params) => api.get('/dashboard/role/all', { params }),
+};
+
+export const teacherService = {
+  GetPagedTeachers: (params) => api.get('/dashboard/teacher', { params }),
+  GetTeacherById: (id) => api.get(`/dashboard/teacher/${id}`),
+  UpdateTeacher: (id, data) => api.put(`/dashboard/teacher/update/${id}`, data),
+  DeleteTeacher: (id) => api.delete(`/dashboard/teacher/delete/${id}`),
+  ApproveTeacher: (id) => api.post(`/dashboard/teacher/approve/${id}`, {}),
+  RejectTeacher: (id) => api.post(`/dashboard/teacher/reject/${id}`, {}),
 };
 
 // ── Lần thi / Kết quả ──

@@ -120,19 +120,35 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
             <h6>Quản lý truyện</h6>
           </li>
 
-          <li className={`sidebar-list ${openMenu === "book" ? "open" : ""}`}>
+          <li className={`sidebar-list ${openMenu === "exam" ? "open" : ""}`}>
             <div
               className="sidebar-link sidebar-title"
-              onClick={() => toggleMenu("book")}
+              onClick={() => toggleMenu("exam")}
             >
               <i className="fa-solid fa-book"></i>
-              <span className="ms-2">Quản lý truyện</span>
+              <span className="ms-2">Quản lý đề thi</span>
               <i className="fa fa-angle-down ms-auto sidebar-icon"></i>
             </div>
 
             <ul className="sidebar-submenu">
-              <li><Link to="/dashboard/book">Danh sách truyện</Link></li>
-              <li><Link to="/dashboard/book/create">Thêm truyện</Link></li>
+              <li><Link to="/dashboard/exam">Danh sách đề thi</Link></li>
+              <li><Link to="/dashboard/exam/create">Thêm đề thi</Link></li>
+            </ul>
+          </li>
+
+          <li className={`sidebar-list ${openMenu === "question" ? "open" : ""}`}>
+            <div
+              className="sidebar-link sidebar-title"
+              onClick={() => toggleMenu("question")}
+            >
+              <i className="fa-solid fa-book"></i>
+              <span className="ms-2">Quản lý câu hỏi</span>
+              <i className="fa fa-angle-down ms-auto sidebar-icon"></i>
+            </div>
+
+            <ul className="sidebar-submenu">
+              <li><Link to="/dashboard/question">Danh sách câu hỏi</Link></li>
+              <li><Link to="/dashboard/question/create">Thêm câu hỏi</Link></li>
             </ul>
           </li>
 
@@ -141,55 +157,39 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
               className="sidebar-link sidebar-title"
             >
               <i className="fa-solid fa-chart-simple"></i>
-              <span className="ms-2"><Link to="/dashboard/bookfollowing">Thống kê</Link></span>
+              <span className="ms-2"><Link to="/dashboard/questionfollowing">Thống kê</Link></span>
             </div>
           </li>
 
-          <li className={`sidebar-list ${openMenu === "category" ? "open" : ""}`}>
+          <li className={`sidebar-list ${openMenu === "grade" ? "open" : ""}`}>
             <div
               className="sidebar-link sidebar-title"
-              onClick={() => toggleMenu("category")}
+              onClick={() => toggleMenu("grade")}
             >
               <i className="fa fa-list"></i>
-              <span className="ms-2">Quản lý thể loại</span>
+              <span className="ms-2">Quản lý lớp</span>
               <i className="fa fa-angle-down ms-auto sidebar-icon"></i>
             </div>
 
             <ul className="sidebar-submenu">
-              <li><Link to="/dashboard/category">Danh sách thể loại</Link></li>
-              <li><Link to="/dashboard/category/create">Thêm thể loại</Link></li>
+              <li><Link to="/dashboard/grade">Danh sách lớp</Link></li>
+              <li><Link to="/dashboard/grade/create">Thêm lớp</Link></li>
             </ul>
           </li>
 
-          <li className={`sidebar-list ${openMenu === "author" ? "open" : ""}`}>
+          <li className={`sidebar-list ${openMenu === "subject" ? "open" : ""}`}>
             <div
               className="sidebar-link sidebar-title"
-              onClick={() => toggleMenu("author")}
+              onClick={() => toggleMenu("subject")}
             >
-              <i className="fa fa-user"></i>
-              <span className="ms-2">Quản lý tác giả</span>
+              <i className="fa fa-book"></i>
+              <span className="ms-2">Quản lý môn học</span>
               <i className="fa fa-angle-down ms-auto sidebar-icon"></i>
             </div>
 
             <ul className="sidebar-submenu">
-              <li><Link to="/dashboard/author">Danh sách tác giả</Link></li>
-              <li><Link to="/dashboard/author/create">Thêm tác giả</Link></li>
-            </ul>
-          </li>
-
-          <li className={`sidebar-list ${openMenu === "artist" ? "open" : ""}`}>
-            <div
-              className="sidebar-link sidebar-title"
-              onClick={() => toggleMenu("artist")}
-            >
-              <i className="fa-solid fa-palette"></i>
-              <span className="ms-2">Quản lý họa sĩ</span>
-              <i className="fa fa-angle-down ms-auto sidebar-icon"></i>
-            </div>
-
-            <ul className="sidebar-submenu">
-              <li><Link to="/dashboard/artist">Danh sách họa sĩ</Link></li>
-              <li><Link to="/dashboard/artist/create">Thêm họa sĩ</Link></li>
+              <li><Link to="/dashboard/subject">Danh sách môn học</Link></li>
+              <li><Link to="/dashboard/subject/create">Thêm môn học</Link></li>
             </ul>
           </li>
 
