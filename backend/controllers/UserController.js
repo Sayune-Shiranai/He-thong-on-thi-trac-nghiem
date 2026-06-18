@@ -194,6 +194,26 @@ const GetAllUsers = async (req, res) => {
   }
 }
 
+const GetAllUserRoleTeacher = async (req, res) => {
+  try {
+    const users = await db.User.findAll({
+      include: [
+        {
+          model: db.Role,
+          where: { name: "Teacher" }
+        }
+      ]
+    });
+    res.json({
+      success: true,
+      data: users
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, error: err.message });
+  }
+}
+
 module.exports = {
   GetPaged,
   UpdateUser,
@@ -201,5 +221,6 @@ module.exports = {
   ApproveUser,
   RejectUser,
   GetUserById,
-  GetAllUsers
+  GetAllUsers,
+  GetAllUserRoleTeacher
 };

@@ -68,7 +68,7 @@ const GetPaged = async (req, res) => {
 //create teacher_assignment
 const CreateTeacherAssignment = async (req, res) => {
   try {
-    let { user_id, grade_ids, subject_ids } = req.body;
+    let { user_id, grade_id, subject_id } = req.body;
 
     const teacher = await db.User.findOne({
       where: { id: user_id },
@@ -87,24 +87,43 @@ const CreateTeacherAssignment = async (req, res) => {
       return res.status(400).json({ message: "Người dùng không phải là giáo viên" });
     }
 
-    grade_ids = JSON.parse(grade_ids);
-    subject_ids = JSON.parse(subject_ids);
+    const checkGrade = await db.Grade.findOne({
+      where: { id: grade_id }
+    });
 
-    const teacher_assignments = [];
-
-    for (const grade_id of grade_ids) {
-      for (const subject_id of subject_ids) {
-        teacher_assignments.push({
-          user_id,
-          grade_id,
-          subject_id
-        });
-      }
+    if (!checkGrade) {
+      return res.status(404).json({ message: "Không tìm thấy khối lớp!" });
     }
 
-    await db.Teacher_Assignment.bulkCreate(teacher_assignments);
+    const checkSubject = await db.Subject.findOne({
+      where: { id: subject_id }
+    });
+
+    if (!checkSubject) {
+      return res.status(404).json({ message: "Không tìm thấy môn học!" });
+    }
+
+    const existedAssignment = await db.Teacher_Assignment.findOne({
+      where: {
+        user_id,
+        grade_id,
+        subject_id
+      }
+    });
+
+    if (existedAssignment) {
+      return res.status(400).json({
+        message: `Giáo viên đã được phân công môn ${checkSubject.name} này cho lớp ${checkGrade.grade} rồi!`
+      });
+    }
+
+    const teacher_assignments = await db.Teacher_Assignment.create({
+      user_id,
+      grade_id,
+      subject_id
+    });
     
-    return res.json({ message: "Giáo viên đã được tạo thành công", data: teacher_assignments });
+    return res.json({ message: "Phân công giáo viên đã được tạo thành công", data: teacher_assignments });
   } catch (err) {
     res.status(500).send(err.message);
   }

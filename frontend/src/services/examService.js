@@ -22,34 +22,31 @@ export const examQuestionService = {
 
 // ── Môn học ──
 export const subjectService = {
-  getAll: (params)     => api.get('/dashboard/subject', { params }),
-  create: (data)       => api.post('/dashboard/subject/create', data),
-  update: (id, data)   => api.post(`/dashboard/subject/update/${id}`, data),
-  delete: (id)         => api.delete(`/dashboard/subject/delete/${id}`),
+  GetPagedSubjects: (params)     => api.get('/dashboard/subject', { params }),
+  GetAllSubjects: () => api.get('/dashboard/subject/all'),
+  CreateSubject: (data)       => api.post('/dashboard/subject/create', data),
+  UpdateSubject: (id, data)   => api.post(`/dashboard/subject/update/${id}`, data),
+  DeleteSubject: (id)         => api.delete(`/dashboard/subject/delete/${id}`),
 };
 
 // ── Khối lớp ──
 export const gradeService = {
-  getAll: (params)     => api.get('/dashboard/grade', { params }),
-  create: (data)       => api.post('/dashboard/grade/create', data),
-  update: (id, data)   => api.post(`/dashboard/grade/update/${id}`, data),
-  delete: (id)         => api.delete(`/dashboard/grade/delete/${id}`),
+  GetPagedGrades: (params)     => api.get('/dashboard/grade', { params }),
+  GetAllGrades: () => api.get('/dashboard/grade/all'),
+  CreateGrade: (data)       => api.post('/dashboard/grade/create', data),
+  UpdateGrade: (id, data)   => api.post(`/dashboard/grade/update/${id}`, data),
+  DeleteGrade: (id)         => api.delete(`/dashboard/grade/delete/${id}`),
 };
 
 // ── Người dùng (admin) ──
 export const userService = {
   getPagedUsers:  (params)   => api.get('/dashboard/user', { params }),
-  getUserById: (id)       => api.get(
-    `/dashboard/user/${id}`
-  ),
+  getUserById: (id)       => api.get(`/dashboard/user/${id}`),
   updateUser:  (id, data) => api.put(`/dashboard/user/update/${id}`, data),
   deleteUser:  (id)       => api.delete(`/dashboard/user/delete/${id}`),
-  approveUser: (id)       => api.post(
-    `/dashboard/user/approve/${id}`, {}, 
-  ),
-  rejectUser:  (id)       => api.post(
-    `/dashboard/user/reject/${id}`, {}, 
-  ),
+  approveUser: (id)       => api.post(`/dashboard/user/approve/${id}`, {},),
+  rejectUser:  (id)       => api.post(`/dashboard/user/reject/${id}`, {},),
+  GetAllUserRoleTeacher: () => api.get('/dashboard/user/teacher'),
 };
 
 export const roleService = {
@@ -62,6 +59,7 @@ export const roleService = {
 export const teacherService = {
   GetPagedTeachers: (params) => api.get('/dashboard/teacher', { params }),
   GetTeacherById: (id) => api.get(`/dashboard/teacher/${id}`),
+  CreateTeacher: (data) => api.post('/dashboard/teacher/create', data),
   UpdateTeacher: (id, data) => api.put(`/dashboard/teacher/update/${id}`, data),
   DeleteTeacher: (id) => api.delete(`/dashboard/teacher/delete/${id}`),
 };

@@ -102,10 +102,11 @@ const DeleteSubject = async (req, res) => {
 //lấy danh sách tất cả môn học
 const GetAllSubjects = async (req, res) => {
     try {
-        const subjects = await db.Subject.findAll({
-            order: [["id", "DESC"]]
+        const subjects = await db.Subject.findAll();
+        return res.json({ 
+            success: true, 
+            data: subjects 
         });
-        return res.json(subjects);
     } catch (err) {
         res.status(500).send(err.message);
     }
@@ -121,7 +122,10 @@ const GetAllExamsBySubject = async (req, res) => {
             },
             order: [["id", "DESC"]]
         });
-        return res.json(exams);
+        return res.json({ 
+            success: true, 
+            data: exams 
+        });
     } catch (err) {
         res.status(500).send(err.message);
     }
@@ -157,11 +161,13 @@ const GetSubjectsByTeacherAssignment = async (req, res) => {
     ];
 
     return res.json({
+      success: true,
       data: subjects
     });
 
   } catch (err) {
     return res.status(500).json({
+      success: false,
       message: err.message
     });
   }

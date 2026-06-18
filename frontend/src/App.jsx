@@ -29,6 +29,7 @@ import UpdateUserPage from './pages/dashboard/User/UpdateUser/UpdateUserPage';
 import RolePage      from './pages/dashboard/Role/RolePage';
 import CreateRolePage from './pages/dashboard/Role/CreateRole/CreateRolePage';
 import TeacherPage from './pages/dashboard/Teacher/TeacherPage';
+import CreateTeacherPage from './pages/dashboard/Teacher/CreateTeacherPage/CreateTeacherPage';
 import AdminResultsPage   from './pages/dashboard/AdminResultsPage';
 import AdminSubjectsPage  from './pages/dashboard/AdminSubjectsPage';
 import NotFoundPage       from './pages/NotFoundPage';
@@ -77,6 +78,7 @@ export default function App() {
               <Route path="role/create" element={<CreateRolePage />} />
               <Route path="user/update/:id" element={<UpdateUserPage />} />
               <Route path="teacher"   element={<TeacherPage />} />
+              <Route path="teacher/create"   element={<CreateTeacherPage />} />
               <Route path="results"   element={<AdminResultsPage />} />
             </Route>
 

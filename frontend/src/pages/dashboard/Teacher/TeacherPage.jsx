@@ -21,8 +21,6 @@ export default function TeacherPage() {
         limit,
         keyword,
       });
-      
-      console.table(res.data);
 
       if (!ignore) {
         setTeachers(res.data || []);
@@ -38,6 +36,10 @@ export default function TeacherPage() {
       ignore = true;
     };
   }, [page, keyword]);
+
+  const handleCreate = () => {
+    navigate("/dashboard/teacher/create");
+  }
 
   const handleUpdate = (id) => {
     navigate(`/dashboard/teacher/update/${id}`);
@@ -56,20 +58,6 @@ export default function TeacherPage() {
     setTeachers(res.data || []);
     setTotalPages(res.totalPages);
   };
-
-  const handleApprove = async (id) => { 
-    await teacherService.ApproveTeacher(id); 
-    const res = await teacherService.GetPagedTeachers({ page, limit, keyword });
-    setTeachers(res.data || []);
-    setTotalPages(res.totalPages);
-  }; 
-
-  const handleReject = async (id) => { 
-    await teacherService.RejectTeacher(id); 
-    const res = await teacherService.GetPagedTeachers({ page, limit, keyword });
-    setTeachers(res.data || []);
-    setTotalPages(res.totalPages);
- }; 
 
   return (
     <div className="main-page">
@@ -110,7 +98,9 @@ export default function TeacherPage() {
               </div>
 
               <div className="col-md-6 text-end">
-                <button className="btn btn-success">Thêm mới</button>
+                <button className="btn btn-success" onClick={handleCreate} title="Thêm mới">
+                  Thêm mới
+                </button>
               </div>
             </div>
           </div>

@@ -102,10 +102,11 @@ const DeleteGrade = async (req, res) => {
 // Lấy tất cả lớp
 const GetAllGrades = async (req, res) => {
     try {
-        const grades = await db.Grade.findAll({
-            order: [["id", "DESC"]]
+        const grades = await db.Grade.findAll();
+        return res.json({ 
+            success: true, 
+            data: grades 
         });
-        return res.json(grades);
     } catch (err) {
         res.status(500).send(err.message);
     }
@@ -121,7 +122,7 @@ const GetAllExamsByGrade = async (req, res) => {
             },
             order: [["id", "DESC"]]
         });
-        return res.json(exams);
+        return res.json({ success: true, data: exams });
     } catch (err) {
         res.status(500).send(err.message);
     }
@@ -157,11 +158,13 @@ const GetGradesByTeacherAssignment = async (req, res) => {
     ];
 
     return res.json({
+      success: true,
       data: grades
     });
 
   } catch (err) {
     return res.status(500).json({
+      success: false,
       message: err.message
     });
   }
