@@ -177,7 +177,10 @@ const GetUserById = async (req, res) => {
     });
     if (!user) return res.status(404).json({ success: false, message: 'Không tìm thấy user!' });
 
-    res.json({ success: true, data: user });
+    res.json({ 
+      success: true, 
+      data: user 
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ success: false, error: err.message });

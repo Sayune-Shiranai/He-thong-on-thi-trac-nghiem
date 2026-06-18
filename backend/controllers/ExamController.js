@@ -325,7 +325,12 @@ const GetAllExams = async (req, res) => {
         ],
         order: [["id", "DESC"]]
       });
-      return res.json(exams);
+      return res.json(
+        {
+          message: "Lấy danh sách đề thi thành công",
+          data: exams
+        }
+      );
     } catch (err) {
         res.status(500).send(err.message);
     }

@@ -101,7 +101,12 @@ const UpdateRole = async (req, res) => {
 
   await CheckRole.update({ name });
 
-    return res.json(CheckRole);
+    return res.json(
+      {
+        message: "Cập nhật role thành công!",
+        data: CheckRole
+      }
+    );
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }

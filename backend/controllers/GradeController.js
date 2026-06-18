@@ -122,7 +122,10 @@ const GetAllExamsByGrade = async (req, res) => {
             },
             order: [["id", "DESC"]]
         });
-        return res.json({ success: true, data: exams });
+        return res.json({ 
+            success: true, 
+            data: exams 
+        });
     } catch (err) {
         res.status(500).send(err.message);
     }
