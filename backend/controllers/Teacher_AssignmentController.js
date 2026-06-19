@@ -133,46 +133,79 @@ const CreateTeacherAssignment = async (req, res) => {
 const UpdateTeacherAssignment = async (req, res) => {
   try {
     const { id } = req.params;
-    const { grade_ids, subject_ids } = req.body;
+    const { user_id, grade_id, subject_id } = req.body;
 
-    const teacher_assignment = await db.Teacher_Assignment.findOne({
+    const checkTeacher_Assignment = await db.Teacher_Assignment.findOne({
       where: { id }
     });
 
-    if (!teacher_assignment) {
-      return res.status(404).json({
-        message: "Không tìm thấy giáo viên!"
+    if (!checkTeacher_Assignment) {
+      return res.status(404).json({ message: "Không tìm thấy phân công!" });
+    }
+
+    const teacher = await db.User.findOne({
+      where: { id: user_id },
+      include: [
+        {
+          model: db.Role
+        }
+      ]
+    });
+
+    if (!teacher) {
+      return res.status(404).json({ message: "Không tìm thấy giáo viên!" });
+    }
+
+    if (teacher.Role?.name !== "Teacher") {
+      return res.status(400).json({ message: "Người dùng không phải là giáo viên" });
+    }
+
+    const checkGrade = await db.Grade.findOne({
+      where: { id: grade_id }
+    });
+
+    if (!checkGrade) {
+      return res.status(404).json({ message: "Không tìm thấy khối lớp!" });
+    }
+
+    const checkSubject = await db.Subject.findOne({
+      where: { id: subject_id }
+    });
+
+    if (!checkSubject) {
+      return res.status(404).json({ message: "Không tìm thấy môn học!" });
+    }
+
+    const existedAssignment = await db.Teacher_Assignment.findOne({
+      where: {
+        user_id,
+        grade_id,
+        subject_id,
+        id: {
+          [Op.ne]: id
+        }
+      }
+    });
+
+    if (existedAssignment) {
+      return res.status(400).json({
+        message: `Giáo viên đã được phân công môn ${checkSubject.name} này cho lớp ${checkGrade.grade} rồi!`
       });
     }
 
-    const user_id = teacher_assignment.user_id;
-
-    await db.Teacher_Assignment.destroy({
-      where: { user_id }
+    await checkTeacher_Assignment.update({
+      user_id,
+      grade_id,
+      subject_id
     });
 
-    const teacher_assignments = [];
-
-    for (const grade_id of grade_ids) {
-      for (const subject_id of subject_ids) {
-        teacher_assignments.push({
-          user_id,
-          grade_id,
-          subject_id
-        });
-      }
-    }
-
-    await db.Teacher_Assignment.bulkCreate(teacher_assignments);
-
     return res.json({
-      message: "Cập nhật phân công thành công!"
+      message: "Cập nhật phân công thành công!",
+      data: checkTeacher_Assignment
     });
 
   } catch (err) {
-    res.status(500).json({
-      message: err.message
-    });
+    res.status(500).send(err.message);
   }
 };
 
@@ -199,8 +232,39 @@ const DeleteTeacherAssignment = async (req, res) => {
   }
 }
 
+// Lấy thông tin teacher theo ID
+const GetTeacherById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const teacher = await db.Teacher_Assignment.findOne({
+      where: { id },
+      include: [
+        {
+          model: db.User
+        },
+        {
+          model: db.Grade
+        },
+        {
+          model: db.Subject
+        }
+      ]
+    });
+    if (!teacher) return res.status(404).json({ success: false, message: 'Không tìm thấy giáo viên!' });
+
+    res.json({ 
+      success: true, 
+      data: teacher 
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, error: err.message });
+  }
+}
+
 module.exports = {
   GetPaged,
+  GetTeacherById,
   CreateTeacherAssignment,
   UpdateTeacherAssignment,
   DeleteTeacherAssignment
