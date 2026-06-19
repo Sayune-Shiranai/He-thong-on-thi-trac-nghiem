@@ -31,6 +31,12 @@ import CreateRolePage from './pages/dashboard/Role/CreateRole/CreateRolePage';
 import TeacherPage from './pages/dashboard/Teacher/TeacherPage';
 import CreateTeacherPage from './pages/dashboard/Teacher/CreateTeacher/CreateTeacherPage';
 import UpdateTeacherPage from './pages/dashboard/Teacher/UpdateTeacher/UpdateTeacherPage';
+import SubjectsPage from './pages/dashboard/Subject/SubjectPage';
+// import CreateSubjectPage from './pages/dashboard/Subject/CreateSubject/CreateSubjectPage';
+// import UpdateSubjectPage from './pages/dashboard/Subject/UpdateSubject/UpdateSubjectPage';
+import GradesPage from './pages/dashboard/Grade/GradePage';
+// import CreateGradePage from './pages/dashboard/Grade/CreateGrade/CreateGradePage';
+// import UpdateGradePage from './pages/dashboard/Grade/UpdateGrade/UpdateGradePage';
 import AdminResultsPage   from './pages/dashboard/AdminResultsPage';
 import AdminSubjectsPage  from './pages/dashboard/AdminSubjectsPage';
 import NotFoundPage       from './pages/NotFoundPage';
@@ -81,6 +87,8 @@ export default function App() {
               <Route path="teacher"   element={<TeacherPage />} />
               <Route path="teacher/create"   element={<CreateTeacherPage />} />
               <Route path="teacher/update/:id"   element={<UpdateTeacherPage />} />
+              <Route path="grade"   element={<GradesPage />} />
+              <Route path="subject"   element={<SubjectsPage />} />
               <Route path="results"   element={<AdminResultsPage />} />
             </Route>
 

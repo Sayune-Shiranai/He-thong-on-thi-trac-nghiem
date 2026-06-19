@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaEdit, FaTrash } from "react-icons/fa";
-import "./RolePage.css";
-import { roleService } from "../../../services/examService";
+import "./subjectPage.css";
+import { subjectService } from '../../../services/examService';
 
-export default function RolePage() {
+export default function SubjectPage() {
   const navigate = useNavigate();
-  const [errorMessage, setErrorMessage] = useState("");
-  const [roles, setRole] = useState([]);
+  const [subjects, setSubjects] = useState([]);
   const [keyword, setKeyword] = useState("");
   const [page, setPage] = useState(1);
   const limit = 10;
@@ -16,52 +15,48 @@ export default function RolePage() {
   useEffect(() => {
     let ignore = false;
 
-    const loadRole = async () => {
-      const res = await roleService.GetPagedRoles({
+    const loadSubjects = async () => {
+      const res = await subjectService.GetPagedSubjects({
         page,
         limit,
         keyword,
       });
 
       if (!ignore) {
-        setRole(res.data);
+        setSubjects(res.data || []);
         setTotalPages(res.totalPages);
       }
     };
 
-    loadRole();
+    loadSubjects();
+
+    
 
     return () => {
       ignore = true;
     };
   }, [page, keyword]);
 
-    const handleCreate = () => {
-    navigate("/dashboard/role/create");
+  const handleCreate = () => {
+    navigate("/dashboard/subject/create");
   }
 
-  const handleDelete = async (id) => {
-    if (!window.confirm("Xóa vai trò này?")) return;
+  const handleUpdate = (id) => {
+    navigate(`/dashboard/subject/update/${id}`);
+  };
 
-    try {
-      await roleService.DeleteRole(id);
 
-      const res = await roleService.GetPagedRoles({
-        page: 1,
-        limit,
-        keyword,
-      });
+  const handleDelete = async (id) => { 
+    if (!window.confirm("Xóa môn học này?")) return; 
+    await subjectService.DeleteSubject(id); 
+    const res = await subjectService.GetPagedSubjects({
+      page: 1,
+      limit,
+      keyword,
+    });
 
-      setRole(res.data);
-      setTotalPages(res.totalPages);
-      setErrorMessage("");
-    } catch (err) {
-      setErrorMessage(
-        err?.response?.data?.error ||
-        err?.response?.data?.message ||
-        "Xóa vai trò thất bại!"
-      );
-    }
+    setSubjects(res.data || []);
+    setTotalPages(res.totalPages);
   };
 
   return (
@@ -70,19 +65,20 @@ export default function RolePage() {
         <div className="page-title">
           <div className="row">
             <div className="col-6">
-              <h4>Danh sách vai trò</h4>
+              <h4>Danh sách môn học</h4>
             </div>
+            {/* <div className="col-6">
+              <ol className="breadcrumb">
+                <li className="breadcrumb-item">Quản trị hệ thống</li>
+                <li className="breadcrumb-item active">Giáo viên</li>
+              </ol>
+            </div> */}
           </div>
         </div>
       </div>
 
       <div className="page-body-box container-fluid">
         <div className="card p-2">
-          {errorMessage && (
-            <div className="alert alert-danger mb-2">
-              {errorMessage}
-            </div>
-          )}
           <div className="header-page-body-box card-header p-2 border-0">
             <div className="row align-items-center">
               <div className="search-box col-md-6 d-flex">
@@ -95,17 +91,16 @@ export default function RolePage() {
                     setPage(1);
                   }}
                 />
-                <button className="btn btn-primary">
+                <button className="btn btn-primary text-nowrap">
                   <i className="fa-solid fa-magnifying-glass me-2"></i>
                   Tìm kiếm
                 </button>
               </div>
 
               <div className="col-md-6 text-end">
-                <button 
-                className="btn btn-success"
-                onClick={handleCreate} 
-                title="Thêm mới">Thêm mới</button>
+                <button className="btn btn-success" onClick={handleCreate} title="Thêm mới">
+                  Thêm mới
+                </button>
               </div>
             </div>
           </div>
@@ -116,30 +111,43 @@ export default function RolePage() {
                 <thead className="table-light">
                   <tr>
                     <th className="text-center">Id</th>
-                    <th>Tên vai trò</th>
+                    <th>Môn học</th>
+                    {/* <th>Trạng thái kiểm duyệt</th> */}
                     <th width="120">Chức năng</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {roles.length === 0 ? (
+                  {subjects?.length === 0 ? (
                     <tr>
                       <td colSpan="3" className="text-center text-muted">
                         Không có dữ liệu
                       </td>
                     </tr>
                   ) : (
-                    roles.map((role, i) => (
-                      <tr key={role.id}>
+                    subjects.map((s, i) => (
+                      <tr key={s.id}>
                         <td className="text-center">{(page - 1) * limit + i + 1}</td>
-                        <td>{role.name}</td>
-                        <td className="text-center">
+                        <td>
+                          {s.name}
+                        </td>
+
+                        <td className="text-center text-nowrap">
+                          <>
+                            <button
+                              className="btn btn-sm btn-primary me-2"
+                              onClick={() => handleUpdate(s.id)}
+                              title="Chỉnh sửa"
+                            >
+                              <FaEdit />
+                            </button>
                             <button
                               className="btn btn-sm btn-danger"
-                              onClick={() => handleDelete(role.id)}
+                              onClick={() => handleDelete(s.id)}
                               title="Xóa"
                             >
                               <FaTrash />
                             </button>
+                          </>
                         </td>
                       </tr>
                     ))
