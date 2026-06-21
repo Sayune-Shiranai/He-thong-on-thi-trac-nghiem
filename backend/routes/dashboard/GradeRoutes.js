@@ -5,7 +5,8 @@ const {
     GetAllGrades,
     CreateGrade,
     UpdateGrade,
-    DeleteGrade
+    DeleteGrade,
+    GetGradetById
 } = require("../../controllers/GradeController.js");
 
 const router = express.Router();
@@ -13,7 +14,8 @@ const router = express.Router();
 router.get("/", GetPaged);
 router.get("/all", GetAllGrades);
 router.post("/create", CreateGrade);
-router.post("/update/:id", UpdateGrade);
+router.put("/update/:id", UpdateGrade);
 router.delete("/delete/:id", DeleteGrade);
+router.get("/:id", GetGradetById);
 
 module.exports = router;

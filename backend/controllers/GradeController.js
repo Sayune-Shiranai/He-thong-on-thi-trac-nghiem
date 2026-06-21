@@ -173,6 +173,24 @@ const GetGradesByTeacherAssignment = async (req, res) => {
   }
 };
 
+const GetGradetById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const grade = await db.Grade.findOne({
+      where: { id }
+    });
+    if (!grade) return res.status(404).json({ success: false, message: 'Không tìm thấy lớp!' });
+
+    res.json({ 
+      success: true, 
+      data: grade 
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, error: err.message });
+  }
+}
+
 module.exports = {
     GetPaged,
     CreateGrade,
@@ -180,5 +198,6 @@ module.exports = {
     DeleteGrade,
     GetAllGrades,
     GetAllExamsByGrade,
-    GetGradesByTeacherAssignment
+    GetGradesByTeacherAssignment,
+    GetGradetById
 }

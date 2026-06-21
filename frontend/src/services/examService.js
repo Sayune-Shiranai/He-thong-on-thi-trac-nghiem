@@ -25,8 +25,9 @@ export const subjectService = {
   GetPagedSubjects: (params)     => api.get('/dashboard/subject', { params }),
   GetAllSubjects: () => api.get('/dashboard/subject/all'),
   CreateSubject: (data)       => api.post('/dashboard/subject/create', data),
-  UpdateSubject: (id, data)   => api.post(`/dashboard/subject/update/${id}`, data),
+  UpdateSubject: (id, data)   => api.put(`/dashboard/subject/update/${id}`, data),
   DeleteSubject: (id)         => api.delete(`/dashboard/subject/delete/${id}`),
+  GetSubjectById: (id)        => api.get(`/dashboard/subject/${id}`),
 };
 
 // ── Khối lớp ──
@@ -34,8 +35,9 @@ export const gradeService = {
   GetPagedGrades: (params)     => api.get('/dashboard/grade', { params }),
   GetAllGrades: () => api.get('/dashboard/grade/all'),
   CreateGrade: (data)       => api.post('/dashboard/grade/create', data),
-  UpdateGrade: (id, data)   => api.post(`/dashboard/grade/update/${id}`, data),
+  UpdateGrade: (id, data)   => api.put(`/dashboard/grade/update/${id}`, data),
   DeleteGrade: (id)         => api.delete(`/dashboard/grade/delete/${id}`),
+  GetGradeById: (id)        => api.get(`/dashboard/grade/${id}`),
 };
 
 // ── Người dùng (admin) ──

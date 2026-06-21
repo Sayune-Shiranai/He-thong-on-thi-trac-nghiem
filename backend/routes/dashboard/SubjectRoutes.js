@@ -5,7 +5,8 @@ const {
     GetAllSubjects,
     CreateSubject,
     UpdateSubject,
-    DeleteSubject
+    DeleteSubject,
+    GetSubjectById
 } = require("../../controllers/SubjectController.js");
 
 const router = express.Router();
@@ -13,7 +14,8 @@ const router = express.Router();
 router.get("/", GetPaged);
 router.get("/all", GetAllSubjects);
 router.post("/create", CreateSubject);
-router.post("/update/:id", UpdateSubject);
+router.put("/update/:id", UpdateSubject);
 router.delete("/delete/:id", DeleteSubject);
+router.get("/:id", GetSubjectById);
 
 module.exports = router;
