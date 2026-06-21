@@ -95,7 +95,7 @@ export default function RolePage() {
                     setPage(1);
                   }}
                 />
-                <button className="btn btn-primary">
+                <button className="btn btn-primary text-nowrap">
                   <i className="fa-solid fa-magnifying-glass me-2"></i>
                   Tìm kiếm
                 </button>

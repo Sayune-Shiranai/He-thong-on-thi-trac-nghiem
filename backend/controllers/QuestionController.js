@@ -36,6 +36,9 @@ const GetPaged = async (req, res) => {
                 {
                     model: db.Exam,
                     attributes: ["id", "title"]
+                },
+                {
+                    model: db.Status,
                 }
             ],
             limit,
@@ -284,33 +287,6 @@ const UploadQuestionImage = async (req, res) => {
   }
 };
 
-// duyệt câu hỏi
-const ApproveQuestion = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const question = await db.Question.findOne({
-      where: { id }
-    });
-
-    if (!question) {
-      return res.status(404).json({
-        message: "Câu hỏi không tồn tại"
-      });
-    }
-
-    question.status = "Approved";
-    await question.save();
-    return res.json({
-      message: "Duyệt câu hỏi thành công",
-      data: question
-    });
-  } catch (err) {
-    return res.status(500).json({
-      error: err.message
-    });
-  }
-};
-
 //delete question
 const DeleteQuestion = async (req, res) => {
   try {
@@ -325,12 +301,12 @@ const DeleteQuestion = async (req, res) => {
       });
     }
 
-    // if (question.content_img) {
-    //   const imagePath = path.join(__dirname, "..", "public", question.content_img);
-    //   if (fs.existsSync(imagePath)) {
-    //     fs.unlinkSync(imagePath);
-    //   }
-    // }
+    if (question.content_img) {
+      const imagePath = path.join(__dirname, "..", "public", question.content_img);
+      if (fs.existsSync(imagePath)) {
+        fs.unlinkSync(imagePath);
+      }
+    }
 
     await question.destroy();
     return res.json({
@@ -344,6 +320,37 @@ const DeleteQuestion = async (req, res) => {
   }
 }
 
+// duyệt câu hỏi
+const ApproveQuestion = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const question = await db.Question.findOne({
+      where: { id }
+    });
+    if (!question) return res.status(404).json({ success: false, message: 'Không tìm thấy câu hỏi!' });
+
+    const status = await db.Status.findOne({
+      where: { name: "Approved" }
+    });
+
+    if (!status) {
+      return res.status(404).json({
+        success: false,
+        message: "Không tìm thấy trạng thái!"
+      });
+    }
+
+    question.status_id = status.id;
+
+    await question.save();
+
+    res.json({ success: true, message: 'Đã duyệt', data: question });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, error: err.message });
+  }
+}
+
 // hủy duyệt câu hỏi
 const RejectQuestion = async (req, res) => {
   try {
@@ -351,25 +358,29 @@ const RejectQuestion = async (req, res) => {
     const question = await db.Question.findOne({
       where: { id }
     });
+    if (!question) return res.status(404).json({ success: false, message: 'Không tìm thấy câu hỏi!' });
 
-    if (!question) {
+    const status = await db.Status.findOne({
+      where: { name: "Rejected" }
+    });
+
+    if (!status) {
       return res.status(404).json({
-        message: "Câu hỏi không tồn tại"
+        success: false,
+        message: "Không tìm thấy trạng thái!"
       });
     }
 
-    question.status = "Rejected";
+    question.status_id = status.id;
+    
     await question.save();
-    return res.json({
-      message: "Hủy duyệt câu hỏi thành công",
-      data: question
-    });
+
+    res.json({ success: true, message: 'Hủy duyệt', data: question });
   } catch (err) {
-    return res.status(500).json({
-      error: err.message
-    });
+    console.error(err);
+    res.status(500).json({ success: false, error: err.message });
   }
-};
+}
 
 module.exports = {
   GetPaged,
@@ -377,6 +388,7 @@ module.exports = {
   UseQuestionBank,
   RandomQuestion,
   UploadQuestionImage,
+  DeleteQuestion,
   ApproveQuestion,
   RejectQuestion
 };

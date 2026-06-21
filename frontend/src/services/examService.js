@@ -9,10 +9,14 @@ export const examService = {
 
 // ── Câu hỏi ──
 export const questionService = {
-  create:      (data)       => api.post('/dashboard/question', data),
-  uploadImage: (formData)   => api.post('/dashboard/question/upload', formData, {
+  GetPagedQuestions: (params)     => api.get('/dashboard/question', { params }),
+  CreateQuestion:      (data)       => api.post('/dashboard/question', data),
+  UploadQuestionImage: (formData)   => api.post('/dashboard/question/upload', formData, {
     headers: { 'Content-Type': 'multipart/form-data' },
   }),
+  DeleteQuestion: (id)         => api.delete(`/dashboard/question/delete/${id}`),
+  ApproveQuestion: (id)       => api.post(`/dashboard/question/approve/${id}`, {},),
+  RejectQuestion:  (id)       => api.post(`/dashboard/question/reject/${id}`, {},),
 };
 
 // ── Câu hỏi trong đề ──
