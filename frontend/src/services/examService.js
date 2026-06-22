@@ -10,7 +10,7 @@ export const examService = {
 // ── Câu hỏi ──
 export const questionService = {
   GetPagedQuestions: (params)     => api.get('/dashboard/question', { params }),
-  CreateQuestion:      (data)       => api.post('/dashboard/question', data),
+  CreateQuestion:      (data)       => api.post('/dashboard/question/createquestion', data),
   UploadQuestionImage: (formData)   => api.post('/dashboard/question/upload', formData, {
     headers: { 'Content-Type': 'multipart/form-data' },
   }),

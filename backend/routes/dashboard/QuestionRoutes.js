@@ -3,6 +3,7 @@ const upload = require("../../middlewares/Upload");
 const {
   GetPaged,
   CreateQuestion,
+  CreateQuestionWithExam,
   UseQuestionBank,
   RandomQuestion,
   UploadQuestionImage,
@@ -13,7 +14,8 @@ const {
 
 const router = express.Router();
 router.get("/", GetPaged);
-router.post("/create", CreateQuestion);
+router.post("/createquestion", CreateQuestion);
+router.post("/create", CreateQuestionWithExam);
 router.post("/create/usequestionbank", UseQuestionBank);
 router.post("/create/random", RandomQuestion);
 router.post("/create/upload", upload.single("content_img"), UploadQuestionImage);

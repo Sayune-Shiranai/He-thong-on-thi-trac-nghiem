@@ -71,6 +71,99 @@ const CreateQuestion = async (req, res) => {
       option_b,
       option_c,
       option_d,
+      correct_answer,
+      grade_id,
+      subject_id
+    } = req.body;
+
+    if (!subject_id) {
+      return res.status(400).json({
+        field: "subject_id",
+        message: "Lớp không được để trống"
+      });
+    }
+
+    if (!grade_id) {
+      return res.status(400).json({
+        field: "grade_id",
+        message: "Môn học không được để trống"
+      });
+    }
+
+    if (!content) {
+      return res.status(400).json({
+        field: "content",
+        message: "Nội dung câu hỏi không được để trống"
+      });
+    }
+
+    if (!option_a) {
+      return res.status(400).json({
+        field: "option_a",
+        message: "Nội dung đáp án A không được để trống"
+      });
+    }
+
+    if (!option_b) {
+      return res.status(400).json({
+        field: "option_b",
+        message: "Nội dung đáp án B không được để trống"
+      });
+    }
+
+    if (!option_c) {
+      return res.status(400).json({
+        field: "option_c",
+        message: "Nội dung đáp án C không được để trống"
+      });
+    }
+
+    if (!option_d) {
+      return res.status(400).json({
+        field: "option_d",
+        message: "Nội dung đáp án D không được để trống"
+      });
+    }
+
+    if (!correct_answer) {
+      return res.status(400).json({
+        field: "correct_answer",
+        message: "Vui lòng chọn đáp án đúng"
+      });
+    }
+    const question = await db.Question.create({
+      content,
+      option_a,
+      option_b,
+      option_c,
+      option_d,
+      correct_answer,
+      grade_id,
+      subject_id,
+      status_id: 2
+    });
+
+    return res.status(201).json({
+      message: "Tạo câu hỏi thành công",
+      data: question
+    });
+  } catch (err) {
+    return res.status(500).json({
+      error: err.message
+    });
+  }
+};
+
+// create question with exam
+const CreateQuestionWithExam = async (req, res) => {
+  try {
+    const {
+      exam_id,
+      content,
+      option_a,
+      option_b,
+      option_c,
+      option_d,
       correct_answer
     } = req.body;
 
@@ -92,11 +185,11 @@ const CreateQuestion = async (req, res) => {
       where: { id: exam_id }
     });
 
-    // if (!exam) {
-    //   return res.status(404).json({
-    //     message: "Đề thi không tồn tại"
-    //   });
-    // }
+    if (!exam) {
+      return res.status(404).json({
+        message: "Đề thi không tồn tại"
+      });
+    }
 
     const question = await db.Question.create({
       content,
@@ -385,6 +478,7 @@ const RejectQuestion = async (req, res) => {
 module.exports = {
   GetPaged,
   CreateQuestion,
+  CreateQuestionWithExam,
   UseQuestionBank,
   RandomQuestion,
   UploadQuestionImage,

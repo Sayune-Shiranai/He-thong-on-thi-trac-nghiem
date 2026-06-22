@@ -35,6 +35,10 @@ export default function QuestionPage() {
     };
   }, [page, keyword]);
 
+  const handleCreate = () => {
+    navigate("/dashboard/question/create");
+  }
+
   const handleUpdate = (id) => {
     navigate(`/dashboard/question/update/${id}`);
   };
@@ -106,7 +110,7 @@ export default function QuestionPage() {
               </div>
 
               <div className="col-md-6 text-end">
-                <button className="btn btn-success">Thêm mới</button>
+                <button className="btn btn-success" onClick={handleCreate} title="Thêm mới">Thêm mới</button>
               </div>
             </div>
           </div>
