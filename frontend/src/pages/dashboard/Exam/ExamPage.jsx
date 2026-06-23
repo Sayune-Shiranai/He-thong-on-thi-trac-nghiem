@@ -130,73 +130,66 @@ export default function ExamPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {questions?.length === 0 ? (
+                  {exams?.length === 0 ? (
                     <tr>
                       <td colSpan="7" className="text-center text-muted">
                         Không có dữ liệu
                       </td>
                     </tr>
                   ) : (
-                    questions.map((q, i) => (
-                      <tr key={q.id}>
+                    exams.map((e, i) => (
+                      <tr key={e.id}>
                         <td className="text-center">{(page - 1) * limit + i + 1}</td>
-                        <td>{q.Grade?.grade}</td>
-                        <td>{q.Subject?.name}</td>
-                        <td>{q.Exams?.map(exam => exam.title).join(", ") || "-"}</td>
-                        <td>{q.content}</td>
-                        <td>{q.option_a}</td>
-                        <td>{q.option_b}</td>
-                        <td>{q.option_c}</td>
-                        <td>{q.option_d}</td>
-                        <td>{q.correct_answer}</td>
+                        <td>{e.Grade?.grade}</td>
+                        <td>{e.Subject?.name}</td>
                         <td>
-                          {q.Status?.name === "Pending" && (
+                          {e.Status?.name === "Pending" && (
                             <span className="badge bg-warning text-dark">Chờ duyệt</span>
                           )}
-                          {q.Status?.name === "Approved" && (
+                          {e.Status?.name === "Approved" && (
                             <span className="badge bg-success">Đã duyệt</span>
                           )}
-                          {q.Status?.name === "Rejected" && (
+                          {e.Status?.name === "Rejected" && (
                             <span className="badge bg-danger">Từ chối</span>
                           )}
                         </td>
                         <td className="text-center text-nowrap">
-                          {q.Status?.name === "Pending" && (
+                          {e.Status?.name === "Pending" && (
                             <>
                               <button
                                 className="btn btn-sm btn-success me-2"
-                                onClick={() => handleApprove(q.id)}
+                                onClick={() => handleApprove(e.id)}
                               >
                                 ✓
                               </button>
                               <button
                                 className="btn btn-sm btn-warning text-dark"
-                                onClick={() => handleReject(q.id)}
+                                onClick={() => handleReject(e.id)}
                               >
                                 ✕
                               </button>
                             </>
                           )}
 
-                          {q.Status?.name === "Rejected" && (
+                          {e.Status?.name === "Rejected" && (
                           <>
                             <button
                               className="btn btn-sm btn-success me-2"
-                              onClick={() => handleApprove(q.id)}
+                              onClick={() => handleApprove(e.id)}
                               title="Duyệt"
                             >
                               ✓
                             </button>
                             <button
                               className="btn btn-sm btn-primary me-2"
-                              onClick={() => handleUpdate(q.id)}
+                              onClick={() => handleUpdate(e.id)}
                               title="Chỉnh sửa"
                             >
                               <FaEdit />
                             </button>
                             <button
                               className="btn btn-sm btn-danger"
-                              onClick={() => handleDelete(q.id)}
+                              onClick={() => handleDelete(e.id)}
                               title="Xóa"
                             >
                               <FaTrash />
@@ -204,10 +197,10 @@ export default function ExamPage() {
                           </>
                           )}
 
-                          {q.Status?.name === "Approved" && (
+                          {e.Status?.name === "Approved" && (
                             <button
                               className="btn btn-sm btn-warning text-dark"
-                              onClick={() => handleReject(q.id)}
+                              onClick={() => handleReject(e.id)}
                             >
                               ✕
                             </button>
