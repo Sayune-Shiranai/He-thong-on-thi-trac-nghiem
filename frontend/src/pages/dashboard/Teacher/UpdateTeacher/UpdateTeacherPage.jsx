@@ -6,7 +6,7 @@ import { gradeService } from "../../../../services/examService";
 import { subjectService } from "../../../../services/examService";
 import "./UpdateTeacherPage.css";
 
-const CreateTeacherPage = () => {
+const UpdateTeacherPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [error, setError] = useState("");
@@ -136,4 +136,4 @@ const CreateTeacherPage = () => {
   );
 };
 
-export default CreateTeacherPage;
+export default UpdateTeacherPage;

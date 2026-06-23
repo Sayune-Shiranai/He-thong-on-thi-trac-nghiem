@@ -10,10 +10,13 @@ const GetPaged = async (req, res) => {
 
         const offset = (page - 1) * limit;
 
-        let where = {};
+        let where = {
+          content_img: null
+        };
 
         if (keyword) {
             where = {
+                ...where,
                 [Op.or]: [
                 { content: { [Op.like]: `%${keyword}%` } }
                 ]
@@ -65,7 +68,6 @@ const GetPaged = async (req, res) => {
 const CreateQuestion = async (req, res) => {
   try {
     const {
-      exam_id,
       content,
       option_a,
       option_b,
@@ -153,6 +155,52 @@ const CreateQuestion = async (req, res) => {
     });
   }
 };
+
+//update question
+const UpdateQuestion = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const {
+      content,
+      option_a,
+      option_b,
+      option_c,
+      option_d,
+      correct_answer,
+      grade_id,
+      subject_id
+    } = req.body;
+
+    const question = await db.Question.findOne({
+      where: { id }
+    });
+
+    if (!question) {
+      return res.status(404).json({ success: false, message: "Không tìm thấy câu hỏi!" });
+    }
+
+    await question.update({
+      grade_id,
+      subject_id,
+      content,
+      option_a,
+      option_b,
+      option_c,
+      option_d,
+      correct_answer
+    });
+
+    return res.json({
+      success: true,
+      message: "Cập nhật câu hỏi thành công!",
+      data: question
+    });
+
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ success: false, error: err.message });
+  }
+}
 
 // create question with exam
 const CreateQuestionWithExam = async (req, res) => {
@@ -475,14 +523,43 @@ const RejectQuestion = async (req, res) => {
   }
 }
 
+// Lấy thông tin question theo ID
+const GetQuestionById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const question = await db.Question.findOne({
+      where: { id },
+      include: [
+        {
+          model: db.Grade
+        },
+        {
+          model: db.Subject
+        }
+      ]
+    });
+    if (!question) return res.status(404).json({ success: false, message: 'Không tìm thấy câu hỏi!' });
+
+    res.json({ 
+      success: true, 
+      data: question 
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, error: err.message });
+  }
+}
+
 module.exports = {
   GetPaged,
   CreateQuestion,
+  UpdateQuestion,
   CreateQuestionWithExam,
   UseQuestionBank,
   RandomQuestion,
   UploadQuestionImage,
   DeleteQuestion,
   ApproveQuestion,
-  RejectQuestion
+  RejectQuestion,
+  GetQuestionById
 };

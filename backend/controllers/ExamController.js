@@ -39,16 +39,9 @@ const GetPaged = async (req, res) => {
                 },
                 {
                     model: db.Question,
-                    attributes: [
-                        "id",
-                        "content",
-                        "content_img",
-                        "option_a",
-                        "option_b",
-                        "option_c",
-                        "option_d",
-                        "correct_answer"
-                    ]
+                },
+                {
+                  model: db.Status
                 }
             ],
             limit,
@@ -122,6 +115,7 @@ const CreateExam = async (req, res) => {
       title,
       grade_id,
       subject_id,
+      status_id: 2,
       user_id: req.user?.id || undefined
     });
 

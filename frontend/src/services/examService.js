@@ -2,21 +2,27 @@ import api from './api';
 
 // ── Đề thi ──
 export const examService = {
-  create:  (data)   => api.post('/dashboard/exam', data),
-  getAll:  (params) => api.get('/exam', { params }),        // public endpoint
-  getById: (id)     => api.get(`/dashboard/exam/${id}`),
+  GetPagedExams: (params)     => api.get('/dashboard/exam', { params }),
+  CreateExam:  (data)   => api.post('/dashboard/exam/create', data),
+  UpdateExam: (id, data)   => api.put(`/dashboard/exam/update/${id}`, data),
+  DeleteExam: (id)         => api.delete(`/dashboard/exam/delete/${id}`),
+  ApproveExam: (id)       => api.post(`/dashboard/exam/approve/${id}`, {},),
+  RejectExam:  (id)       => api.post(`/dashboard/exam/reject/${id}`, {},),
+  GetExamById: (id)        => api.get(`/dashboard/exam/${id}`),
 };
 
 // ── Câu hỏi ──
 export const questionService = {
   GetPagedQuestions: (params)     => api.get('/dashboard/question', { params }),
   CreateQuestion:      (data)       => api.post('/dashboard/question/createquestion', data),
+  UpdateQuestion: (id, data)   => api.put(`/dashboard/question/update/${id}`, data),
   UploadQuestionImage: (formData)   => api.post('/dashboard/question/upload', formData, {
     headers: { 'Content-Type': 'multipart/form-data' },
   }),
   DeleteQuestion: (id)         => api.delete(`/dashboard/question/delete/${id}`),
   ApproveQuestion: (id)       => api.post(`/dashboard/question/approve/${id}`, {},),
   RejectQuestion:  (id)       => api.post(`/dashboard/question/reject/${id}`, {},),
+  GetQuestionById: (id)        => api.get(`/dashboard/question/${id}`),
 };
 
 // ── Câu hỏi trong đề ──

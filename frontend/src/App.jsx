@@ -39,7 +39,7 @@ import CreateGradePage from './pages/dashboard/Grade/CreateGrade/CreateGradePage
 import UpdateGradePage from './pages/dashboard/Grade/UpdateGrade/UpdateGradePage';
 import QuestionsPage from './pages/dashboard/Question/QuestionPage';
 import CreateQuestionsPage from './pages/dashboard/Question/CreateQuestion/CreateQuestionPage';
-// import UpdateQuestionsPage from './pages/dashboard/Question/UpdateQuestion/UpdateQuestionPage';
+import UpdateQuestionsPage from './pages/dashboard/Question/UpdateQuestion/UpdateQuestionPage';
 // import ExamsPage from './pages/dashboard/Exam/ExamPage';
 // import CreateExamsPage from './pages/dashboard/Exam/CreateExam/CreateExamPage';
 // import UpdateExamsPage from './pages/dashboard/Exam/UpdateExam/UpdateExamPage';
@@ -101,8 +101,8 @@ export default function App() {
               <Route path="subject/update/:id"   element={<UpdateSubjectPage />} />
               <Route path="question"   element={<QuestionsPage />} />
               <Route path="question/create"   element={<CreateQuestionsPage />} />
-              {/* <Route path="question/update/:id"   element={<UpdateQuestionsPage />} />
-              <Route path="exam"   element={<ExamsPage />} />
+              <Route path="question/update/:id"   element={<UpdateQuestionsPage />} />
+              {/* <Route path="exam"   element={<ExamsPage />} />
               <Route path="exam/create"   element={<CreateExamsPage />} />
               <Route path="exam/update/:id"   element={<UpdateExamsPage />} /> */}
               <Route path="results"   element={<AdminResultsPage />} />
