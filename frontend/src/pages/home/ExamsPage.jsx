@@ -54,7 +54,7 @@ export default function ExamsPage() {
   const [maxQ, setMaxQ]       = useState('');
 
   useEffect(() => {
-    examService.getAll({ limit: 500 })
+    examService.GetAllExam()
       .then(d => setAllExams(Array.isArray(d) ? d : d.exams || d.data || []))
       .catch(() => setAllExams(MOCK))
       .finally(() => setLoading(false));

@@ -39,7 +39,7 @@ export default function SubjectDetailPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    examService.getAll({ subject: label, limit: 100 })
+    examService.GetAllExam({ subject: label })
       .then(d => {
         const all = Array.isArray(d) ? d : d.exams || d.data || [];
         const filtered = all.filter(e => (e.subject || e.Subject?.name) === label);

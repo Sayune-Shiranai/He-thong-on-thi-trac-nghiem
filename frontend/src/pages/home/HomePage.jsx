@@ -48,7 +48,7 @@ export default function HomePage(){
   const [filter,setFilter]=useState('all');
 
   useEffect(()=>{
-    examService.getAll({status:'published'})
+    examService.GetAllExam({status:'published'})
       .then(d=>setExams(Array.isArray(d)?d:d.exams||[]))
       .catch(()=>setExams(MOCK_EXAMS))
       .finally(()=>setLoading(false));

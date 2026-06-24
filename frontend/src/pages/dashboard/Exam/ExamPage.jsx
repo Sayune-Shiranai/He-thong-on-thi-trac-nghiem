@@ -140,8 +140,19 @@ export default function ExamPage() {
                     exams.map((e, i) => (
                       <tr key={e.id}>
                         <td className="text-center">{(page - 1) * limit + i + 1}</td>
+                        <td>{e.title}</td>
                         <td>{e.Grade?.grade}</td>
                         <td>{e.Subject?.name}</td>
+                        <td
+                          className="text-primary fw-bold text-center"
+                          style={{ cursor: "pointer" }}
+                          title="Xem danh sách câu hỏi"
+                          onClick={() =>
+                            navigate(`/dashboard/exam/${e.id}`)
+                          }
+                        >
+                          {e.Questions?.length || 0}
+                        </td>
                         <td>
                           {e.Status?.name === "Pending" && (
                             <span className="badge bg-warning text-dark">Chờ duyệt</span>

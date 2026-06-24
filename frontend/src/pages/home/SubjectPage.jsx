@@ -26,7 +26,7 @@ export default function SubjectPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    examService.getAll({ limit: 500 })
+    examService.GetAllExam()
       .then(d => {
         const exams = Array.isArray(d) ? d : d.exams || d.data || [];
         const c = {};

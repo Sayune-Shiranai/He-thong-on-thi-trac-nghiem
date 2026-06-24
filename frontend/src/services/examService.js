@@ -9,6 +9,8 @@ export const examService = {
   ApproveExam: (id)       => api.post(`/dashboard/exam/approve/${id}`, {},),
   RejectExam:  (id)       => api.post(`/dashboard/exam/reject/${id}`, {},),
   GetExamById: (id)        => api.get(`/dashboard/exam/${id}`),
+  //home
+  GetAllExam: () => api.get('/exam'),
 };
 
 // ── Câu hỏi ──

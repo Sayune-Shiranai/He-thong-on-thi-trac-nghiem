@@ -17,7 +17,7 @@ export default function AdminResultsPage(){
   const [loading,setLoading]=useState(true);const [examFilter,setExamFilter]=useState('');
 
   useEffect(()=>{
-    Promise.all([api.get('/admin/attempts'),examService.getAll()])
+    Promise.all([api.get('/admin/attempts'),examService.GetAllExam()])
       .then(([a,e])=>{setAttempts(Array.isArray(a)?a:a.attempts||[]);setExams(Array.isArray(e)?e:e.exams||[]);})
       .catch(()=>{setAttempts(MOCK_A);setExams(MOCK_E);})
       .finally(()=>setLoading(false));

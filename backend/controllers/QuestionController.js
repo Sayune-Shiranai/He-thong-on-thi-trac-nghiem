@@ -64,6 +64,33 @@ const GetPaged = async (req, res) => {
     }
 }
 
+// const GetAllQuestionByExam = async (req, res) => {
+//   try {
+//     const { id } = req.params;
+
+//     const questions = await db.Question.findAll({
+//       include: [
+//         {
+//           model: db.Exam,
+//           where: { id: req.params.id },
+//           through: { attributes: [] }
+//         }
+//       ]
+//     });
+
+//     return res.json({
+//         success: true,
+//         data: questions
+//     });
+
+//   } catch (err) {
+//     return res.status(500).json({
+//         success: false,
+//         message: err.message
+//     });
+//   }
+// };
+
 // create question
 const CreateQuestion = async (req, res) => {
   try {

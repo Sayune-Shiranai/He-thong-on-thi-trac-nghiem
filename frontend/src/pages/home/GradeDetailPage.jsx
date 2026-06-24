@@ -54,7 +54,7 @@ export default function GradeDetailPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    examService.getAll({ grade: filter, limit: 100 })
+    examService.GetAllExam()
       .then(d => {
         const all = Array.isArray(d) ? d : d.exams || d.data || [];
         const filtered = all.filter(e => (e.grade || e.Grade?.grade) === filter);

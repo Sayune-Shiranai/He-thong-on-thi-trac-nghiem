@@ -331,7 +331,7 @@ const GetAllExams = async (req, res) => {
 }
 
 //lấy chi tiết đề thi theo id
-const GetExamDetail = async (req, res) => {
+const GetExamById = async (req, res) => {
   try {
     const { id } = req.params;
     const exam = await db.Exam.findOne({
@@ -379,6 +379,5 @@ module.exports = {
   ApproveExam,
   RejectExam,
   GetAllExams,
-  GetExamDetail,
-  GetExamDetail,
+  GetExamById
 };
