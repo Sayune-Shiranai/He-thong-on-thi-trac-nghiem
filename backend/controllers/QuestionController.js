@@ -274,7 +274,8 @@ const CreateQuestionWithExam = async (req, res) => {
       option_d,
       correct_answer,
       grade_id: exam.grade_id,
-      subject_id: exam.subject_id
+      subject_id: exam.subject_id,
+      status_id: 2
     });
 
     await db.Exam_Question.create({

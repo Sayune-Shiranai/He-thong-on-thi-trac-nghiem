@@ -43,6 +43,7 @@ import UpdateQuestionsPage from './pages/dashboard/Question/UpdateQuestion/Updat
 import DashboardExamPage from './pages/dashboard/Exam/ExamPage';
 import CreateExamsPage from './pages/dashboard/Exam/CreateExam/CreateExamPage';
 // import UpdateExamsPage from './pages/dashboard/Exam/UpdateExam/UpdateExamPage';
+import CreateExamQuestionPage from './pages/dashboard/ExamQuestion/CreateExamQuestion/CreateExamQuestionPage';
 import AdminResultsPage   from './pages/dashboard/AdminResultsPage';
 import AdminSubjectsPage  from './pages/dashboard/AdminSubjectsPage';
 import NotFoundPage       from './pages/NotFoundPage';
@@ -105,6 +106,7 @@ export default function App() {
               <Route path="exam"   element={<DashboardExamPage />} />
               <Route path="exam/create"   element={<CreateExamsPage />} />
               {/* <Route path="exam/update/:id"   element={<UpdateExamsPage />} /> */}
+              <Route path="exam/:id/question"   element={<CreateExamQuestionPage />} />
               <Route path="results"   element={<AdminResultsPage />} />
             </Route>
             <Route path="*" element={<NotFoundPage />} />

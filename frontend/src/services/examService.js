@@ -9,6 +9,7 @@ export const examService = {
   ApproveExam: (id)       => api.post(`/dashboard/exam/approve/${id}`, {},),
   RejectExam:  (id)       => api.post(`/dashboard/exam/reject/${id}`, {},),
   GetExamById: (id)        => api.get(`/dashboard/exam/${id}`),
+  DeleteQuestionByExam: (exam_id, question_id)         => api.delete(`/dashboard/exam/${exam_id}/question/${question_id}`),
   //home
   GetAllExam: () => api.get('/exam'),
 };
@@ -17,6 +18,9 @@ export const examService = {
 export const questionService = {
   GetPagedQuestions: (params)     => api.get('/dashboard/question', { params }),
   CreateQuestion:      (data)       => api.post('/dashboard/question/createquestion', data),
+  CreateQuestionWithExam:      (data)       => api.post('/dashboard/question/create', data),
+  RandomQuestion:      (data)       => api.post('/dashboard/question/create/random', data),
+  UseQuestionBank:      (data)       => api.post('/dashboard/question/create/usequestionbank', data),
   UpdateQuestion: (id, data)   => api.put(`/dashboard/question/update/${id}`, data),
   UploadQuestionImage: (formData)   => api.post('/dashboard/question/upload', formData, {
     headers: { 'Content-Type': 'multipart/form-data' },

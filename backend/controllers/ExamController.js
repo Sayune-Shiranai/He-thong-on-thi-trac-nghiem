@@ -200,7 +200,10 @@ const DeleteExam = async (req, res) => {
         message: "Đề thi không tồn tại!"
       });
     }
-
+    await db.Exam_Question.destroy({
+      where: { exam_id: id }
+    });
+    
     await exam.destroy();
 
     return res.status(200).json({
@@ -243,6 +246,34 @@ const ApproveExam = async (req, res) => {
   } catch (err) {
     return res.status(500).json({
       error: err.message
+    });
+  }
+};
+
+const DeleteQuestionByExam = async (req, res) => {
+  try {
+    const { exam_id, question_id } = req.params;
+
+    const exam = await db.Exam.findOne({ where: { id: exam_id } });
+
+    if (!exam) {
+      return res.status(404).json({
+        success: false,
+        message: "Không tìm thấy đề thi"
+      });
+    }
+
+    await exam.removeQuestion(question_id);
+
+    return res.json({
+      success: true,
+      message: "Xóa câu hỏi khỏi đề thi thành công"
+    });
+
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      message: err.message
     });
   }
 };
@@ -379,5 +410,6 @@ module.exports = {
   ApproveExam,
   RejectExam,
   GetAllExams,
-  GetExamById
+  GetExamById,
+  DeleteQuestionByExam
 };
