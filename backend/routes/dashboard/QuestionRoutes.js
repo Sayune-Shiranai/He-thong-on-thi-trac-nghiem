@@ -11,6 +11,7 @@ const {
   DeleteQuestion,
   ApproveQuestion,
   RejectQuestion,
+  GetAllQuestionGradeSubjectByExam,
   GetQuestionById
 } = require("../../controllers/QuestionController");
 
@@ -25,6 +26,7 @@ router.put("/update/:id", UpdateQuestion);
 router.delete("/delete/:id", DeleteQuestion);
 router.post("/approve/:id", ApproveQuestion); // dashboard/user/approve/:id
 router.post("/reject/:id", RejectQuestion); // dashboard/user/reject/:id
+router.get("/exam/:exam_id/questionbank", GetAllQuestionGradeSubjectByExam)
 router.get("/:id", GetQuestionById);
 
 

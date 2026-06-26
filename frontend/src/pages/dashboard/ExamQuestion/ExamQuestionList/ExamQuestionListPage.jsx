@@ -16,7 +16,6 @@ export default function ExamQuestionList({
             examId,
             questionId
         );
-
         reload();
     };
 

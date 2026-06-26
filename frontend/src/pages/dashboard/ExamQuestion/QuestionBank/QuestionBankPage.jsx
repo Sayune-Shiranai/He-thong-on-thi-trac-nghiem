@@ -6,16 +6,15 @@ const QuestionBank = ({ examId, reload }) => {
   const [selected, setSelected] = useState([]);
 
   useEffect(() => {
-    loadQuestions();
-  }, []);
+    if (examId) {
+      loadQuestions();
+    }
+  }, [examId]);
 
   const loadQuestions = async () => {
-    const res = await questionService.GetPagedQuestions({
-      page: 1,
-      limit: 100
-    });
+    const res = await questionService.GetAllQuestionGradeSubjectByExam(examId);
 
-    setQuestions(res.data);
+    setQuestions(res.data || []);
   };
 
   const handleCheck = (id) => {
@@ -27,60 +26,53 @@ const QuestionBank = ({ examId, reload }) => {
   };
 
   const handleAdd = async () => {
+    try {
+      await questionService.UseQuestionBank({
+          exam_id: examId,
+          question_ids: selected
+        });
 
-      try {
+      await reload();
 
-          await questionService.UseQuestionBank({
-              exam_id: examId,
-              question_ids: selected
-          });
-
-          await reload();
-
-          setSelected([]);
-
-      } catch(err) {
-          console.log(err);
-      }
+      setSelected([]);
+    } catch(err) {
+      console.log(err);
+    }
   };
 
   return (
-    <>
-      <h4>Kho câu hỏi</h4>
+  <>
+    <h4>Kho câu hỏi</h4>
+    <table className="table">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Câu hỏi</th>
+        </tr>
+      </thead>
 
-      <table className="table">
-
-        <thead>
-          <tr>
-            <th></th>
-            <th>Câu hỏi</th>
+      <tbody>
+        {questions.map(q => (
+          <tr key={q.id}>
+            <td>
+              <input
+                type="checkbox"
+                onChange={() => handleCheck(q.id)}
+              />
+            </td>
+            <td>{q.content}</td>
           </tr>
-        </thead>
+        ))}
+      </tbody>
+    </table>
 
-        <tbody>
-          {questions.map(q => (
-            <tr key={q.id}>
-              <td>
-                <input
-                  type="checkbox"
-                  onChange={() => handleCheck(q.id)}
-                />
-              </td>
-
-              <td>{q.content}</td>
-            </tr>
-          ))}
-        </tbody>
-
-      </table>
-
-      <button
-        className="btn btn-success"
-        onClick={handleAdd}
-      >
-        Thêm vào đề thi
-      </button>
-    </>
+    <button
+      className="btn btn-success"
+      onClick={handleAdd}
+    >
+      Thêm vào đề thi
+    </button>
+  </>
   );
 };
 

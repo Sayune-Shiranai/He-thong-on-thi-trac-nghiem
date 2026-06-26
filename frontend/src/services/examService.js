@@ -28,6 +28,7 @@ export const questionService = {
   DeleteQuestion: (id)         => api.delete(`/dashboard/question/delete/${id}`),
   ApproveQuestion: (id)       => api.post(`/dashboard/question/approve/${id}`, {},),
   RejectQuestion:  (id)       => api.post(`/dashboard/question/reject/${id}`, {},),
+  GetAllQuestionGradeSubjectByExam: (exam_id)   => api.get(`/dashboard/question/exam/${exam_id}/questionbank`),
   GetQuestionById: (id)        => api.get(`/dashboard/question/${id}`),
 };
 

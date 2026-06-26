@@ -551,6 +551,47 @@ const RejectQuestion = async (req, res) => {
   }
 }
 
+const GetAllQuestionGradeSubjectByExam = async (req, res) => {
+  try {
+    const { exam_id } = req.params;
+
+    const exam = await db.Exam.findOne({
+      where: {
+        id: exam_id
+      }
+    });
+
+    if (!exam) {
+      return res.status(404).json({
+        success: false,
+        message: "Không tìm thấy đề thi"
+      });
+    }
+
+    const questions = await db.Question.findAll({
+      where: {
+        grade_id: exam.grade_id,
+        subject_id: exam.subject_id
+      },
+      include: [
+        { model: db.Grade },
+        { model: db.Subject }
+      ]
+    });
+
+    return res.json({
+      success: true,
+      data: questions
+    });
+
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      message: err.message
+    });
+  }
+};
+
 // Lấy thông tin question theo ID
 const GetQuestionById = async (req, res) => {
   try {
@@ -589,5 +630,6 @@ module.exports = {
   DeleteQuestion,
   ApproveQuestion,
   RejectQuestion,
+  GetAllQuestionGradeSubjectByExam,
   GetQuestionById
 };
