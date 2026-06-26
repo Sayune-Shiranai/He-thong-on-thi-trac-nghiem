@@ -1,6 +1,7 @@
 const db = require('../models/index.js');
 const path = require("path");
 const fs = require("fs");
+const { Op } = require('sequelize');
 
 const GetPaged = async (req, res) => {
     try {
@@ -27,22 +28,22 @@ const GetPaged = async (req, res) => {
 
         const questions = await db.Question.findAll({
             where,
-              include: [
-                {
-                    model: db.Grade,
-                    attributes: ["id", "grade"]
-                },
-                {
-                    model: db.Subject,
-                    attributes: ["id", "name"]
-                },
-                {
-                    model: db.Exam,
-                    attributes: ["id", "title"]
-                },
-                {
-                    model: db.Status,
-                }
+            include: [
+              {
+                  model: db.Grade,
+                  attributes: ["id", "grade"]
+              },
+              {
+                  model: db.Subject,
+                  attributes: ["id", "name"]
+              },
+              {
+                  model: db.Exam,
+                  attributes: ["id", "title"]
+              },
+              {
+                  model: db.Status,
+              }
             ],
             limit,
             offset,
@@ -331,30 +332,56 @@ const UseQuestionBank = async (req, res) => {
 const RandomQuestion = async (req, res) => {
   try {
     const { exam_id, count } = req.body;
-    const exam = await db.Exam.findOne({
-      where: { id: exam_id }
-    });
 
-    if (!exam) {
-      return res.status(404).json({
-        message: "Không tìm thấy đề thi"
-      });
-    }
-
-    if(isNaN(count) || count <= 0) {
+    // Kiểm tra số lượng
+    if (isNaN(count) || Number(count) <= 0) {
       return res.status(400).json({
+        success: false,
         message: "Vui lòng nhập số lượng câu hỏi hợp lệ!"
       });
     }
 
+    const exam = await db.Exam.findOne({
+      where: {
+        id: exam_id 
+      },
+      include: [
+        {
+          model: db.Question
+        }
+      ]
+    });
+    
+    if (!exam) {
+      return res.status(404).json({
+        success: false,
+        message: "Không tìm thấy đề thi"
+      });
+    }
+
+    const checkQuestion = (exam?.Questions || []).map(q => q.id);
+
     const questions = await db.Question.findAll({
       where: {
         grade_id: exam.grade_id,
-        subject_id: exam.subject_id
+        subject_id: exam.subject_id,
+        status_id: {
+          [Op.ne]: 1,
+        },
+        id: {
+          [Op.notIn]: checkQuestion.length ? checkQuestion : [0]
+        }
       },
       order: db.sequelize.random(),
-      limit: count
+      limit: Number(count)
     });
+
+    if (questions.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Không còn câu hỏi phù hợp để thêm."
+      });
+    }
 
     const data = questions.map(question => ({
       exam_id,
@@ -363,12 +390,15 @@ const RandomQuestion = async (req, res) => {
 
     await db.Exam_Question.bulkCreate(data);
 
-    return res.json({
-      message: "Thêm câu hỏi thành công",
+    return res.status(200).json({
+      success: true,
+      message: `Đã thêm ${questions.length} câu hỏi vào đề thi.`,
       data: questions
     });
+
   } catch (err) {
     return res.status(500).json({
+      success: false,
       message: err.message
     });
   }

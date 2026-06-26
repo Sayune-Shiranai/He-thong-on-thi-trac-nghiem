@@ -87,14 +87,6 @@ const CreateExam = async (req, res) => {
       });
     }
 
-    const grade = await db.Grade.findOne({ where: { id: grade_id } });
-
-    if (!grade) {
-      return res.status(404).json({
-        message: "Lớp không tồn tại!"
-      });
-    }
-
     if (!subject_id) {
       return res.status(400).json({
         field: "subject_id",
@@ -102,13 +94,19 @@ const CreateExam = async (req, res) => {
       });
     }
 
-    const subject = await db.Subject.findOne({ where: { id: subject_id } });
+    const CheckExam = await db.Exam.findOne({
+      where: {
+        title,
+        grade_id,
+        subject_id
+      }
+    });
 
-    if (!subject) {
-      return res.status(404).json({
-        message: "Môn học không tồn tại!"
+    if (CheckExam) {
+      return res.status(400).json({
+        field: "title",
+        message: "Tên đề thi đã tồn tại trong khối và môn này!"
       });
-
     }
 
     const exam = await db.Exam.create({

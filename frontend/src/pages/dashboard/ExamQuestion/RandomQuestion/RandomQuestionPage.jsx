@@ -2,9 +2,7 @@ import { useState } from "react";
 import { questionService } from "../../../../services/examService";
 
 export default function RandomQuestion({ examId, reload }) {
-
     const [count, setCount] = useState(10);
-
     const handleRandom = async () => {
 
         try {
