@@ -4,16 +4,12 @@ import { questionService } from "../../../../services/examService";
 export default function RandomQuestion({ examId, reload }) {
     const [count, setCount] = useState(10);
     const handleRandom = async () => {
-
         try {
-
             await questionService.RandomQuestion({
                 exam_id: examId,
                 count: Number(count)
             });
-
             await reload();
-
         } catch(err) {
             console.log(err);
         }
@@ -21,7 +17,7 @@ export default function RandomQuestion({ examId, reload }) {
 
     return (
         <div className="card p-3 mb-3">
-            <h5>Chọn random câu hỏi</h5>
+            <h5>Random câu hỏi</h5>
             <input
                 type="number"
                 className="form-control mb-3"
@@ -37,7 +33,6 @@ export default function RandomQuestion({ examId, reload }) {
             >
                 Random
             </button>
-
         </div>
     );
 }
