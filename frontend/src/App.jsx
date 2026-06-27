@@ -42,8 +42,9 @@ import CreateQuestionsPage from './pages/dashboard/Question/CreateQuestion/Creat
 import UpdateQuestionsPage from './pages/dashboard/Question/UpdateQuestion/UpdateQuestionPage';
 import DashboardExamPage from './pages/dashboard/Exam/ExamPage';
 import CreateExamsPage from './pages/dashboard/Exam/CreateExam/CreateExamPage';
-// import UpdateExamsPage from './pages/dashboard/Exam/UpdateExam/UpdateExamPage';
+import UpdateExamsPage from './pages/dashboard/Exam/UpdateExam/UpdateExamPage';
 import CreateExamQuestionPage from './pages/dashboard/ExamQuestion/CreateExamQuestion/CreateExamQuestionPage';
+import ImportQuestionPage from './pages/dashboard/ExamQuestion/UploadQuestion/UploadQuestionPage';
 import AdminResultsPage   from './pages/dashboard/AdminResultsPage';
 import AdminSubjectsPage  from './pages/dashboard/AdminSubjectsPage';
 import NotFoundPage       from './pages/NotFoundPage';
@@ -105,8 +106,9 @@ export default function App() {
               <Route path="question/update/:id"   element={<UpdateQuestionsPage />} />
               <Route path="exam"   element={<DashboardExamPage />} />
               <Route path="exam/create"   element={<CreateExamsPage />} />
-              {/* <Route path="exam/update/:id"   element={<UpdateExamsPage />} /> */}
+              <Route path="exam/update/:id"   element={<UpdateExamsPage />} />
               <Route path="exam/:id/question"   element={<CreateExamQuestionPage />} />
+              <Route path="exam/:id/import"   element={<ImportQuestionPage />} />
               <Route path="results"   element={<AdminResultsPage />} />
             </Route>
             <Route path="*" element={<NotFoundPage />} />

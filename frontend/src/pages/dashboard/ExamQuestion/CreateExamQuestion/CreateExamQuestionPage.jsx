@@ -11,11 +11,13 @@ export default function CreateExamQuestionPage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [mode, setMode] = useState("");
+  const [exam, setExam] = useState({});
   const [examQuestions, setExamQuestions] = useState([]);
 
   const loadExamQuestions = async () => {
       const res = await examService.GetExamById(id);
 
+      setExam(res.data);
       setExamQuestions(res.data.Questions || []);
   };
 
@@ -31,8 +33,6 @@ export default function CreateExamQuestionPage() {
 
       navigate("/dashboard/exam")
 
-      loadExamQuestions(); // reload lại dữ liệu
-
     } catch (err) {
       console.log(err);
     }
@@ -41,7 +41,7 @@ export default function CreateExamQuestionPage() {
     return (
         <div className="container-fluid">
             <div className="card p-4">
-                <h3>Quản lý câu hỏi đề thi</h3>
+                <h3>Quản lý câu hỏi đề thi {exam.title}</h3>
                 <div className="row mb-4">
                     <div className="col-md-4">
                         <button
@@ -98,13 +98,15 @@ export default function CreateExamQuestionPage() {
                     questions={examQuestions}
                     reload={loadExamQuestions}
                 />
+
+                <button 
+                    className="btn btn-success mt-3"
+                    onClick={handleCompleteExam}
+                >
+                Hoàn thành tạo đề thi
+                </button>
             </div>
-            <button
-              className="btn btn-success mt-3"
-              onClick={handleCompleteExam}
-            >
-              Hoàn thành tạo đề thi
-            </button>
+            
         </div>
     );
 }

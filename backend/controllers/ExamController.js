@@ -135,9 +135,7 @@ const UpdateExam = async (req, res) => {
   try {
     const { id } = req.params;
     const {
-      title,
-      grade_id,
-      subject_id,
+      title
     } = req.body;
 
     const exam = await db.Exam.findOne({ where: { id } });
@@ -150,28 +148,6 @@ const UpdateExam = async (req, res) => {
 
     if (title) {
       exam.title = title;
-    }
-
-    if (grade_id) {
-      const grade = await db.Grade.findOne({ where: { id: grade_id } });
-
-      if (!grade) {
-        return res.status(404).json({
-          message: "Lớp không tồn tại!"
-        });
-      }
-      exam.grade_id = grade_id;
-    }
-
-    if (subject_id) {
-      const subject = await db.Subject.findOne({ where: { id: subject_id } });
-
-      if (!subject) {
-        return res.status(404).json({
-          message: "Môn học không tồn tại!"
-        });
-      }
-      exam.subject_id = subject_id;
     }
 
     await exam.save();

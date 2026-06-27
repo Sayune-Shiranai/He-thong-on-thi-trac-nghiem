@@ -333,7 +333,6 @@ const RandomQuestion = async (req, res) => {
   try {
     const { exam_id, count } = req.body;
 
-    // Kiểm tra số lượng
     if (isNaN(count) || Number(count) <= 0) {
       return res.status(400).json({
         success: false,
@@ -408,7 +407,6 @@ const RandomQuestion = async (req, res) => {
 const UploadQuestionImage = async (req, res) => {
   try {
     const {
-      exam_id,
       answer_count,
       correct_answers
     } = req.body;
@@ -423,11 +421,11 @@ const UploadQuestionImage = async (req, res) => {
       where: { id: exam_id }
     });
 
-    // if (!exam) {
-    //   return res.status(404).json({
-    //     message: "Đề thi không tồn tại"
-    //   });
-    // }
+    if (!exam) {
+      return res.status(404).json({
+        message: "Đề thi không tồn tại"
+      });
+    }
 
     const totalQuestions = parseInt(answer_count);
 

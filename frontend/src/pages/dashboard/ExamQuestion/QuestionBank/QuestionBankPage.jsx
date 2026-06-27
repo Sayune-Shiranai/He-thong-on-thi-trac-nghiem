@@ -48,6 +48,11 @@ const QuestionBank = ({ examId, reload }) => {
         <tr>
           <th></th>
           <th>Câu hỏi</th>
+          <th>Đáp án A</th>
+          <th>Đáp án B</th>
+          <th>Đáp án C</th>
+          <th>Đáp án D</th>
+          <th>Đáp án đúng</th>
         </tr>
       </thead>
 
@@ -61,6 +66,11 @@ const QuestionBank = ({ examId, reload }) => {
               />
             </td>
             <td>{q.content}</td>
+            <td>{q.option_a}</td>
+            <td>{q.option_b}</td>
+            <td>{q.option_c}</td>
+            <td>{q.option_d}</td>
+            <td>{q.correct_answer}</td>
           </tr>
         ))}
       </tbody>
