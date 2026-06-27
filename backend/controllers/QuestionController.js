@@ -407,6 +407,7 @@ const RandomQuestion = async (req, res) => {
 const UploadQuestionImage = async (req, res) => {
   try {
     const {
+      exam_id,
       answer_count,
       correct_answers
     } = req.body;
@@ -455,12 +456,11 @@ const UploadQuestionImage = async (req, res) => {
     const createdQuestions = [];
 
     for (let i = 0; i < totalQuestions; i++) {
-      const answer = parsedAnswers[i];
       const question = await db.Question.create({
         content_img: `/media/exam/${req.file.filename}`,
         question_number: i + 1,
         answer_count: totalQuestions,
-        correct_answer: answer,
+        correct_answer: parsedAnswers[i],
         grade_id: exam.grade_id,
         subject_id: exam.subject_id
       });

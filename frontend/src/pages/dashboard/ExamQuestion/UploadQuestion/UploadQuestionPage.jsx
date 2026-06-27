@@ -74,10 +74,13 @@ export default function UploadQuestionPage() {
 
       const formData = new FormData();
 
-      formData.append("file", file);
+      formData.append("content_img", file);
       formData.append("exam_id", id);
-      formData.append("question_count", questionCount);
-      formData.append("answers", JSON.stringify(answers));
+      formData.append("answer_count", questionCount);
+      formData.append(
+        "correct_answers",
+        JSON.stringify(answers.map(x => x.answer))
+      );
 
       await questionService.UploadQuestionImage(formData);
 
@@ -112,7 +115,7 @@ export default function UploadQuestionPage() {
           <input
             type="file"
             className="form-control"
-            accept=".doc,.docx,.pdf"
+            accept=".png,.jpg"
             onChange={(e) => setFile(e.target.files[0])}
           />
         </div>

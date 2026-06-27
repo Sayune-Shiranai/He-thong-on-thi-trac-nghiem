@@ -22,7 +22,7 @@ export const questionService = {
   RandomQuestion:      (data)       => api.post('/dashboard/question/create/random', data),
   UseQuestionBank:      (data)       => api.post('/dashboard/question/create/usequestionbank', data),
   UpdateQuestion: (id, data)   => api.put(`/dashboard/question/update/${id}`, data),
-  UploadQuestionImage: (formData)   => api.post('/dashboard/question/upload', formData, {
+  UploadQuestionImage: (formData)   => api.post('/dashboard/question/create/upload', formData, {
     headers: { 'Content-Type': 'multipart/form-data' },
   }),
   DeleteQuestion: (id)         => api.delete(`/dashboard/question/delete/${id}`),
