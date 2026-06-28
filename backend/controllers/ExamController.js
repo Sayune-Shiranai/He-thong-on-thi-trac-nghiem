@@ -96,16 +96,14 @@ const CreateExam = async (req, res) => {
 
     const CheckExam = await db.Exam.findOne({
       where: {
-        title,
-        grade_id,
-        subject_id
+        title
       }
     });
 
     if (CheckExam) {
       return res.status(400).json({
         field: "title",
-        message: "Tên đề thi đã tồn tại trong khối và môn này!"
+        message: "Tên đề thi đã tồn tại!"
       });
     }
 

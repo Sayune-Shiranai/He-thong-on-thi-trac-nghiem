@@ -75,14 +75,13 @@ export default function UploadQuestionPage() {
       const formData = new FormData();
 
       formData.append("content_img", file);
-      formData.append("exam_id", id);
       formData.append("answer_count", questionCount);
       formData.append(
         "correct_answers",
         JSON.stringify(answers.map(x => x.answer))
       );
 
-      await questionService.UploadQuestionImage(formData);
+      await questionService.UploadQuestionImage(formData, id);
 
       await examService.UpdateExam(id, {
         status: "completed"

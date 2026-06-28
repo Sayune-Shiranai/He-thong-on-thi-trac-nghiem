@@ -105,9 +105,9 @@ export default function UserPage() {
                 </button>
               </div>
 
-              <div className="col-md-6 text-end">
+              {/* <div className="col-md-6 text-end">
                 <button className="btn btn-success">Thêm mới</button>
-              </div>
+              </div> */}
             </div>
           </div>
 

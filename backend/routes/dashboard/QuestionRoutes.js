@@ -21,7 +21,7 @@ router.post("/createquestion", CreateQuestion);
 router.post("/create", CreateQuestionWithExam);
 router.post("/create/usequestionbank", UseQuestionBank);
 router.post("/create/random", RandomQuestion);
-router.post("/create/upload", upload.single("content_img"), UploadQuestionImage);
+router.post("/exam/:exam_id/upload", upload.single("content_img"), UploadQuestionImage);
 router.put("/update/:id", UpdateQuestion);
 router.delete("/delete/:id", DeleteQuestion);
 router.post("/approve/:id", ApproveQuestion); // dashboard/user/approve/:id

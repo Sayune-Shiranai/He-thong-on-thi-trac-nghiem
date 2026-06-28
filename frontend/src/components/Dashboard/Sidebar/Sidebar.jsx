@@ -152,14 +152,14 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
             </ul>
           </li>
 
-          <li className="sidebar-list">
+          {/* <li className="sidebar-list">
             <div
               className="sidebar-link sidebar-title"
             >
               <i className="fa-solid fa-chart-simple"></i>
               <span className="ms-2"><Link to="/dashboard/questionfollowing">Thống kê</Link></span>
             </div>
-          </li>
+          </li> */}
 
           <li className={`sidebar-list ${openMenu === "grade" ? "open" : ""}`}>
             <div

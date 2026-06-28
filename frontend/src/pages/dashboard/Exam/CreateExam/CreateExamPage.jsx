@@ -45,12 +45,12 @@ const CreateExamPage = () => {
     e.preventDefault();
     try {
       const res = await examService.CreateExam(formData);
-      const examId = res.data.id;
+      const exam_id = res.data.id;
 
       if (createType === "manual") {
-        navigate(`/dashboard/exam/${examId}/question`);
+        navigate(`/dashboard/exam/${exam_id}/question`);
       } else {
-        navigate(`/dashboard/exam/${examId}/import`);
+        navigate(`/dashboard/exam/${exam_id}/upload`);
       }
     } catch (error) {
       setError(error.message);
