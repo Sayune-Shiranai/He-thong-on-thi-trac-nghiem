@@ -1,3 +1,5 @@
+import "./QuestionListPage.css"
+
 export default function QuestionListPage({ exam }) {
   const questions = exam?.Questions ?? [];
 

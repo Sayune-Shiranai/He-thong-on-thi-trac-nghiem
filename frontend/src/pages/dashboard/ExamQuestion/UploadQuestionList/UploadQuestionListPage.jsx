@@ -49,9 +49,6 @@ export default function UploadQuestionListPage({ exam }) {
                                                 ? "bg-success text-white fw-bold"
                                                 : "bg-light"
                                             }`}
-                                        // style={{
-                                        //     width: "23%"
-                                        // }}
                                     >
                                         {item}
                                     </div>
