@@ -1,0 +1,5 @@
+.exam_img {
+    max-height: 850px;
+    object-fit: contain;
+    width: 100%;
+}

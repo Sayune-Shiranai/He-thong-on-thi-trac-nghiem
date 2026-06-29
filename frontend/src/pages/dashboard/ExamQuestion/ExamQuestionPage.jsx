@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { examService } from "../../../services/examService";
 
-import QuestionList from "./QuestionList/QuestionListPage";
-// import UploadQuestion from "./UploadQuestionList/UploadQuestionListPage";
+import QuestionListPage from "./QuestionList/QuestionListPage";
+import UploadQuestionListPage from "./UploadQuestionList/UploadQuestionListPage";
 
 export default function ExamQuestionPage() {
   const { id } = useParams();
@@ -49,7 +49,14 @@ export default function ExamQuestionPage() {
     );
   }
 
-  const questions = exam?.questions || [];
+  const questions = exam?.Questions || [];
+
+  const isUploadExam = questions.some(
+    q => q.content_img && q.content_img.trim() !== ""
+  );
+
+  console.log("Questions:", questions);
+  console.log("isUploadExam:", isUploadExam);
 
   return (
     <div className="container-fluid">
@@ -67,8 +74,15 @@ export default function ExamQuestionPage() {
 
           <h4 className="mb-1 text-center flex-grow-1">Đề thi {exam.title}</h4>
         </div>
-        <div className="card-body">
+        {/* <div className="card-body">
           <QuestionList exam={exam} />
+        </div> */}
+        <div className="card-body">
+          {isUploadExam ? (
+            <UploadQuestionListPage exam={exam} reload={loadExam} />
+          ) : (
+            <QuestionListPage exam={exam} />
+          )}
         </div>
       </div>
 
