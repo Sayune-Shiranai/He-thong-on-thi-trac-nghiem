@@ -122,7 +122,7 @@ export default function ExamPage() {
                   <tr>
                     <th className="text-center">Id</th>
                     <th>Tên đề thi</th>
-                    <th>Lớp</th>
+                    <th>Khối</th>
                     <th>Môn học</th>
                     <th>Câu hỏi</th>
                     <th>Trạng thái kiểm duyệt</th>

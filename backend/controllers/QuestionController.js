@@ -109,7 +109,7 @@ const CreateQuestion = async (req, res) => {
     if (!subject_id) {
       return res.status(400).json({
         field: "subject_id",
-        message: "Lớp không được để trống"
+        message: "Khối không được để trống"
       });
     }
 

@@ -92,7 +92,7 @@ const CreateTeacherAssignment = async (req, res) => {
     });
 
     if (!checkGrade) {
-      return res.status(404).json({ message: "Không tìm thấy khối lớp!" });
+      return res.status(404).json({ message: "Không tìm thấy khối!" });
     }
 
     const checkSubject = await db.Subject.findOne({
@@ -113,7 +113,7 @@ const CreateTeacherAssignment = async (req, res) => {
 
     if (existedAssignment) {
       return res.status(400).json({
-        message: `Giáo viên đã được phân công môn ${checkSubject.name} này cho lớp ${checkGrade.grade} rồi!`
+        message: `Giáo viên đã được phân công môn ${checkSubject.name} này cho khối ${checkGrade.grade} rồi!`
       });
     }
 
@@ -165,7 +165,7 @@ const UpdateTeacherAssignment = async (req, res) => {
     });
 
     if (!checkGrade) {
-      return res.status(404).json({ message: "Không tìm thấy khối lớp!" });
+      return res.status(404).json({ message: "Không tìm thấy khối khối!" });
     }
 
     const checkSubject = await db.Subject.findOne({
@@ -189,7 +189,7 @@ const UpdateTeacherAssignment = async (req, res) => {
 
     if (existedAssignment) {
       return res.status(400).json({
-        message: `Giáo viên đã được phân công môn ${checkSubject.name} này cho lớp ${checkGrade.grade} rồi!`
+        message: `Giáo viên đã được phân công môn ${checkSubject.name} này cho khối ${checkGrade.grade} rồi!`
       });
     }
 

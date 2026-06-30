@@ -84,14 +84,14 @@ const UpdateQuestionPage = () => {
         <div className="card-body p-2">
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
-              <label className="form-label">Lớp</label>
+              <label className="form-label">Khối</label>
               <select
                 name="grade_id"
                 value={formData.grade_id}
                 className="form-control"
                 onChange={handleChange}
               >
-                <option value="">-- Chọn lớp --</option>
+                <option value="">-- Chọn khối --</option>
                 {grades.map((grade) => (
                   <option key={grade.id} value={grade.id}>{grade.grade}</option>
                 ))}

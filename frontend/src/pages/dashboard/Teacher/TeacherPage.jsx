@@ -112,7 +112,7 @@ export default function TeacherPage() {
                   <tr>
                     <th className="text-center">Id</th>
                     <th>Tên giáo viên</th>
-                    <th>Lớp</th>
+                    <th>Khối</th>
                     <th>Môn</th>
                     {/* <th>Trạng thái kiểm duyệt</th> */}
                     <th width="120">Chức năng</th>

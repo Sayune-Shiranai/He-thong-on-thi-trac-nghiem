@@ -50,7 +50,7 @@ const UpdateGradePage = () => {
       <div className="page-title">
           <div className="row">
             <div className="col-6">
-             <h4>Chỉnh sửa lớp
+             <h4>Chỉnh sửa khối
               </h4>
             </div>
           </div>
@@ -60,7 +60,7 @@ const UpdateGradePage = () => {
           <form onSubmit={handleSubmit}>
 
             <div className="mb-3">
-              <label className="form-label">Tên lớp</label>
+              <label className="form-label">Tên khối</label>
               <input
                 type="text"
                 className="form-control"

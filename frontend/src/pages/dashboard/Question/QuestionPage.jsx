@@ -121,7 +121,7 @@ export default function QuestionPage() {
                 <thead className="table-light">
                   <tr>
                     <th className="text-center">Id</th>
-                    <th>Lớp</th>
+                    <th>Khối</th>
                     <th>Môn học</th>
                     <th>Đề thi</th>
                     <th>Câu hỏi</th>

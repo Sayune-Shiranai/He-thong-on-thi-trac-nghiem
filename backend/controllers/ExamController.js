@@ -3,65 +3,88 @@ const { Op } = require("sequelize");
 
 //lấy danh sách đề thi theo phân trang
 const GetPaged = async (req, res) => {
-    try {
-        let { page = 1, limit = 10, keyword = "" } = req.query;
-        page = parseInt(page);
-        limit = parseInt(limit);
+  try {
+      let { page = 1, limit = 10, keyword = "" } = req.query;
+      page = parseInt(page);
+      limit = parseInt(limit);
 
-        const offset = (page - 1) * limit;
-
-        let where = {};
-
-        if (keyword) {
-            where = {
-                [Op.or]: [
-                { title: { [Op.like]: `%${keyword}%` } }
-                ]
-            };
+      const FindGrade = await db.Grade.findAll({
+        where: {
+            grade: {
+                [Op.like]: `%${keyword}%`
+            }
         }
+      });
 
-        const totalRecords = await db.Exam.count({ where });
+      const grades = FindGrade.map(g => g.id);
 
-        const exams = await db.Exam.findAll({
-            where,
-            include: [
-                {
-                    model: db.Grade,
-                    attributes: ["id", "grade"]
-                },
-                {
-                    model: db.Subject,
-                    attributes: ["id", "name"]
-                },
-                {
-                    model: db.User,
-                    attributes: ["id", "username"]
-                },
-                {
-                    model: db.Question,
-                },
-                {
-                  model: db.Status
-                }
-            ],
-            limit,
-            offset,
-            order: [["id", "DESC"]]
-        });
+      const FindSubject = await db.Subject.findAll({
+        where: {
+            name: {
+                [Op.like]: `%${keyword}%`
+            }
+        }
+      });
 
-        const totalPages = Math.ceil(totalRecords / limit);
+      const subjects = FindSubject.map(g => g.id);
 
-        return res.json({
-            page,
-            limit,
-            totalPages,
-            totalRecords,
-            data: exams
-        });
+      const offset = (page - 1) * limit;
 
-    } catch (err) {
-        res.status(500).send(err.message);
-    }
+      let where = {};
+
+      if (keyword) {
+          where = {
+              [Op.or]: [
+              { title: { [Op.like]: `%${keyword}%` } },
+              { grade_id: { [Op.in]: grades } },
+              { subject_id: { [Op.in]: subjects } },
+              ]
+          };
+      }
+
+      const totalRecords = await db.Exam.count({ where });
+
+      const exams = await db.Exam.findAll({
+          where,
+          include: [
+              {
+                  model: db.Grade,
+                  attributes: ["id", "grade"]
+              },
+              {
+                  model: db.Subject,
+                  attributes: ["id", "name"]
+              },
+              {
+                  model: db.User,
+                  attributes: ["id", "username"]
+              },
+              {
+                  model: db.Question,
+              },
+              {
+                model: db.Status
+              }
+          ],
+          limit,
+          offset,
+          order: [["id", "DESC"]]
+      });
+
+      const totalPages = Math.ceil(totalRecords / limit);
+
+      return res.json({
+          page,
+          limit,
+          totalPages,
+          totalRecords,
+          data: exams
+      });
+
+  } catch (err) {
+      console.log(err);
+      res.status(500).send(err.message);
+  }
 }
 
 //create exam
@@ -83,7 +106,7 @@ const CreateExam = async (req, res) => {
     if (!grade_id) {
       return res.status(400).json({
         field: "grade_id",
-        message: "Vui lòng chọn lớp!"
+        message: "Vui lòng chọn khối!"
       });
     }
 

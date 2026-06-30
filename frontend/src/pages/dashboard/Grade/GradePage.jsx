@@ -47,7 +47,7 @@ export default function GradePage() {
 
 
   const handleDelete = async (id) => { 
-    if (!window.confirm("Xóa lớp này?")) return; 
+    if (!window.confirm("Xóa khối này?")) return; 
     await gradeService.DeleteGrade(id); 
     const res = await gradeService.GetPagedGrades({
       page: 1,
@@ -65,7 +65,7 @@ export default function GradePage() {
         <div className="page-title">
           <div className="row">
             <div className="col-6">
-              <h4>Danh sách lớp</h4>
+              <h4>Danh sách khối</h4>
             </div>
             {/* <div className="col-6">
               <ol className="breadcrumb">
@@ -111,7 +111,7 @@ export default function GradePage() {
                 <thead className="table-light">
                   <tr>
                     <th className="text-center">Id</th>
-                    <th>Lớp</th>
+                    <th>Khối</th>
                     {/* <th>Trạng thái kiểm duyệt</th> */}
                     <th width="120">Chức năng</th>
                   </tr>

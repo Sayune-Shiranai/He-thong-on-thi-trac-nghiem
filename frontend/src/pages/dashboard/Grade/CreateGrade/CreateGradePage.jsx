@@ -19,7 +19,7 @@ const CreateGradePage = () => {
 
         const errors = {};
         if (!grade || grade.trim() === "") {
-            errors.grade = "Tên lớp không được để trống!";
+            errors.grade = "Tên khối không được để trống!";
         }
 
         if (Object.keys(errors).length > 0) {
@@ -65,7 +65,7 @@ const CreateGradePage = () => {
             <div className="page-title">
                 <div className="row">
                     <div className="col-6">
-                        <h4>Thêm lớp</h4>
+                        <h4>Thêm khối</h4>
                     </div>
                 </div>
             </div>
@@ -78,11 +78,11 @@ const CreateGradePage = () => {
                     </div>
                     )}
                     <div className="mb-3">
-                        <label className="form-label">Tên lớp</label>
+                        <label className="form-label">Tên khối</label>
                         <input
                             className={`form-control ${state.errors?.grade ? "is-invalid" : ""}`}
                             name="grade"
-                            placeholder="Tên lớp"
+                            placeholder="Tên khối"
                             defaultValue={state.formData?.grade || ""}
                         />
                         {state.errors?.grade && (

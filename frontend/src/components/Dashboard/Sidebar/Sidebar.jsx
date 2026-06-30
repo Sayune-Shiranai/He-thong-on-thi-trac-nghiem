@@ -167,13 +167,13 @@ const Sidebar = ({ collapsed, setCollapsed }) => {
               onClick={() => toggleMenu("grade")}
             >
               <i className="fa fa-list"></i>
-              <span className="ms-2">Quản lý lớp</span>
+              <span className="ms-2">Quản lý khối</span>
               <i className="fa fa-angle-down ms-auto sidebar-icon"></i>
             </div>
 
             <ul className="sidebar-submenu">
-              <li><Link to="/dashboard/grade">Danh sách lớp</Link></li>
-              <li><Link to="/dashboard/grade/create">Thêm lớp</Link></li>
+              <li><Link to="/dashboard/grade">Danh sách khối</Link></li>
+              <li><Link to="/dashboard/grade/create">Thêm khối</Link></li>
             </ul>
           </li>
 

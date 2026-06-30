@@ -43,12 +43,12 @@ const GetPaged = async (req, res) => {
     }
 }
 
-// Tạo lớp mới
+// Tạo khối mới
 const CreateGrade = async (req, res) => {
     try {
         const { grade } = req.body;
         if (!grade) {
-            return res.status(400).json({ message: "Vui lòng nhập lớp!" });
+            return res.status(400).json({ message: "Vui lòng nhập khối!" });
         }
 
         const newGrade = await db.Grade.create({ grade });
@@ -58,13 +58,13 @@ const CreateGrade = async (req, res) => {
     }
 }
 
-// Cập nhật lớp
+// Cập nhật khối
 const UpdateGrade = async (req, res) => {
     try {
         const { id } = req.params;
         const { grade } = req.body;
         if (!grade) {
-            return res.status(400).json({ message: "Vui lòng nhập lớp!" });
+            return res.status(400).json({ message: "Vui lòng nhập khối!" });
         }
 
         const CheckGrade = await db.Grade.findOne(
@@ -72,7 +72,7 @@ const UpdateGrade = async (req, res) => {
         );
 
         if (!CheckGrade) {
-            return res.status(404).json({ message: "Lớp không tồn tại!" });
+            return res.status(404).json({ message: "Khối không tồn tại!" });
         }
 
         await CheckGrade.update({ grade });
@@ -82,7 +82,7 @@ const UpdateGrade = async (req, res) => {
     }
 }
 
-// Xóa lớp
+// Xóa khối
 const DeleteGrade = async (req, res) => {
     try {
         const { id } = req.params;
@@ -90,16 +90,16 @@ const DeleteGrade = async (req, res) => {
             { where: { id } }
         );
         if (!CheckGrade) {
-            return res.status(404).json({ message: "Lớp không tồn tại!" });
+            return res.status(404).json({ message: "Khối không tồn tại!" });
         }
         await CheckGrade.destroy();
-        return res.json({ message: "Lớp đã được xóa!" });
+        return res.json({ message: "Khối đã được xóa!" });
     } catch (err) {
         res.status(500).send(err.message);
     }
 }
 
-// Lấy tất cả lớp
+// Lấy tất cả khối
 const GetAllGrades = async (req, res) => {
     try {
         const grades = await db.Grade.findAll();
@@ -112,7 +112,7 @@ const GetAllGrades = async (req, res) => {
     }
 }
 
-// Lấy tất cả đề thi theo lớp
+// Lấy tất cả đề thi theo khối
 const GetAllExamsByGrade = async (req, res) => {
     try {
         const { id } = req.params;
@@ -179,7 +179,7 @@ const GetGradetById = async (req, res) => {
     const grade = await db.Grade.findOne({
       where: { id }
     });
-    if (!grade) return res.status(404).json({ success: false, message: 'Không tìm thấy lớp!' });
+    if (!grade) return res.status(404).json({ success: false, message: 'Không tìm thấy khối!' });
 
     res.json({ 
       success: true, 
