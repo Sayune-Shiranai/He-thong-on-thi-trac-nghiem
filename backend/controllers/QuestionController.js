@@ -4,65 +4,87 @@ const fs = require("fs");
 const { Op } = require('sequelize');
 
 const GetPaged = async (req, res) => {
-    try {
-        let { page = 1, limit = 10, keyword = "" } = req.query;
-        page = parseInt(page);
-        limit = parseInt(limit);
+  try {
+      let { page = 1, limit = 10, keyword = "" } = req.query;
+      page = parseInt(page);
+      limit = parseInt(limit);
 
-        const offset = (page - 1) * limit;
+      const offset = (page - 1) * limit;
 
-        let where = {
-          content_img: null
-        };
+      let where = {
+        content_img: null
+      };
 
-        if (keyword) {
-            where = {
-                ...where,
-                [Op.or]: [
-                { content: { [Op.like]: `%${keyword}%` } }
-                ]
-            };
+      const FindGrade = await db.Grade.findAll({
+        where: {
+            grade: {
+                [Op.like]: `%${keyword}%`
+            }
         }
+      });
 
-        const totalRecords = await db.Question.count({ where });
+      const grades = FindGrade.map(g => g.id);
 
-        const questions = await db.Question.findAll({
-            where,
-            include: [
-              {
-                  model: db.Grade,
-                  attributes: ["id", "grade"]
-              },
-              {
-                  model: db.Subject,
-                  attributes: ["id", "name"]
-              },
-              {
-                  model: db.Exam,
-                  attributes: ["id", "title"]
-              },
-              {
-                  model: db.Status,
-              }
-            ],
-            limit,
-            offset,
-            order: [["id", "DESC"]]
-        });
+      const FindSubject = await db.Subject.findAll({
+        where: {
+            name: {
+                [Op.like]: `%${keyword}%`
+            }
+        }
+      });
 
-        const totalPages = Math.ceil(totalRecords / limit);
+      const subjects = FindSubject.map(g => g.id);
 
-        return res.json({
-            page,
-            limit,
-            totalPages,
-            totalRecords,
-            data: questions
-        });
+      if (keyword) {
+          where = {
+              ...where,
+              [Op.or]: [
+              { content: { [Op.like]: `%${keyword}%` } },
+              { grade_id: { [Op.in]: grades } },
+              { subject_id: { [Op.in]: subjects } },
+              ]
+          };
+      }
 
-    } catch (err) {
-        res.status(500).send(err.message);
-    }
+      const totalRecords = await db.Question.count({ where });
+
+      const questions = await db.Question.findAll({
+          where,
+          include: [
+            {
+                model: db.Grade,
+                attributes: ["id", "grade"]
+            },
+            {
+                model: db.Subject,
+                attributes: ["id", "name"]
+            },
+            {
+                model: db.Exam,
+                attributes: ["id", "title"]
+            },
+            {
+                model: db.Status,
+            }
+          ],
+          limit,
+          offset,
+          order: [["id", "DESC"]]
+      });
+
+      const totalPages = Math.ceil(totalRecords / limit);
+
+      return res.json({
+          page,
+          limit,
+          totalPages,
+          totalRecords,
+          data: questions
+      });
+
+  } catch (err) {
+      res.status(500).send(err.message);
+  }
 }
 
 // const GetAllQuestionByExam = async (req, res) => {
@@ -600,11 +622,19 @@ const GetAllQuestionGradeSubjectByExam = async (req, res) => {
     const questions = await db.Question.findAll({
       where: {
         grade_id: exam.grade_id,
-        subject_id: exam.subject_id
+        subject_id: exam.subject_id,
+        status_id: 2
       },
       include: [
-        { model: db.Grade },
-        { model: db.Subject }
+        { 
+          model: db.Grade 
+        },
+        { 
+          model: db.Subject 
+        },
+        { 
+          model: db.Status 
+        },
       ]
     });
 
