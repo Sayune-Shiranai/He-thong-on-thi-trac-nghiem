@@ -4,7 +4,7 @@ const { Op } = require("sequelize");
 //lấy danh sách đề thi theo phân trang
 const GetPaged = async (req, res) => {
   try {
-      let { page = 1, limit = 10, keyword = "" } = req.query;
+      let { page = 1, limit = 10, keyword = "", grade_id = "", subject_id = "" } = req.query;
       page = parseInt(page);
       limit = parseInt(limit);
 
@@ -40,6 +40,14 @@ const GetPaged = async (req, res) => {
               { subject_id: { [Op.in]: subjects } },
               ]
           };
+      }
+
+      if (grade_id) {
+          where.grade_id = grade_id;
+      }
+
+      if (subject_id) {
+          where.subject_id = subject_id;
       }
 
       const totalRecords = await db.Exam.count({ where });
