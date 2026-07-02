@@ -6,6 +6,7 @@ import RandomQuestion from "../RandomQuestion/RandomQuestionPage";
 import ExamQuestionList from "../ExamQuestionList/ExamQuestionListPage";
 
 import { examService } from "../../../../services/examService";
+import { questionService } from "../../../../services/examService";
 
 export default function CreateExamQuestionPage() {
   const { id } = useParams();
@@ -13,11 +14,14 @@ export default function CreateExamQuestionPage() {
   const [mode, setMode] = useState("");
   const [exam, setExam] = useState({});
   const [examQuestions, setExamQuestions] = useState([]);
+  const [questions, setQuestions] = useState([]);
 
   const loadExamQuestions = async () => {
       const res = await examService.GetExamById(id);
+      const questionRes = await questionService.GetAllQuestionGradeSubjectByExam(id);
 
       setExam(res.data);
+      setQuestions(questionRes.data);
       setExamQuestions(res.data.Questions || []);
   };
 
@@ -49,6 +53,9 @@ export default function CreateExamQuestionPage() {
                             onClick={() => setMode("bank")}
                         >
                             Sử dụng kho câu hỏi
+                            <small className="fw-normal ms-2">
+                                ({questions.length} câu hỏi)
+                            </small>
                         </button>
                     </div>
 
@@ -67,6 +74,9 @@ export default function CreateExamQuestionPage() {
                             onClick={() => setMode("random")}
                         >
                             Random câu hỏi
+                            <small className="fw-normal ms-2">
+                                ({questions.length} câu hỏi)
+                            </small>
                         </button>
                     </div>
 

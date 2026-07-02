@@ -1,12 +1,18 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaEdit, FaTrash } from "react-icons/fa";
-import "./QuestionPage.css";
+import { gradeService } from "../../../services/examService";
+import { subjectService } from "../../../services/examService";
 import { questionService } from '../../../services/examService';
+import "./QuestionPage.css";
 
 export default function QuestionPage() {
   const navigate = useNavigate();
   const [questions, setQuestions] = useState([]);
+  const [grades, setGrades] = useState([]);
+  const [subjects, setSubjects] = useState([]);
+  const [gradeId, setGradeId] = useState("");
+  const [subjectId, setSubjectId] = useState("");
   const [keyword, setKeyword] = useState("");
   const [page, setPage] = useState(1);
   const limit = 10;
@@ -16,10 +22,18 @@ export default function QuestionPage() {
     let ignore = false;
 
     const loadQuestions = async () => {
+      const gradeRes = await gradeService.GetAllGrades();
+      const subjectRes = await subjectService.GetAllSubjects();
+
+      setGrades(gradeRes.data);
+      setSubjects(subjectRes.data);
+
       const res = await questionService.GetPagedQuestions({
         page,
         limit,
         keyword,
+        grade_id: gradeId,
+        subject_id: subjectId,
       });
 
       if (!ignore) {
@@ -33,7 +47,7 @@ export default function QuestionPage() {
     return () => {
       ignore = true;
     };
-  }, [page, keyword]);
+  }, [page, keyword, gradeId, subjectId]);
 
   const handleCreate = () => {
     navigate("/dashboard/question/create");
@@ -51,6 +65,8 @@ export default function QuestionPage() {
       page: 1,
       limit,
       keyword,
+      grade_id: gradeId,
+      subject_id: subjectId,
     });
 
     setQuestions(res.data || []);
@@ -59,14 +75,26 @@ export default function QuestionPage() {
 
   const handleApprove = async (id) => { 
     await questionService.ApproveQuestion(id); 
-    const res = await questionService.GetPagedQuestions({ page, limit, keyword });
+    const res = await questionService.GetPagedQuestions({ 
+      page, 
+      limit, 
+      keyword,
+      grade_id: gradeId,
+      subject_id: subjectId,
+    });
     setQuestions(res.data || []);
     setTotalPages(res.totalPages);
   }; 
 
   const handleReject = async (id) => { 
     await questionService.RejectQuestion(id); 
-    const res = await questionService.GetPagedQuestions({ page, limit, keyword });
+    const res = await questionService.GetPagedQuestions({ 
+      page, 
+      limit, 
+      keyword,
+      grade_id: gradeId,
+      subject_id: subjectId,
+    });
     setQuestions(res.data || []);
     setTotalPages(res.totalPages);
  }; 
@@ -93,9 +121,9 @@ export default function QuestionPage() {
         <div className="card p-2">
           <div className="header-page-body-box card-header p-2 border-0">
             <div className="row align-items-center">
-              <div className="search-box col-md-6 d-flex">
+              <div className="search-box col-md-8 d-flex">
                 <input
-                  className="form-control me-2"
+                  className="form-control me-2 "
                   placeholder="Nhập từ khóa..."
                   value={keyword}
                   onChange={(e) => {
@@ -107,9 +135,41 @@ export default function QuestionPage() {
                   <i className="fa-solid fa-magnifying-glass me-2"></i>
                   Tìm kiếm
                 </button>
+
+                <div className="ms-3 col-md-2">
+                  <select 
+                    className="form-select bg-white py-2 px-2" 
+                    value={gradeId}
+                    onChange={(e) => {
+                      setGradeId(e.target.value);
+                      setPage(1);
+                    }}
+                  >
+                    <option value="">-- Chọn khối --</option>
+                    {grades.map((grade) => (
+                      <option key={grade.id} value={grade.id}>{grade.grade}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="ms-3 col-md-2">
+                  <select 
+                    className="form-select bg-white py-2 px-2" 
+                    value={subjectId}
+                    onChange={(e) => {
+                      setSubjectId(e.target.value);
+                      setPage(1);
+                    }}
+                  >
+                    <option value="">-- Chọn môn --</option>
+                    {subjects.map((subject) => (
+                      <option key={subject.id} value={subject.id}>{subject.name}</option>
+                    ))}
+                  </select>
+                </div>
               </div>
 
-              <div className="col-md-6 text-end">
+              <div className="col-md-4 text-end">
                 <button className="btn btn-success" onClick={handleCreate} title="Thêm mới">Thêm mới</button>
               </div>
             </div>

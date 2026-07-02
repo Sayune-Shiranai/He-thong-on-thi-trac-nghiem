@@ -5,7 +5,7 @@ const { Op } = require('sequelize');
 
 const GetPaged = async (req, res) => {
   try {
-      let { page = 1, limit = 10, keyword = "" } = req.query;
+      let { page = 1, limit = 10, keyword = "", grade_id, subject_id } = req.query;
       page = parseInt(page);
       limit = parseInt(limit);
 
@@ -44,6 +44,14 @@ const GetPaged = async (req, res) => {
               { subject_id: { [Op.in]: subjects } },
               ]
           };
+      }
+
+      if (grade_id) {
+          where.grade_id = grade_id;
+      }
+
+      if (subject_id) {
+          where.subject_id = subject_id;
       }
 
       const totalRecords = await db.Question.count({ where });
@@ -396,6 +404,13 @@ const RandomQuestion = async (req, res) => {
       order: db.sequelize.random(),
       limit: Number(count)
     });
+    
+    if (Number(count) > questions.length) {
+      return res.status(400).json({
+        success: false,
+        message: "Số lượng câu hỏi random vượt quá số lượng câu hỏi có sẵn!"
+      });
+    }
 
     if (questions.length === 0) {
       return res.status(400).json({

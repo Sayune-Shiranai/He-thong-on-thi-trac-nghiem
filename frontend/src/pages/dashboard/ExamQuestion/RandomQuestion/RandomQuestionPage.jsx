@@ -3,15 +3,18 @@ import { questionService } from "../../../../services/examService";
 
 export default function RandomQuestion({ examId, reload }) {
     const [count, setCount] = useState(10);
+    const [error, setError] = useState("");
     const handleRandom = async () => {
+        setError("");
         try {
             await questionService.RandomQuestion({
                 exam_id: examId,
                 count: Number(count)
             });
             await reload();
-        } catch(err) {
-            console.log(err);
+        } catch(error) {
+            setError(error.message);
+            console.log(error);
         }
     };
 
@@ -26,6 +29,8 @@ export default function RandomQuestion({ examId, reload }) {
                     setCount(e.target.value)
                 }
             />
+
+            {error && <div className="alert alert-danger">{error}</div>}
 
             <button
                 className="btn btn-warning"

@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { userService, subjectService, gradeService } from '../../services/examService';
+import { 
+  userService, 
+  subjectService, 
+  gradeService, 
+  questionService, 
+  examService 
+} from '../../services/examService';
 import './AdminOverviewPage.css';
 
 export default function AdminOverviewPage() {
@@ -10,20 +16,27 @@ export default function AdminOverviewPage() {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const [users, subjects, grades] = await Promise.all([
-          userService.getAll({ limit: 1 }),
-          subjectService.getAll({ limit: 1 }),
-          gradeService.getAll({ limit: 1 }),
+        const [users, subjects, grades, questions, exams] = await Promise.all([
+          userService.getPagedUsers(),
+          subjectService.GetPagedSubjects(),
+          gradeService.GetPagedGrades(),
+          questionService.GetPagedQuestions(),
+          examService.GetPagedExams(),
         ]);
+        console.log(users);
+        console.log(subjects);
+        console.log(grades);
+        console.log(questions);
+        console.log(exams);
         setStats({
           totalUsers:     users.totalRecords     || 0,
           totalSubjects:  subjects.totalRecords  || 0,
           totalGrades:    grades.totalRecords     || 0,
-          totalExams:     3,   // chưa có GET all exams
-          totalQuestions: 0,
+          totalExams:     exams.totalRecords     || 0,
+          totalQuestions: questions.totalRecords || 0,
         });
-      } catch {
-        setStats({ totalUsers: 0, totalSubjects: 4, totalGrades: 3, totalExams: 3, totalQuestions: 0 });
+      } catch (err) {
+        console.error(err);
       } finally {
         setLoading(false);
       }
@@ -42,10 +55,11 @@ export default function AdminOverviewPage() {
 
       <div className="admin-stats-grid stagger">
         {[
-          { label: 'Người dùng',    value: stats.totalUsers,     color: 'blue',   icon: '👥', to: '/dashboard/users' },
-          { label: 'Đề thi',        value: stats.totalExams,     color: 'green',  icon: '📋', to: '/dashboard/exams' },
-          { label: 'Câu hỏi',       value: stats.totalQuestions, color: 'orange', icon: '❓', to: '/dashboard/questions' },
-          { label: 'Môn học',        value: stats.totalSubjects,  color: 'red',    icon: '📚', to: '/dashboard/subjects' },
+          { label: 'Người dùng',    value: stats.totalUsers,     color: 'blue',   icon: '👥', to: '/dashboard/user' },
+          { label: 'Đề thi',        value: stats.totalExams,     color: 'green',  icon: '📋', to: '/dashboard/exam' },
+          { label: 'Câu hỏi',       value: stats.totalQuestions, color: 'orange', icon: '❓', to: '/dashboard/question' },
+          { label: 'Môn học',        value: stats.totalSubjects, color: 'red',    icon: '📚', to: '/dashboard/subject' },
+          { label: 'Khối',       value: stats.totalGrades,       color: 'yellow', icon: '🏫', to: '/dashboard/grade' },
         ].map(s => (
           <Link to={s.to} key={s.label} style={{ textDecoration: 'none' }}>
             <div className={`admin-stat-card animate-fadeIn ${s.color}`}>
@@ -63,10 +77,11 @@ export default function AdminOverviewPage() {
         <h2 className="section-heading">Thao tác nhanh</h2>
         <div className="quick-grid">
           {[
-            { to: '/dashboard/exams',     icon: '+', label: 'Tạo đề thi mới' },
-            { to: '/dashboard/questions', icon: '+', label: 'Thêm câu hỏi' },
-            { to: '/dashboard/subjects',  icon: '→', label: 'Quản lý môn học' },
-            { to: '/dashboard/users',     icon: '→', label: 'Quản lý người dùng' },
+            { to: '/dashboard/exam/create',     icon: '+', label: 'Tạo đề thi mới' },
+            { to: '/dashboard/question/create', icon: '+', label: 'Thêm câu hỏi' },
+            { to: '/dashboard/grade',     icon: '→', label: 'Quản lý khối' },
+            { to: '/dashboard/subject',  icon: '→', label: 'Quản lý môn học' },
+            
           ].map(a => (
             <Link key={a.to} to={a.to} className="quick-card">
               <span className="quick-icon">{a.icon}</span>

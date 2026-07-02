@@ -8,6 +8,10 @@ const GetPaged = async (req, res) => {
       page = parseInt(page);
       limit = parseInt(limit);
 
+      const offset = (page - 1) * limit;
+
+      let where = {};
+
       const FindGrade = await db.Grade.findAll({
         where: {
             grade: {
@@ -27,10 +31,6 @@ const GetPaged = async (req, res) => {
       });
 
       const subjects = FindSubject.map(g => g.id);
-
-      const offset = (page - 1) * limit;
-
-      let where = {};
 
       if (keyword) {
           where = {
