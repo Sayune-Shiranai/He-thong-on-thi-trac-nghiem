@@ -3,114 +3,129 @@ const { Op } = require('sequelize');
 
 // 1. SUBMIT EXAM - Nộp bài & tính điểm
 const SubmitExam = async (req, res) => {
-  try {
-    // Dữ liệu client gửi lên
-    const { 
-      user_id, 
-      exam_id, 
-      started_at, 
-      duration, 
-      answers 
-    } = req.body;
+  // try {
+  //   // Dữ liệu client gửi lên
+  //   const { exam_id }= req.params;
+  //   const user_id = req.user.id;
 
-    // Validate required fields
-    if (!user_id || !exam_id || !answers) {
-      return res.status(400).json({
-        message: "Thiếu thông tin bắt buộc"
-      });
-    }
+  //   if (!user_id) {
+  //     return res.status(401).json({
+  //       message: "Chưa đăng nhập!"
+  //     });
+  //   }
 
-    // Lấy danh sách câu hỏi của đề thi
-    const examQuestions = await db.Exam_Question.findAll({
-      where: { exam_id },
-      include: [{
-        model: db.Question,
-        attributes: ['id', 'correct_answer']
-      }]
-    });
+  //   const { 
+  //     answers, 
+  //     started_at,
+  //     submitted_at,
+  //     duration
+  //   } = req.body
 
-    if (!examQuestions.length) {
-      return res.status(404).json({
-        message: "Đề thi không có câu hỏi"
-      });
-    }
+  //   // Validate required fields
+  //   if (!user_id || !exam_id || !answers) {
+  //     return res.status(400).json({
+  //       message: "Thiếu thông tin bắt buộc"
+  //     });
+  //   }
 
-    // Tính điểm
-    let correct_count = 0;
-    let wrong_count = 0;
-    let null_count = 0;
-    const resultDetails = [];
+  //   // Lấy danh sách câu hỏi của đề thi
+  //   const examQuestions = await db.Exam_Question.findAll({
+  //     where:{
+  //       exam_id
+  //     },
 
-    examQuestions.forEach(eq => {
-      const question = eq.Question;
-      // Tìm câu trả lời của user
-      const userAnswer = answers.find(a => a.question_id === question.id);
-      const selected_answer = userAnswer ? userAnswer.selected_answer : null;
+  //     include: [
+  //       {
+  //       model: db.Question,
+  //       attributes: [
+  //         'id',
+  //          'correct_answer'
+  //         ]
+  //     }]
+  //   });
+
+  //   if (!examQuestions.length) {
+  //     return res.status(404).json({
+  //       message: "Đề thi không có câu hỏi"
+  //     });
+  //   }
+
+  //   // Tính điểm
+  //   let correct_count = 0;
+  //   let wrong_count = 0;
+  //   let null_count = 0;
+  //   const resultDetails = [];
+
+  //   examQuestions.forEach(eq => {
+  //     const question = eq.Question;
+  //     // Tìm câu trả lời của user
+  //     const userAnswer = answers.find(a => a.question_id === question.id);
+  //     const selected_answer = userAnswer ? userAnswer.selected_answer : null;
       
-      let is_correct = false;
-      if (selected_answer === null) {
-        null_count++;
-      } else if (selected_answer === question.correct_answer) {
-        is_correct = true;
-        correct_count++;
-      } else {
-        wrong_count++;
-      }
+  //     let is_correct = false;
+  //     if (selected_answer === null) {
+  //       null_count++;
+  //     } else if (selected_answer === question.correct_answer) {
+  //       is_correct = true;
+  //       correct_count++;
+  //     } else {
+  //       wrong_count++;
+  //     }
 
-      // Lưu chi tiết từng câu
-      resultDetails.push({
-        question_id: question.id,
-        selected_answer: selected_answer,
-        is_correct: is_correct
-      });
-    });
+  //     // Lưu chi tiết từng câu
+  //     resultDetails.push({
+  //       question_id: question.id,
+  //       selected_answer: selected_answer,
+  //       is_correct: is_correct
+  //     });
+  //   });
 
-    // Tính điểm (giả định: mỗi câu đúng 1 điểm)
-    const total_question = examQuestions.length;
-    const total_score = correct_count;
-    const submitted_at = new Date();
+  //   // Tính điểm (giả định: mỗi câu đúng 1 điểm)
+  //   const total_question = examQuestions.length;
+  //   const total_score = correct_count;
+  //   const submitted_at = new Date();
 
-    // Tạo Result
-    const result = await db.Result.create({
-      user_id,
-      exam_id,
-      total_score,
-      total_question: total_question.toString(), // Hoặc INTEGER
-      started_at,
-      submitted_at,
-      duration
-    });
+  //   // Tạo Result
+  //   const result = await db.Result.create({
+  //     user_id,
+  //     exam_id,
+  //     total_score,
+  //     total_question: total_question.toString(), // Hoặc INTEGER
+  //     started_at,
+  //     submitted_at,
+  //     duration
+  //   });
 
-    // Tạo Resultdetail cho từng câu
-    for (const detail of resultDetails) {
-      await db.Resultdetail.create({
-        result_id: result.id,
-        question_id: detail.question_id,
-        selected_answer: detail.selected_answer,
-        is_correct: detail.is_correct
-      });
-    }
+  //   // Tạo Resultdetail cho từng câu
+  //   for (const detail of resultDetails) {
+  //     await db.Resultdetail.create({
+  //       result_id: result.id,
+  //       question_id: detail.question_id,
+  //       selected_answer: detail.selected_answer,
+  //       is_correct: detail.is_correct
+  //     });
+  //   }
 
-    // Trả về kết quả
-    return res.status(201).json({
-      message: "Nộp bài thành công",
-      data: {
-        id: result.id,
-        total_score,
-        total_question: total_question,
-        correct_count,
-        wrong_count,
-        null_count,
-        duration,
-        submitted_at
-      }
-    });
+  //   // Trả về kết quả
+  //   return res.status(201).json({
+  //     message: "Nộp bài thành công",
+  //     data: {
+  //       id: result.id,
+  //       total_score,
+  //       total_question: total_question,
+  //       correct_count,
+  //       wrong_count,
+  //       null_count,
+  //       duration,
+  //       submitted_at
+  //     }
+  //   });
 
-  } catch (err) {
-    return res.status(500).json({
-      error: err.message
-    });
-  }
+  // } catch (err) {
+  //   return res.status(500).json({
+  //     error: err.message
+  //   });
+  // }
 };
 
 // 2. GET ALL - Lấy tất cả kết quả (không phân trang)
@@ -192,7 +207,7 @@ const GetById = async (req, res) => {
 // 4. GET BY USER - Lịch sử thi của user
 const GetByUser = async (req, res) => {
   try {
-    const { user_id } = req.params;
+    const { user_id } = req.user.id;
     const { page = 1, limit = 10 } = req.query;
     
     const pageNum = parseInt(page);

@@ -403,6 +403,184 @@ const GetExamById = async (req, res) => {
     });
   }
 };
+
+//StartExam
+const StartExam = async (req, res) => {
+try {
+    const { exam_id } = req.params;
+    const user_id = req.user.id
+
+    const exam = await db.Exam.findByPk(exam_id);
+
+    if (!exam) {
+      return res.status(404).json({
+        message: "Đề thi không tồn tại!"
+      });
+    }
+
+    if (existed) {
+      return res.status(200).json({
+        message: "Bạn đang làm bài này.",
+        data: existed
+       
+      });
+    }
+
+    const started_at = new Date();
+
+    const result = await db.Result.create({
+      user_id,
+      exam_id,
+      total_score: 0,
+      total_question: 0,
+      started_at,
+      submitted_at: null,
+      duration: 0
+    });
+
+    return res.status(201).json({
+      message: "Bắt đầu làm bài thành công",
+      data: {
+        result_id: result.id,
+        started_at
+      }
+    });
+
+  } catch (err) {
+    return res.status(500).json({
+      error: err.message
+    });
+  }
+};
+
+//SubmitExam
+const SubmitExam = async (req, res) => {
+try {
+
+    const { exam_id } = req.params;
+    const { answers } = req.body;
+    const user_id = req.user.id;
+
+    const exam = await db.Exam.findOne({
+      where: {
+        id: exam_id
+      },
+      include: [
+        {
+          model: db.Question,
+          through: {
+            attributes: []
+          }
+        }
+      ]
+    });
+
+    if (!exam) {
+      return res.status(404).json({
+        message: "Đề thi không tồn tại!"
+      });
+    }
+
+    // Lấy Result đã tạo khi StartExam
+    const result = await db.Result.findOne({
+      where: {
+        result_id,
+        user_id,
+        exam_id
+      }
+    });
+
+    if (!result) {
+      return res.status(404).json({
+        message: "Không tìm thấy phiên làm bài!"
+      });
+    }
+
+    // Kiểm tra đã nộp chưa
+    if (result.submitted_at) {
+      return res.status(400).json({
+        message: "Bài thi đã được nộp!"
+      });
+    }
+
+    const submitted_at = new Date();
+
+    // Tính thời gian làm bài (giây)
+    const duration = Math.floor(
+      (submitted_at - result.started_at) / 1000
+    );
+
+    let correct_count = 0;
+    let wrong_count = 0;
+    let null_count = 0;
+
+    // Chấm từng câu
+    for (const question of exam.Questions) {
+
+      const answer = answers.find(
+        a => a.question_id == question.id
+      );
+
+      let selected_answer = null;
+      let is_correct = false;
+
+      if (answer) {
+        selected_answer = answer.selected_answer;
+
+        if (selected_answer === question.correct_answer) {
+          is_correct = true;
+          correct_count++;
+        } else {
+          wrong_count++;
+        }
+      } else {
+        null_count++;
+      }
+
+      await db.Resultdetail.create({
+        result_id: result.id,
+        question_id: question.id,
+        selected_answer,
+        is_correct
+      });
+
+    }
+
+    const total_question = exam.Questions.length;
+
+    // Thang điểm 10
+    const total_score = Number(
+      ((correct_count / total_question) * 10).toFixed(2)
+    );
+
+    // Cập nhật Result
+    await result.update({
+      total_question,
+      total_score,
+      submitted_at,
+      duration
+    });
+
+    return res.status(200).json({
+      message: "Nộp bài thành công",
+      data: {
+        result_id: result.id,
+        total_question,
+        correct_count,
+        wrong_count,
+        null_count,
+        total_score,
+        duration,
+        submitted_at
+      }
+    });
+
+  } catch (err) {
+    return res.status(500).json({
+      error: err.message
+    });
+  }
+};
     
 
 module.exports = {
@@ -414,5 +592,7 @@ module.exports = {
   RejectExam,
   GetAllExams,
   GetExamById,
-  DeleteQuestionByExam
+  DeleteQuestionByExam,
+  StartExam,
+  SubmitExam
 };
