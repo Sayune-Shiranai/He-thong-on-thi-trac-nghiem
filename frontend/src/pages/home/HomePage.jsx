@@ -14,7 +14,7 @@ const MOCK_EXAMS=[
   {id:'6',title:'HTML & CSS Cơ bản',description:'HTML ngữ nghĩa, Flexbox, Grid, animation và trợ năng.',duration:25,questionCount:15,difficulty:'easy',category:'Lập trình',passingScore:75},
 ];
 
-const DIFF_LABEL={easy:'Dễ',medium:'Trung bình',hard:'Khó'};
+// const DIFF_LABEL={easy:'Dễ',medium:'Trung bình',hard:'Khó'};
 
 function ExamCard({exam,onView}){
   const diffBadge={easy:'badge-success',medium:'badge-warning',hard:'badge-danger'}[exam.difficulty]||'badge-neutral';
@@ -60,8 +60,8 @@ export default function HomePage(){
     return ms&&mf;
   });
 
-  const categories=[...new Set(exams.map(e=>e.category).filter(Boolean))];
-  const filterLabels={all:'Tất cả',easy:'Dễ',medium:'Trung bình',hard:'Khó'};
+  // const categories=[...new Set(exams.map(e=>e.category).filter(Boolean))];
+  // const filterLabels={all:'Tất cả',easy:'Dễ',medium:'Trung bình',hard:'Khó'};
 
   return(
     <div className="dashboard-page">
@@ -80,13 +80,13 @@ export default function HomePage(){
 
       <div className="dashboard-filters">
         <input type="search" className="form-input search-input" placeholder="Tìm kiếm đề thi…" value={search} onChange={e=>setSearch(e.target.value)}/>
-        <div className="filter-chips">
+        {/* <div className="filter-chips">
           {['all','easy','medium','hard',...categories].map(f=>(
             <button key={f} className={`filter-chip ${filter===f?'active':''}`} onClick={()=>setFilter(f)}>
               {filterLabels[f]||f}
             </button>
           ))}
-        </div>
+        </div> */}
       </div>
 
       {loading

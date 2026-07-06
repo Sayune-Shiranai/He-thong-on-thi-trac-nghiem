@@ -11,11 +11,22 @@ const GetPaged = async (req, res) => {
 
     let where = {};
 
+    const FindRole = await db.Role.findAll({
+            where: {
+                name: {
+                    [Op.like]: `%${keyword}%`
+                }
+            }
+          });
+    
+    const roles = FindRole.map(r => r.id);
+
     if (keyword) {
       where = {
         [Op.or]: [
           { username: { [Op.like]: `%${keyword}%` } },
-          { email: { [Op.like]: `%${keyword}%` } }
+          { email: { [Op.like]: `%${keyword}%` } },
+          { role_id: { [Op.in]: roles } }
         ]
       };
     }
