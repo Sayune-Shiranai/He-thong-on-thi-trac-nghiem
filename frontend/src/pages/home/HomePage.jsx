@@ -47,18 +47,32 @@ export default function HomePage(){
   const [search,setSearch]=useState('');
   const [filter,setFilter]=useState('all');
 
-  useEffect(()=>{
-    examService.GetAllExam({status:'published'})
-      .then(d=>setExams(Array.isArray(d)?d:d.exams||[]))
-      .catch(()=>setExams(MOCK_EXAMS))
-      .finally(()=>setLoading(false));
-  },[]);
+  useEffect(() => {
+    const loadExams = async () => {
+      try {
+        setLoading(true);
 
-  const filtered=exams.filter(e=>{
-    const ms=e.title.toLowerCase().includes(search.toLowerCase());
-    const mf=filter==='all'||e.category===filter||e.difficulty===filter;
-    return ms&&mf;
-  });
+        const res = await examService.GetAllExam({
+          status: "published",
+        });
+
+        setExams(res.data || []);
+      } catch (err) {
+        console.error(err);
+        // setExams(MOCK_EXAMS);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadExams();
+  }, []);
+
+  // const filtered=exams.filter(e=>{
+  //   const ms=e.title.toLowerCase().includes(search.toLowerCase());
+  //   const mf=filter==='all'||e.category===filter||e.difficulty===filter;
+  //   return ms&&mf;
+  // });
 
   // const categories=[...new Set(exams.map(e=>e.category).filter(Boolean))];
   // const filterLabels={all:'Tất cả',easy:'Dễ',medium:'Trung bình',hard:'Khó'};
@@ -89,12 +103,12 @@ export default function HomePage(){
         </div> */}
       </div>
 
-      {loading
+      {/* {loading
         ?<div className="loading-screen"><div className="spinner"/><span>Đang tải đề thi…</span></div>
         :filtered.length===0
           ?<div className="empty-state"><div className="empty-icon">📋</div><h3>Không tìm thấy đề thi</h3><p>{search?'Thử từ khoá khác.':'Hiện chưa có đề thi nào.'}</p></div>
           :<div className="exam-grid stagger">{filtered.map(e=><ExamCard key={e.id} exam={e} onView={id=>navigate(`/detail/${id}`)}/>)}</div>
-      }
+      } */}
     </div>
   );
 }
