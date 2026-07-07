@@ -406,10 +406,11 @@ const GetExamById = async (req, res) => {
 
 //StartExam
 const StartExam = async (req, res) => {
-try {
-    const { exam_id } = req.params;
-    const user_id = req.user.id
+  try {
+    const { id: exam_id } = req.params;
+    const user_id = req.user.id;
 
+    // Kiểm tra đề thi
     const exam = await db.Exam.findByPk(exam_id);
 
     if (!exam) {
@@ -418,24 +419,31 @@ try {
       });
     }
 
+    // Kiểm tra đã bắt đầu nhưng chưa nộp chưa
+    const existed = await db.Result.findOne({
+      where: {
+        user_id,
+        exam_id,
+        submitted_at: null
+      }
+    });
+
     if (existed) {
       return res.status(200).json({
         message: "Bạn đang làm bài này.",
-        data: existed
-       
+        result_id: existed.id,
+        started_at: existed.started_at
       });
     }
-
-    const started_at = new Date();
 
     const result = await db.Result.create({
       user_id,
       exam_id,
-      total_score: 0,
-      total_question: 0,
-      started_at,
-      submitted_at: null,
-      duration: 0
+      // total_score: 0,
+      // total_question: 0,
+      started_at: new Date(),
+      // submitted_at: null,
+      // duration: 0
     });
 
     return res.status(201).json({
@@ -484,7 +492,6 @@ try {
     // Lấy Result đã tạo khi StartExam
     const result = await db.Result.findOne({
       where: {
-        result_id,
         user_id,
         exam_id
       }
