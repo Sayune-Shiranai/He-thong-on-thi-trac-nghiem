@@ -55,6 +55,7 @@ export const gradeService = {
   UpdateGrade: (id, data)   => api.put(`/dashboard/grade/update/${id}`, data),
   DeleteGrade: (id)         => api.delete(`/dashboard/grade/delete/${id}`),
   GetGradeById: (id)        => api.get(`/dashboard/grade/${id}`),
+  GetAllGrade: () => api.get('/grade'),
 };
 
 // ── Người dùng (admin) ──

@@ -14,7 +14,7 @@ const MOCK_EXAMS=[
   {id:'6',title:'HTML & CSS Cơ bản',description:'HTML ngữ nghĩa, Flexbox, Grid, animation và trợ năng.',duration:25,questionCount:15,difficulty:'easy',category:'Lập trình',passingScore:75},
 ];
 
-const DIFF_LABEL={easy:'Dễ',medium:'Trung bình',hard:'Khó'};
+// const DIFF_LABEL={easy:'Dễ',medium:'Trung bình',hard:'Khó'};
 
 function ExamCard({exam,onView}){
   const diffBadge={easy:'badge-success',medium:'badge-warning',hard:'badge-danger'}[exam.difficulty]||'badge-neutral';
@@ -47,21 +47,35 @@ export default function HomePage(){
   const [search,setSearch]=useState('');
   const [filter,setFilter]=useState('all');
 
-  useEffect(()=>{
-    examService.GetAllExam({status:'published'})
-      .then(d=>setExams(Array.isArray(d)?d:d.exams||[]))
-      .catch(()=>setExams(MOCK_EXAMS))
-      .finally(()=>setLoading(false));
-  },[]);
+  useEffect(() => {
+    const loadExams = async () => {
+      try {
+        setLoading(true);
 
-  const filtered=exams.filter(e=>{
-    const ms=e.title.toLowerCase().includes(search.toLowerCase());
-    const mf=filter==='all'||e.category===filter||e.difficulty===filter;
-    return ms&&mf;
-  });
+        const res = await examService.GetAllExam({
+          status: "published",
+        });
 
-  const categories=[...new Set(exams.map(e=>e.category).filter(Boolean))];
-  const filterLabels={all:'Tất cả',easy:'Dễ',medium:'Trung bình',hard:'Khó'};
+        setExams(res.data || []);
+      } catch (err) {
+        console.error(err);
+        // setExams(MOCK_EXAMS);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadExams();
+  }, []);
+
+  // const filtered=exams.filter(e=>{
+  //   const ms=e.title.toLowerCase().includes(search.toLowerCase());
+  //   const mf=filter==='all'||e.category===filter||e.difficulty===filter;
+  //   return ms&&mf;
+  // });
+
+  // const categories=[...new Set(exams.map(e=>e.category).filter(Boolean))];
+  // const filterLabels={all:'Tất cả',easy:'Dễ',medium:'Trung bình',hard:'Khó'};
 
   return(
     <div className="dashboard-page">
@@ -80,21 +94,21 @@ export default function HomePage(){
 
       <div className="dashboard-filters">
         <input type="search" className="form-input search-input" placeholder="Tìm kiếm đề thi…" value={search} onChange={e=>setSearch(e.target.value)}/>
-        <div className="filter-chips">
+        {/* <div className="filter-chips">
           {['all','easy','medium','hard',...categories].map(f=>(
             <button key={f} className={`filter-chip ${filter===f?'active':''}`} onClick={()=>setFilter(f)}>
               {filterLabels[f]||f}
             </button>
           ))}
-        </div>
+        </div> */}
       </div>
 
-      {loading
+      {/* {loading
         ?<div className="loading-screen"><div className="spinner"/><span>Đang tải đề thi…</span></div>
         :filtered.length===0
           ?<div className="empty-state"><div className="empty-icon">📋</div><h3>Không tìm thấy đề thi</h3><p>{search?'Thử từ khoá khác.':'Hiện chưa có đề thi nào.'}</p></div>
           :<div className="exam-grid stagger">{filtered.map(e=><ExamCard key={e.id} exam={e} onView={id=>navigate(`/detail/${id}`)}/>)}</div>
-      }
+      } */}
     </div>
   );
 }
