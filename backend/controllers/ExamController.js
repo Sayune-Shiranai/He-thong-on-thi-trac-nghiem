@@ -409,15 +409,34 @@ const StartExam = async (req, res) => {
   try {
     const { id: exam_id } = req.params;
     const user_id = req.user.id;
+    
 
     // Kiểm tra đề thi
-    const exam = await db.Exam.findByPk(exam_id);
+    const exam = await db.Exam.findOne({
+      where: {
+        id: exam_id
+      },
+      include: [
+        {
+          model: db.Question,
+          through: {
+            attributes: []
+          }
+        }
+      ]
+    });
 
     if (!exam) {
       return res.status(404).json({
         message: "Đề thi không tồn tại!"
       });
     }
+    
+    if (exam.Questions.length === 0) {
+    return res.status(400).json({
+        message: "Đề thi chưa có câu hỏi."
+    });
+}
 
     // Kiểm tra đã bắt đầu nhưng chưa nộp chưa
     const existed = await db.Result.findOne({
@@ -450,7 +469,7 @@ const StartExam = async (req, res) => {
       message: "Bắt đầu làm bài thành công",
       data: {
         result_id: result.id,
-        started_at
+        started_at: result.started_at
       }
     });
 
@@ -465,9 +484,10 @@ const StartExam = async (req, res) => {
 const SubmitExam = async (req, res) => {
 try {
 
-    const { exam_id } = req.params;
+    const { id: exam_id } = req.params;
     const { answers } = req.body;
     const user_id = req.user.id;
+
 
     const exam = await db.Exam.findOne({
       where: {
@@ -493,20 +513,15 @@ try {
     const result = await db.Result.findOne({
       where: {
         user_id,
-        exam_id
-      }
+        exam_id,
+        submitted_at: null
+      },
+      order: [["id", "DESC"]]
     });
 
     if (!result) {
       return res.status(404).json({
         message: "Không tìm thấy phiên làm bài!"
-      });
-    }
-
-    // Kiểm tra đã nộp chưa
-    if (result.submitted_at) {
-      return res.status(400).json({
-        message: "Bài thi đã được nộp!"
       });
     }
 

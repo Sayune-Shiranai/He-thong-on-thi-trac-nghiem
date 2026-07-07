@@ -11,6 +11,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Result.init({
+    user_id: DataTypes.INTEGER,
+    exam_id: DataTypes.INTEGER,
     total_score: DataTypes.FLOAT,
     total_question: DataTypes.STRING,
     started_at: DataTypes.DATE,
