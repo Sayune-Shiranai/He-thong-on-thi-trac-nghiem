@@ -6,7 +6,7 @@ const Footer = () => {
     <footer className='page-footer'>
       <div className="container-fluid">
         <div className='row'>
-          <p>© SayuneNovel React</p>
+          <p>© Hệ thống ôn thi trắc nghiệm</p>
         </div>
       </div>
     </footer>
